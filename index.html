@@ -88,6 +88,7 @@ hr {
 	margin-top:-35%;
 }
 #select-screen{
+	position:absolute;
 	width:100%;
 	height:100%;
 	opacity: 0.5;
@@ -129,17 +130,31 @@ hr {
 
 .select-ctr{
 	position:absolute;
-	width:20px;
-	height:20px;
-	bottom:65%;
+	display:block;
+	width:100%;
+	height:100%;
+    cursor: pointer;
+    color: transparent;
+    border: none;
+	top:0;
 }
 
-#begin{
-	background:url("http://549.ipdisk.co.kr/reol/img/l.png") no-repeat;
+.select-ctr button{
+	position:absolute;
+	width:15%;
+	height:100%;
+	border:0;
+	background-color:rgba(255,255,255,.3);
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+}
+
+#select-next{
 	left:0;
 }
-#next{
-	background:url("http://549.ipdisk.co.kr/reol/img/r.png") no-repeat;
+#select-begin{
 	right:0;
 }
 #body{
@@ -302,8 +317,8 @@ function slide(f){
 		l[next].style.right=(n?-x:x)+'px';
 		sliding(n?true:false);
 	}
-	document.getElementById("next").addEventListener('click',function(){slide_next(1)},false);
-	document.getElementById("begin").addEventListener('click',function(){slide_next(0)},false);
+	document.getElementById("select-next").addEventListener('click',function(){slide_next(1)},false);
+	document.getElementById("select-begin").addEventListener('click',function(){slide_next(0)},false);
 	return{next:slide_next};
 }
 function select(f){
@@ -375,13 +390,16 @@ window.onload =init;
 					<img id=select-1 src="http://549.ipdisk.co.kr/reol/img/Album/4.jpg" style="margin-top:-30%;">
 				</li>
 			</ul>
-			<div id=select-screen></div>
 			<!-- 여기밑부터 이벤트 엑세스 가능 -->
 			<!--img id=logo src=http://549.ipdisk.co.kr/img/reol/logo.png /-->
 			<div id=title>REOL</div>
 			<div id=menu onclick="side_open()">Σ</div>
 			<img id=icon src="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" style='filter:invert()'>
-			<img id=next class=select-ctr><img id=begin class=select-ctr>
+			<div class=select-ctr>
+				<div id=select-screen></div>
+				<button id=select-next><img src=http://549.ipdisk.co.kr/reol/img/l.png></button>
+				<button id=select-begin><img src=http://549.ipdisk.co.kr/reol/img/r.png></button>
+			</div>
 		</div>
 		<!--===========================================
 		헤더 - 타이틀 셀렉터와 병합
