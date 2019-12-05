@@ -33,10 +33,13 @@
 		<!--===========================================
 		사이트 공개 테그
 		===========================================-->
-		<meta name="keywords" content="REOL,Σ,레오루,Sigma,びっくり,驚く,れをる,Album">
+		<meta name="keywords" content="REOL,Σ,레오루,Sigma,びっくり,れをる,Album">
 		<meta name="description" content="RΞOL / れをる Album">
 		
-		
+		<!--===========================================
+		라이브러리 모음
+		===========================================-->
+		<script src="../js/anime.min.js"></script>
 		<!--===========================================
 		사이트 구동에 필요한 데이터
 		===========================================-->
@@ -69,55 +72,75 @@ body{
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	user-select:none;
+	overflow-y:hidden;
 }
-#select{
-	position:relative;
-	overflow:hidden;
+/* 기본적인 항목들 */
+
+header, nav, section{
+	position:fixed;
+	width:100%;
 	height:100%;
-	white-space:nowrap;
-	width:1024px;
-	color:#000;
-	margin: 0 auto;
+	margin:auto;
 }
-#select ul#slider {
+nav{
+	max-width:1024px;
+	width:650px;
+	height:650px;
+	position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#slider{
+	position:relative;
+	margin:auto 0;
+	width:100%;
+	height:100%;
+	
+	overflow:hidden;
+	border-radius: 10%;
+	border-width: 1px;
+	border-color: #7f7f7f;
+	border-style: dashed;
 	list-style:none;
 	margin:0;
 	padding:0;
 }
-#select ul li {
+#slider li,#slider img{
 	position:absolute;
 	width:100%;
+	min-height:670px;
+	min-width:670px;
 }
-#select ul li img {
+#slider-ctr{
+	position:absolute;
 	width:100%;
 	height:100%;
+	top:0;
 }
-#select #icon{
+#slider-ctr #icon,#slider-ctr #select-play{
 	position:absolute;
 	top:0;bottom:0;
 	left:0;right:0;
 	margin:0 auto;
 	height:auto;
-	width: 2.5em;
-	font-size:2em;
+	width:10%;
 	text-align:center;
 	overflow:hidden;
 }
-.select-ctr{
-	position:absolute;
-	display:block;
-	width:100%;
-	height:100%;
-		cursor: pointer;
-		color: transparent;
-		border: none;
-	top:0;
+#slider-ctr #select-play{
+	margin-top:50%;
+	transform:translateY(-90%);
 }
 
-.select-ctr button{
-	position:absolute;
+#slider-ctr button{
+    position: absolute;
 	width:15%;
 	height:100%;
+	top:0;
+	margin:0;
 	border:0;
 	background-color:rgba(255,255,255,.3);
 	cursor: pointer;
@@ -125,136 +148,36 @@ body{
 	border: none;
 	outline: none;
 }
-#select-screen{
-	position:absolute;
-	width:100%;
-	height:100%;
-	opacity: 0.5;
-}
-#select-screen #player-main{
-	width: 30%;
-	height:30%;
-	margin:auto;
-	background:rgba(255,255,255,.3);
-}
-#select-screen #player-main-play{
-	position:relative;
-	width: 100%;
-	height:100%;
-}
-#select-next{
-	left:0;
-}
 #select-begin{
 	right:0;
 }
 
-#body{
-	margin:0 auto;
-	max-width:1024px;
-	height:100%;
-	text-align:center;
+/* 스라이더 */
+section{
+	position: fixed;
+    max-width: 1024px;
+    left: 0;
+    right: 0;
+    margin-top: 50px;
 }
-
-#footer{
-	clear: both;
-	width:100%;
-	height:30px;
-	background:#293e97;
+section .title{
+	font-size:100px;
 }
-
-#player-img{
-	width:100%;
-	margin-top:20px;
-}
-
-
-button{
+section img{
+	float:right;
 	width:100px;
-	height:50px;
+	height:100px;
 }
 
-.player{
-	width:100%;
-	height:100%;
+/* 섹션 */
+section{
+	top:1600px;
 }
-.thumb{
-		background:#5f65b1;
-		border: 1px solid #bebebe;
-		border-radius: 1px;
-		position: absolute;
-		left: 0px;
-		top: -2px;
-		width: 22px;
-		height: 10px;
-		margin-left: -1px;
-		overflow: hidden;
-		cursor: pointer;
-}
+
 		</style>
-		<!--===========================================
-		프린트 전용 헤더
-		===========================================-->
-		<!--script src="../js/soungjin.js?var=1"></script-->
-		<script src="../js/anime.min.js"></script>
 		<script>
-
-//페이지 구동용 자바스크립트
-
-/*
-IE7 대응 엘리먼트 제작
-*/
-var isIE=navigator.userAgent.toLowerCase().indexOf("msie")!=-1;
-
-var lib_n="_Soungjin_s",_cEle=0;//라이브러리 네임
-if(!window.Element){Element=function(){};_cEle=1;}
-Element.prototype.removeClass = function(n){var c=this.className,l=c.split(' '),o=_U,i=0;for(;i<l.length;i++)if(l[i]!=n){if(o)o+=' '+l[i];else o=l[i];}this.className=o;return this;};
-Element.prototype.add=function(ele){this.appendChild(ele);return this;};
-Element.prototype.addClass=function(n){var c=this.className;this.className=(c==''?n:c+' '+n);return this;};
-Element.prototype.isClass=function(a){var l=this.className.split(' '),i=0;for(;i<l.length;i++)if(l[i]===a)return 1;return 0;};
-Element.prototype.css=function(){
-	var a=arguments,b=a.length,c=this.getAttribute("style"),d,e;
-	if(b==1){
-		if(typeof a[0]!="object"){
-			if(!c)return undefined;
-			if(c.indexOf(";")){//찾기
-				d=c.split(";");
-				if(d[d.length-1]=="")
-					d.length--;
-				for(c=0;c<d.length;c++){
-					e=d[c].split(":");
-					if(e[0]===a[0])
-						return parseInt(e[1].match("px")?e[1].substring(0,e[1].length-2):e[1]);
-				}
-			}else{
-				d=c.split(":");
-				if(d[0]==a[0])
-					return d[1];
-			}
-			return undefined;
-		}else{
-			c="";
-			for(d in a[0]){
-				console.log(a[0][d]);
-				this.style[d]=a[0][d];
-			}
-				//c+=d+":"+a[0][d]+";";
-			//this.setAttribute("style",c);
-			return this;
-		}
-	}else if(b==2)
-		this.style[a[0]]=a[1];
-		//this.setAttribute("style",a[0]+":"+a[1]);
-	return this;
-};
-Element.prototype.data=function(){
-	var a=arguments,b=a.length,c=typeof a[1]!="string";
-	if(b==1)return this.getAttribute("data-"+a[0]);
-	if(b==2)this.setAttribute("data-"+a[0],a[1]);
-	return this;
-};
-Element.prototype.getPosition=function(){return this.getBoundingClientRect()};
-Element.prototype.on=function(){//이벤트명/실행함수//이후에는 넘기는 인자
+var lib_n="_Soungjin_s";//라이브러리 네임
+Element.prototype.on=window.on=function(){//이벤트명/실행함수//이후에는 넘기는 인자
 	var a=arguments,b=a.length,c,d=this,e=[],f=0;
 	if(b<2)return d;//적용x
 	libElement(d);
@@ -272,430 +195,139 @@ Element.prototype.on=function(){//이벤트명/실행함수//이후에는 넘기
 	d[lib_n].event[a[0]]=c;
 	return d;
 }
-var __split=String.prototype.split;
-String.prototype.split=function(){
-	var a=arguments,b;
-	if(a.length<=0||!__split)return;
-	if(this.length>0&&this.indexOf(a[0])){
-		try{
-			a=__split.call(this,arguments[0]);
-			return a;
-		}catch(e){
-			return this;
-		}
-	}
-}
-if(!isIE)window.on=Element.prototype.on;
-
-function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}};}
-
-if(_cEle){
-	var __createElement=document.createElement;
-	document.createElement=function(tagName){
-		var ele=__createElement(tagName);
-		for(var key in Element.prototype)ele[key]=Element.prototype[key];
-		return ele;
-	}
-	var __getElementById=document.getElementById;
-	document.getElementById=function(id){
-		var ele=__getElementById(id);
-		for(var key in Element.prototype)ele[key]=Element.prototype[key];
-		return ele;
-	}
-}
-
-var __getElementsByClassName=document.getElementsByClassName;
-if(!__getElementsByClassName){
-	document.getElementsByClassName=function(className){
-		var regEx=new RegExp('(^| )'+className+'( |$)');
-		var nodes=[];
-		var elements=document.body.getElementsByTagName("*");
-		var len=elements.length;
-		for(var i=0;i<len;i++)if(regEx.test(elements[i].className))nodes.push(elements[i]);
-		elements=null;
-		return nodes;
-	}
-}
-
-function scroll(open){
-	var body=document.getElementById("body").getPosition(),x=document.body.scrollTop|document.documentElement.scrollTop,select_mini=document.getElementById("select-mini");
-	if(x>(open.isOpen()?358:179)){//hidden
-		select_mini.style.display="block";
-	}else{//open
-		select_mini.style.display="none";
-	}
-}
-/*
-function slide(ele,b,f){
-	var l=ele.getElementsByTagName("li"),x=ele.getPosition().width,max=l.length-1,now=0,aniStart=0,next=1,sp=15;
-	function slide_next(n){
-		function sliding(a){
-			var cx=parseInt(l[now].style.right,10)+(a?sp:(-sp)),
-				nx=parseInt(l[next].style.right,10)+(a?sp:(-sp));
-			if(cx>=x||cx<-x){
-				l[now].style.right=-x+"px";//사라지는것
-				l[next].style.right=0;//이동할것
-				a?now++:now--;
-				if(now>max||now<0)now=a?0:max;
-				aniStart=0;
-				document.location.href="#"+b[now];
-				if (typeof f=='function')f(now);
-				return;
-			}
-			l[now].style.right=cx+"px";
-			l[next].style.right=nx+"px";
-			setTimeout(function(){sliding(a)},20);
-		}
-		if (aniStart)return;
-		next=now+(n?1:-1);
-		if(next>max||next<0)next=n?0:max;
-		aniStart=1;
-		l[next].style.right=(n?-x:x)+'px';
-		sliding(n?true:false);
-	}
-	var c=-1,p=document.location.href.split("#")[1];
-	for(var c=0;b[c]!==p&&c<b.length;c++);
-	if(c>=b.length){c=0;}
-	now=c;
-	for (i=0;i<=max;i++)
-		if (i==now)l[i].style.right=0;
-		else {
-			var z=ele.getPosition();
-			for(var y in z)
-				console.log(y+"\t"+z[y]);
-			l[i].style.right=-x+"px";
-		}
-	if (typeof f=='function')f(now);
-	return slide_next;
-}*/
-function slide(ele){
-	var a=ele.getElementsByTagName("li"),b=a.length,c=0,d=[0,0],e,f=1024,g=1;
-	for(;g<b;g++)a[g].style="transform: translateX("+f+"px)";
-	function slide_next(n){
-		if(d[0]&&d[1])return;
-		d=[1,1];e=n?c+1:c-1;
-		if(e>=b)e=0;if(e<0)e=b-1;
-		a[e].style="transform: translateX("+(n?f:-f)+"px)";
-		anime({//가려져야 할것,
-			targets:a[c],
-			//easing: 'linear',
-			translateX:n?-f:f,
-			complete:function(){
-				d[0]=0;
-				c=e;
-				anime({
-					
-				});
-			}
-		});
-		anime({//나와야 할것
-			targets:a[e],
-			//easing: 'linear',
-			translateX:0,
-			complete:function(){d[1]=0}
-		});
-	}
-	return slide_next;
-}
-function changeimg(tar,datas,time,url){//element | [data-'',data-''] | ms | "/img/Album/"
-	var a=0,b=datas.length,c,d=0,e=0;
-	//tar.src=url+tar.data(datas[d]).split('|')[0];
-	change();
-	function change(){//index/point
-		if(d<0||d>=b){
-			clearInterval(c);
-			return;
-		}
-		var f=tar.data(datas[d]).split('|');
-		if(e>=f.length)e=0;
-		tar.src=url+tar.data(datas[d]).split('|')[e];
-		e++;
-	}
-	function index(index){
-		if(index<0||index>=b){
-			return undefined;
-		}
-		clearInterval(c);
-		c=setInterval(change,time);
-		d=index;e=0;
-		change();
-		return d;
-	}
-	c=setInterval(change,time);
-	return index;
-}
-
-		</script>
-		
-		<script>
-function progbar(){//프로그래스바 처리
-	var a=document.getElementsByClassName("progbar"),b=0;
-	function _create(ele){
-		var a=document.createElement("div").addClass("progbar-empty")//내부 항목
-			,b=document.createElement("div").addClass("progbar-fill")//게이지바
-			,c=document.createElement("div").addClass("thumb")
-			,d=0,e=0,f=ele.getPosition(),g
-			,h=document.createElement("screen").css({height:"100%",width:"100%",position:"fixed",top:0,left:0,display:"block",cursor:"pointer"}),i,j=f.width,k;//바
-		ele.css({height:"8px",width:"100%",position:"relative",background:"#fff",cursor:"pointer",border:"1px solid #293e97"});
-		b.css({background:"#b2b2b2",width:"100px",height:"8px"});
-		c.on("mousedown",function(){
-			if(e){document.body.removeChild(this);e=0;return;}
-			document.body.add(h);e=1;
-		});
-		k=function(){
-			var a=window.event.clientX-i;
-			if(a>j+1||a<=0)return;
-			c.css("left",a+"px");
-			ele.value=Math.floor(a/j*100);
-			ele.onchange&&ele.onchange.call(this);
-		}
-		h.on("mousemove",function(){
-			e&&k();
-		}).on("mouseup",function(){
-			document.body.removeChild(this);e=0;
-		});
-		a.add(b).add(c);
-		ele.add(a).on("click",function(){
-			if(e){document.body.removeChild(this);e=0;return;}
-			k();
-		});
-		i=c.getPosition().left;//초기위치
-		j-=c.getPosition().width/2;
-	}
-	for(;b<a.length;b++)
-		_create(a[b]);
-}
-
-function loadingView(vele,hele,time,f){
-	vele.css({display:"block",height:"100%",position:"fixed"});
-	hele.css({display:"none",height:0});
-	if(time<0)return;
-	setTimeout(function(){
-		vele.css({display:"none",height:0,position:"fixed"});
-		hele.css({display:"block",height:"auto"});
-		typeof f=='function'&&f();
-	},time);
-}
-function player(ele){
-	var a=ele.querySelector(".stroke"),b=a.getTotalLength(),d,z;
-	a.style.strokeDasharray=b;
-	a.style.strokeDashoffset=b;
-	d=function(e){
-		switch(e.type){
-			case "animationstart":
-				z=ele.onStart;
-				typeof z=='function'&&z();
-				break;
-			case "animationiteration":
-				z=ele.onEnded;
-				typeof z=='function'&&z();
-				break;
-		}
-	}
-	a.addEventListener("animationstart",d);
-	a.addEventListener("animationiteration",d);
-	ele.on("click",function(){
-		var c=a.style.webkitAnimationPlayState;
-		if(c=="running"){
-			ele.querySelector(".play").css("opacity",1);
-			ele.querySelector(".pause").css("opacity",0);
-			typeof ele.onPlay=='function'&&ele.onPlay();
-		}else{
-			ele.querySelector(".play").css("opacity",0);
-			ele.querySelector(".pause").css("opacity",1);
-			typeof ele.onPause=='function'&&ele.onPause();
-		}
-		a.style.webkitAnimationPlayState=(c=="running"?"paused":"running");
-	});
-	function re(){
-		var b=a.style.webkitAnimationPlayState=="running";
-		if(b)a.style.webkitAnimationPlayState=="paused";
-		a.classList.remove("stroke");
-		setTimeout(function(){
-			a.classList.add("stroke");
-			if(b)a.style.webkitAnimationPlayState=="running";
-		},10);
-	}
-	function seek(c){
-		var d=b*c/100;
-		//a.style.strokeDasharray=d;
-		a.style.strokeDashoffset=d;
-		console.log(a.style);
-		return d;
-	}
-	return {seek:seek,replay:re};
-}
-var _A;
-function init(){
-	progbar();
-	_A=player(document.getElementById("player-main-play"));
-	next=slide(id("slider"),["no-title","very-colorful","sigma","endless-ep"],function(a){
-		console.log("이벤트?"+a);
-	});
-	var f=function(){
-		next(this.id!=="select-next");
-	};
-	document.getElementById("select-next").addEventListener('click',f,false);
-	document.getElementById("select-begin").addEventListener('click',f,false);
-}
+function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}}}
+/////////////////////////////System func ////////////////////////////////////
 function id(a){return document.getElementById(a)}
 
-function load(){
-	init();
-	/*
-	change=changeimg(id("player-img"),["no-title","very-colorful","sigma","endless-ep"],3000,"/img/Album/");
-	loadingView(id("select"),id("content"),-1);
-	loadingView(id("loading"),id("body"),3*1000,function(){
-		document.getElementsByClassName("progbar")[0].on("change",function(){
+const tag=["no-title","very-colorful","sigma","endless-ep"];
+const name=["No title + / -","極彩色","「Σ」","エンドレスEP"];
+const data=[
+	{name:"No title + / -",tag:"no-title",
+		list:["- Opening -","ヒビカセ","オオエドランヴ","drop pop candy","No title","Echo","- BWW SCREAM -","アシンメトリー","-FINAL SIGMA-","ギガンティックO.T.N - Big Death Edition -","- Ending -"],
+		
+	},
+	{name:"極彩色",tag:"very-colorful",
+		list:[],
+	},
+	{name:"「Σ」",tag:"sigma",
+		list:[],
+	},
+	{name:"エンドレスEP",tag:"endless-ep",
+		list:[],
+	}
+]
+function nav(e){
+	var a,b=0,c=document.location.href.split("#")[1],c,d=this;
+	for(;tag[b]!==c&&b<tag.length;b++);
+	if(b>=tag.length){b=0;}
+	a=function slide(z,y){
+		var a=this.getElementsByTagName("li"),b=a.length,c=z,d=[0,0],e,f=1024,g=0;
+		if(z>=b||z<0)c=0;
+		for(;g<b;g++)if(c!=g)a[g].style="transform: translateX("+f+"px)";
+		function slide_next(n){
+			if(d[0]&&d[1])return;
+			d=[1,1];e=n?c+1:c-1;
+			if(e>=b)e=0;if(e<0)e=b-1;
+			a[e].style="transform: translateX("+(n?f:-f)+"px)";
+			anime({//가려져야 할것,
+				targets:a[c],
+				//easing: 'linear',
+				easing: [.91,-0.54,.29,1.56],
+				translateX:n?-f:f,
+				complete:function(){
+					d[0]=0;
+					c=e;
+					typeof y=='function'&&y(e);
+				}
+			});
+			anime({//나와야 할것
+				targets:a[e],
+				//easing: 'linear',
+				translateX:0,
+				easing: [.91,-0.54,.29,1.56],
+				complete:function(){d[1]=0}
+			});
+		}
+		return slide_next;
+	}.call(id("slider"),b,function(a){
+		document.location.href="#"+tag[a];
+		b=a;
+	});
+	c=function(){a(this.id!=="select-next")};
+	id("select-next").on("click",c);
+	id("select-begin").on("click",c);
+	id("select-play").on("click",function(){typeof e=='function'&&e.call(d,b)});
+}
+function section(a,b){
+	var c=this.querySelector(".title");
+	c.innerHTML=name[a];
+	
+	this.querySelector("#back").on("click",function(){
+		console.log(b);
+		typeof b=='function'&&b();
+	});
+}
+function init(){
+	nav.call(document.querySelector("nav"),function(a){
+		var b=document.querySelector("section"),c=this,d;
+		d=function(e,o,f){
+			anime({
+				targets:e,
+				top:o,
+				complete:f
+			});
+		}
+		section.call(b,a,function(){d(b,1600);d(c,0);});
+		d(c,-1600);
+		d(b,0,function(){
+			var c=b.querySelector("tbody");
 			
 		});
-	});*/
+		
+	});
+	console.log("start");
 }
 
-
-if(!isIE)window.on("load",load);
-else window.onload=load;
+window.on("load",init);
 		</script>
-		<style>
-.player-hidden {
-	opacity: 0;
-}
-.stroke{
-	stroke-dasharray: 145;
-	stroke-dashoffset: 145;
-	-webkit-animation: dash 60s linear infinite paused;
-	animation: dash 60s linear infinite paused;
-}
-@-webkit-keyframes dash {
-	from {
-		stroke-dashoffset: 0;
-	}
-	to {
-		stroke-dashoffset: 145;
-	}
-}
-@keyframes dash {
-	from {
-		stroke-dashoffset: 0;
-	}
-	to {
-		stroke-dashoffset: 145;
-	}
-}
-		</style>
 	</head>
 	<body>
-		<div id=loading style="width:500px;height:500px;">
-			loading...
-		</div>
-		<div id=body>
-			<!--===========================================
-			타이틀 셀렉터
-			===========================================-->
-			<div id=select>
-				<ul id=slider>
-					<li><img id=select-2 src="/img/Album/1-1.jpg" alt="No title +/-"></li>
-					<li><img id=select-3 src="/img/Album/2-1.jpg" alt="very-colorful"></li>
-					<li><img id=select-4 src="/img/Album/3-1.jpg" alt="Sigma"></li>
-					<li><img id=select-5 src="/img/Album/4.jpg" alt="Endless-ep"></li>
-				</ul>
-				<!-- 여기밑부터 이벤트 엑세스 가능 -->
-				<div id=title>REOL</div>
-				<div id=menu onclick="side_open()">Σ</div>
-				<!--img id=icon src="/img/logo.png" style='filter:invert()'-->
+		<!--===========================================
+		헤더	-	로딩항목
+		===========================================-->
+		<!--header>
+			Loading...
+		</header-->
+		<!--===========================================
+		네비	-	리스트 항목
+		===========================================-->
+		<nav>
+			<ul id=slider>
+				<li><img id=select-2 src="/img/Album/1-1.jpg" alt="No title +/-"></li>
+				<li><img id=select-3 src="/img/Album/2-1.jpg" alt="very-colorful"></li>
+				<li><img id=select-4 src="/img/Album/3-1.jpg" alt="Sigma"></li>
+				<li><img id=select-5 src="/img/Album/4.jpg" alt="Endless-ep"></li>
+			</ul>
+			<div id=slider-ctr>
 				<img id=icon src="https://www.reol.jp/images/common/logo.png" style='filter:invert()'>
-				<div class=select-ctr>
-					<div id=select-screen>
-						<div id=player-main>
-							<div id=player-main-play>
-								<svg viewBox="0 0 60 60">
-									<g>
-										<path class="play" fill="#f1f1f1" d="M24.89,40.84c-0.37,0.22-0.83,0.23-1.2,0.02s-0.6-0.61-0.6-1.04V20.2c0-0.43,0.23-0.83,0.6-1.04 c0.37-0.21,0.83-0.21,1.2,0.02l16.35,9.81c0.36,0.21,0.58,0.6,0.58,1.02s-0.22,0.81-0.58,1.02L24.89,40.84z"></path>
-										<path class="pause" fill="#f1f1f1" d="M28.03,19.06v21.88c0,0.86-0.7,1.56-1.56,1.56h-3.12c-0.86,0-1.56-0.7-1.56-1.56V19.06 c0-0.86,0.7-1.56,1.56-1.56h3.12C27.33,17.5,28.03,18.2,28.03,19.06z M38.46,19.06v21.88c0,0.86-0.7,1.56-1.56,1.56h-3.12 c-0.86,0-1.56-0.7-1.56-1.56V19.06c0-0.86,0.7-1.56,1.56-1.56h3.12C37.76,17.5,38.46,18.2,38.46,19.06z"></path>
-										<path class="stroke-bg" fill="none" stroke="#4c4c4c" stroke-width="4" d="M30,7C17.32,7,7,17.32,7,30 c0,12.68,10.32,23,23,23c12.68,0,23-10.32,23-23C53,17.32,42.68,7,30,7z"></path>
-										
-										<path class="stroke" fill="none" stroke="#f1f1f1" stroke-width="4" d="M30,7C17.32,7,7,17.32,7,30 c0,12.68,10.32,23,23,23c12.68,0,23-10.32,23-23C53,17.32,42.68,7,30,7z" style="stroke-dasharray: 144.494; stroke-dashoffset: 144.494; animation-play-state: running;"></path>
-									</g>
-								</svg>
-							</div>
-						</div>
-					</div>
-					<button id=select-next><img src=/img/l.png></button>
-					<button id=select-begin><img src=/img/r.png></button>
-				</div>
-				</div>
-			<div id=content>
-				
+				<img id=select-play src="/img/play.png">
+				<button id=select-next><img src=/img/l.png></button>
+				<button id=select-begin><img src=/img/r.png></button>
 			</div>
-			<div id=footer>
-				Create BY Soungjin's
-			</div>
-		</div>
+		</nav>
+		<!--===========================================
+		섹션 - 데이터
+		===========================================-->
+		<section>
+			<p class=title>undefind</p><img id=back src=/img/back.png>
+			<table>
+				<colgroup>
+					<col width="10px"><col width="100%"><col width="100px">
+				</colgroup>
+				<tbody>
+					<!--tr><td class=album-music-id>01.</td><td class=album-music-title >- Opening -</td><td><img class=album-music-youtube-link></td></tr-->
+				</tbody>
+			</table>
+		</section>
 	</body>
 </html>
-<!---
-만들어야 하는것,
-12-10 홈페이지
-사유: 취미로
-내용: .?.
-
-12-20 일자
-음악 플레이어 - 음원을 재생시킬때, (#player-img-main) 가 CD 재생 형식으로 한번 회전하다 중지하고 계속 재생되는 형식,
-가사를 최적화 시킬 방법을 찾아야함, - javascript파일로 만들던가 뭔 짓을 해서 로드되게 만들어야 최소화됨(캐쉬 제거하여 필수로!)
-플로팅 가사 라이브러리 제작 - 뽀대?
-하단부 이미지 뷰어 구조 생각해야함.
-상단 (#select)부와 하단 (.album-music-list .album)부 연동하는 부분 제작.
-(#slider)부에 있는 이미지, 1개가 아닌 여러개기 때문에 그에 따른 이미지 변경 효과도 주면 좋을것 가틈.
-(#slider)스크립트 축소화 프로젝트 (이건 프로젝트로 가야할거 같다.... 너무크다) ok
-익스플로워용으로 만들어도 괜찮을듯, - 상단 (#slider)부가 생략되는거만 보완하면 익스용으로 완성될거 같다.
-
-Re. 존x많다.....헐
-
-12-21일자
-(#slider)스크립트 축소화 프로젝트 (이건 프로젝트로 가야할거 같다.... 너무크다) ok
-
-12-23
-(nav)를 스크립트로 (#slider)변경시 변경해주는것 ok
-(nav)를 스크립트로 (#slider)변경시 변경해줄때 좀, 더 자연스럼게 만들자!
-
-12-29
-엘범 셀렉터 제작(비교적 단순하게 제작)
-コラボレーション(콜라보레이션) 영역 처리 [화면 오버하는거 고치자]
-# 테그에 의한 페이지 변화 - 뭔가...됬음 ok
-
-12-31
-언젠가 줄여야 하는 자바스크립트 코드...
-미니 타이틀바 수정하기 = width:100% 에서 1024px으로 수정하기 (이미지나 이런거 넣어야지..)
-
-1-1
-로딩화면 제?
-
-1-5 Re.
-다시만들어 보자!
-
-1-8
-IE에서도 구동되는 seekbar제작 이름은 progbar
-
-1-11
-이미지 슬라이드 제작
-깔끔하게 최대한 만들자
-
-
-
---->
-<!--
-IE7 처리 주의사항 메모
-전혀 IE는 개발 안해봤기 때문에 이런 실수가 많다.
-일단 기본적으로 Element 테그가 없다.
-기본적으로 크롬에서 지원하는 오브젝트가 많이 없어서
-지원하도록 제작해줘야함.
-
-그리고 한번에 처리가 안되는 테그가 오질라게 많음.
-IE는 display:none 가 일을 안한다고 함.
-rgba 는 안먹힘
-forEach함수가 없다...?
-
-
-걍 느림...두말x 느리다.
-
--->
