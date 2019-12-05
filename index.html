@@ -20,8 +20,8 @@
 		<meta property="og:type" content="website">
 		<meta property="og:description" content="RΞOL / れをる Album">
 		
-		<meta property="og:url" content="http://www.toysfactory.co.jp/artist/official">
-		<meta property="og:image" content="http://www.reol.jp/wp/wp-content/themes_pc/common/img/ogp_img.jpg">
+		<meta property="og:url" content="http://www.toysfactory.co.jp/artist/reol/official">
+		<meta property="og:image" content="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/ogp_img.jpg">
 		<meta property="fb:app_id" content="">
 		-->
 		
@@ -40,6 +40,7 @@
 		라이브러리 모음
 		===========================================-->
 		<script src="/js/anime.min.js"></script>
+		<script src="/js/bookflip.js"></script>
 		<!--===========================================
 		사이트 구동에 필요한 데이터
 		===========================================-->
@@ -74,6 +75,8 @@ body{
 	user-select:none;
 	overflow-y:hidden;
 }
+
+
 /* 기본적인 항목들 */
 
 header, nav, section{
@@ -93,70 +96,14 @@ nav{
     right: 0;
 }
 
-#slider{
-	position:relative;
-	margin:auto 0;
-	width:100%;
-	height:100%;
-	
-	overflow:hidden;
-	border-radius: 10%;
-	border-width: 1px;
-	border-color: #7f7f7f;
-	border-style: dashed;
-	list-style:none;
-	margin:0;
-	padding:0;
-}
-#slider li,#slider img{
-	position:absolute;
-	width:100%;
-	min-height:670px;
-	min-width:670px;
-}
-#slider-ctr{
-	position:absolute;
-	width:100%;
-	height:100%;
-	top:0;
-}
-#slider-ctr #icon,#slider-ctr #select-play{
-	position:absolute;
-	top:0;bottom:0;
-	left:0;right:0;
-	margin:0 auto;
-	height:auto;
-	width:10%;
-	text-align:center;
-	overflow:hidden;
-}
-#slider-ctr #select-play{
-	margin-top:50%;
-	transform:translateY(-90%);
-	cursor:pointer;
-}
-
-#slider-ctr button{
-    position: absolute;
-	width:15%;
-	height:100%;
-	top:0;
-	margin:0;
-	border:0;
-	background-color:rgba(255,255,255,.3);
-	cursor: pointer;
-	color: transparent;
-	border: none;
-	outline: none;
-}
-#select-begin{
-	right:0;
-}
 
 /* 스라이더 */
 section{
 	position: fixed;
     max-width: 1024px;
+	min-width:650px;
+	min-height:650px;
+	top:1600px;
     left: 0;
     right: 0;
     margin-top: 50px;
@@ -174,15 +121,116 @@ section #back{
 }
 section #album{
 	clear:both;
-	width:150px;
-	height:150px;
+	width:350px;
+	height:350px;
+}
+section #list{
+	display:block;
+	width:350px;
+    padding: 0 10px;
 }
 
-/* 섹션 */
+/* ======================================================= */
+/*
+nav{
+	top:-1600px;
+}
 section{
-	top:1600px;
-}
+	top:0px;
+}*/
 
+@media (max-width:655px){
+	#slider, #slider img{
+		width:100%;
+		height:100%;
+	}
+	#slider{
+		position:relative;
+		margin:auto 0;
+		width:1px;
+		height:1px;
+		
+		list-style:none;
+		margin:0;
+		padding:0;
+	}
+	#slider li{
+		min-height:auto;
+		min-width:100%;
+	}
+	nav,#slider-view{
+		width:100%;
+		height:100vw;
+	}
+	
+} 
+@media (min-width:655px){
+	/* nav 테그에 대응하기 위해서 이하는 필터링이 필요함 */
+	#slider{
+		position:relative;
+		margin:auto 0;
+		width:100%;
+		height:100%;
+		
+		overflow:hidden;
+		border-radius: 10%;
+		border-width: 1px;
+		border-color: #7f7f7f;
+		border-style: dashed;
+		list-style:none;
+		margin:0;
+		padding:0;
+	}
+	#slider-view{
+		width:1px;
+		height:1px;
+	}
+	#slider li,#slider img{
+		position:absolute;
+		width:100%;
+		min-height:670px;
+		min-width:670px;
+	}
+	#slider-ctr{
+		position:absolute;
+		width:100%;
+		height:100%;
+		top:0;
+	}
+	#slider-ctr #icon,#slider-ctr #select-play{
+		position:absolute;
+		top:0;bottom:0;
+		left:0;right:0;
+		margin:0 auto;
+		height:auto;
+		width:10%;
+		text-align:center;
+		overflow:hidden;
+	}
+	#slider-ctr #select-play{
+		margin-top:50%;
+		transform:translateY(-90%);
+		cursor:pointer;
+	}
+
+	#slider-ctr button{
+		position: absolute;
+		width:15%;
+		height:100%;
+		top:0;
+		margin:0;
+		border:0;
+		background-color:rgba(255,255,255,.3);
+		cursor: pointer;
+		color: transparent;
+		border: none;
+		outline: none;
+	}
+	#select-begin{
+		right:0;
+	}
+	
+}
 		</style>
 		<script>
 var lib_n="_Soungjin_s";//라이브러리 네임
@@ -274,7 +322,7 @@ function nav(e){
 	id("select-play").on("click",function(){typeof e=='function'&&e.call(d,b)});
 }
 function section(a,b){
-	var c=this.querySelector(".title"),d=this.querySelector("tbody"),e,f=data[a],g,h=0,i,j,k;
+	var c=this.querySelector(".title"),d=this.querySelector(".track-list"),e,f=data[a],g,h=0,i,j,k;
 	c.innerHTML=data[a].name;
 	this.querySelector("#back").on("click",function(){
 		typeof b=='function'&&b();
@@ -323,9 +371,41 @@ function init(){
 		d(b,0);
 	});
 	console.log("start");
+	var a=changeSize([655]);
+	window.on("resize",function(){
+		var b=a();
+		if(b[0]||b[1]){
+			console.log("크기변경");
+		}
+	});
 }
 
 window.on("load",init);
+function changeSize(ops){
+	var a;//크기 작다|크다
+	if(!ops.length)return function(){};
+	if(!ops[1])ops[1]=0;
+	function rsize(){
+		var b=document.body.clientWidth,c=document.body.clientHeight,d=[b>ops[0],c>ops[1]];//크기 [w,h]
+		if(!a){
+			a=d;
+			return a;
+		}
+		return (function(){
+			var r=isChange(d);
+			a=d;
+			return r;
+		})();
+	}
+	function isChange(b){
+		if(!b||!b.length)return [0,0];
+		return [a[0]!=b[0],a[1]!=b[1]];
+	}
+	function z(){
+	
+	}
+	return rsize;
+}
 		</script>
 	</head>
 	<body>
@@ -339,6 +419,7 @@ window.on("load",init);
 		네비	-	리스트 항목
 		===========================================-->
 		<nav>
+			<div id=slider-view></div>
 			<ul id=slider>
 				<li><img id=select-2 src="/img/Album/1-1.jpg" alt="No title +/-"></li>
 				<li><img id=select-3 src="/img/Album/2-1.jpg" alt="very-colorful"></li>
@@ -357,15 +438,98 @@ window.on("load",init);
 		===========================================-->
 		<section>
 			<p class=title>undefind</p><img id=back src=/img/back.png>
-			<img id=album>
-			<table>
-				<colgroup>
-					<col width="30px"><col>
-				</colgroup>
-				<tbody>
-					<!--tr><td class=album-music-id>01.</td><td class=album-music-title >- Opening -</td><td><img class=album-music-youtube-link></td></tr-->
-				</tbody>
-			</table>
+			<div id=list>			
+				<img id=album>
+				
+				<div class=scroll-area>
+					<ol class=track-list>
+						<li>
+							<div class=track-show-actions>
+								<div class=track-index>
+									<div class=track-index-number></div>
+									<div class=track-control-wrapper>
+										<span class=play><svg xmlns="http://www.w3.org/2000/svg" width="15" height="20.357" viewBox="0 0 14 19"><defs><style> .cls-1 { fill-rule: evenodd; } </style></defs><path class="cls-1" d="M1575,629.5l-14,9.5V620Z" transform="translate(-1561 -620)"></path></svg></span>
+										<span class=pause><svg xmlns="http://www.w3.org/2000/svg" width="15" height="19" viewBox="0 0 15 19"><path d="M264,700h4v19h-4V700Zm11,0h4v19h-4V700Z" transform="translate(-264 -700)"></path></svg></span>
+									</div>
+								</div>
+								<div class=track-name>트랙이름</div>
+								<div class=track-duration>00:00</div>
+							</div>
+						</li>
+					</ol>
+				</div>
+			</div>
+			<style>
+.track-show-actions{
+	display: flex;
+	line-height: 1.2em;
+}
+.track-index{
+    flex-shrink: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+}
+.track-list li{
+	margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+@media (max-width: 480px) .track-duration{
+	margin-left: 18px;
+}
+			</style>
 		</section>
+		
+		
+<script type="text/javascript">
+/****************************************************************************
+//** Software License Agreement (BSD License)
+//** Book Flip slideshow script- Copyright 2011, Will Jones (coastworx.com)
+//** This Script is wholly developed and owned by CoastWorx.com
+//** Copywrite: http://www.coastworx.com/
+//** You are free to use this script so long as this coptwrite notices
+//** and link back to http://www.coastworx.com stays intact in its entirety.
+//** If you want to remove the link back to http://www.coastworx.com then purchase a licence.
+//** You are NOT Permitted to claim this script as your own or
+//** use this script for commercial purposes without the express
+//** permission of CoastWorx Technologies!
+//***************************************************************************/
+
+pWidth=400; //width of each page
+pHeight=482; //height of each page
+
+numPixels=20;  //size of block in pixels to move each pass
+pSpeed=15; //speed of animation, more is slower
+
+startingPage="0";//select page to start from, for last page use "e", eg. startingPage="e"
+allowAutoflipFromUrl = true; //true allows querystring in url eg bookflip.html?autoflip=5
+
+pageBackgroundColor="#CCCCCC";
+pageFontColor="#ffffff";
+
+pageBorderWidth="1";
+pageBorderColor="#3D4D5D";
+pageBorderStyle="solid";  //dotted, dashed, solid, double, groove, ridge, inset, outset, dotted solid double dashed, dotted solid
+
+pageShadowLeftImgUrl ="black_gradient.png";
+pageShadowWidth = 80;
+pageShadowOpacity = 60;
+pageShadow=1 //0=shadow off, 1= shadow on left page
+
+allowPageClick=true; //allow page turn by clicking the page directly
+allowNavigation=true; //this builds a drop down list of pages for auto navigation.
+pageNumberPrefix="page "; //displays in the drop down list of pages if enabled
+
+ini();
+</script>
 	</body>
 </html>
+<!--
+MEMO
+1-14 개조
+음악은 최대30초만,(저작권자의 권리는 보장해줘야지![그래도 문제긴하지만,,,,쩝...])
+
+
+
+-->
