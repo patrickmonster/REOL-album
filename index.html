@@ -121,13 +121,35 @@ section #back{
 }
 section #album{
 	clear:both;
-	width:350px;
-	height:350px;
+	width:250px;
+	height:250px;
 }
 section #list{
-	display:block;
-	width:350px;
+	display:right;
+    width: 630px;
     padding: 0 10px;
+}
+section #list .scroll-area{
+    float: right;
+    max-width: 300px;
+    width: 300px;
+}
+section #list .music{
+	width:250px;
+}
+
+
+section #track-list-item-id,section #track-list-item-img{
+	text-align:right;
+	display:inline-block;
+	width:20px;
+	height:20px;
+	margin:5px;
+	padding:0px;
+	cursor:pointer;
+}
+section #track-list-item-img{
+	display:none;
 }
 
 /* ======================================================= */
@@ -139,7 +161,7 @@ section{
 	top:0px;
 }*/
 
-@media (max-width:655px){
+@media (max-width:656px){
 	#slider, #slider img{
 		width:100%;
 		height:100%;
@@ -164,7 +186,7 @@ section{
 	}
 	
 } 
-@media (min-width:655px){
+@media (min-width:656px){
 	/* nav 테그에 대응하기 위해서 이하는 필터링이 필요함 */
 	#slider{
 		position:relative;
@@ -231,6 +253,7 @@ section{
 	}
 	
 }
+
 		</style>
 		<script>
 var lib_n="_Soungjin_s";//라이브러리 네임
@@ -258,26 +281,39 @@ Element.prototype.data=function(){
 	if(b==2)this.setAttribute("data-"+a[0],a[1]);
 	return this;
 };
-function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}}}
+Element.prototype.createElement=function(ele){var ele=document.createElement(ele);this.appendChild(ele);return ele;};
+Element.prototype.indexOf=function(){var c=this.parentNode.childNodes,i=0;for(;i<c.length;i++)if(c[i]==this)return i;return -1;};
+Element.prototype.getPosition=function(){return this.getBoundingClientRect()};
+
+function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}}}//라이브러리 불러오기
 ///////////////////////////// System func ////////////////////////////////////
 function id(a){return document.getElementById(a)}
 
 const data=[
 	{name:"No title + / -",tag:"no-title",
 		list:["- Opening -","ヒビカセ","オオエドランヴ","drop pop candy","No title","Echo","- BWW SCREAM -","アシンメトリー","-FINAL SIGMA-","ギガンティックO.T.N - Big Death Edition -","- Ending -"],
-		img:["1-1.jpg","1-2.jpg"]
+		music:["01 - GigaP - Opening.flac","02 - GigaP x Reol - Hibikaze.flac","03 - GigaP feat. Reol, nqrse - Ooedo Ranvu.flac","04 - GigaP x Reol - drop pop candy.flac","05 - GigaP - Interlude.flac",
+				"06 - Reol - No title.flac","07 - GigaP x Reol - Echo.flac","08 - GigaP - BWW SCREAM.flac","09 - GigaP x L.Petty feat. Reol - Asymmetry.flac","10 - GigaP feat. Reol - Gigantic O.T.N -Big Death Edition-.flac","11 - GigaP - Ending.flac"],
+		img:["1-1.jpg","1-2.jpg"],
+		color:"#2b479b"
 	},
 	{name:"極彩色",tag:"very-colorful",
 		list:["-nil-","極彩色","生命線","水底游歩道","ハルシアン","ロジックエージェント","-orderly-","mede:mede","Syrup","ラ·タタン","ミッドナイトストロウラ","Behind The Night","ROXY","約束の蒼","MONSTER","染"],
-		img:["2-1.jpg","2-2.jpg","2-3.jpg","2-4.png","2-5.png","2-6.png"]
+		music:["(01) [ ギガP] -nil-.flac","(02) [ギガP feat. れをる] 極彩色.flac",".flac",".flac",".flac",".flac",".flac",".flac"],
+		img:["2-1.jpg","2-2.jpg","2-3.jpg","2-4.png","2-5.png","2-6.png"],
+		color:"#e0c190"
 	},
 	{name:"「Σ」",tag:"sigma",
 		list:["VIP KID","ギミアブレスタッナウ","宵々古今","コノヨ Loading...","RE:","Lunatic","神様になった日","ちるちる","-FINAL SIGMA-","DetaramE KiddinG","サマーホラーパーティ","404 Not Found","VIORA"],
-		img:["3-1.jpg","3-2.jpg","3-3.jpg","3-4.png"]
+		music:["01. VIP KID.flac","02. ギミアブレスタッナウ.flac","03. 宵々古今.flac","04. コノヨLoading....flac","05. RE_.flac","06. Lunatic.flac","07. 神様になった日.flac","08. ちるちる.flac","09. -FINAL SIGMA-.flac",".flac","10. DetaramE KiddinG.flac","11. サマーホラーパーティ.flac","12. 404 not found.flac","13. VIORA.flac"],
+		img:["3-1.jpg","3-2.jpg","3-3.jpg","3-4.png"],
+		color:"#f8f8f6"
 	},
 	{name:"エンドレスEP",tag:"endless-ep",
 		list:["ニュータイプトーキョー","B12","エンドレスライン","LUVORATORRRRRY!"],
-		img:["4.jpg"]
+		music:["01 ニュータイプトーキョー.flac","02 B12.flac","03 エンドレスライン.flac","04 LUVORATORRRRRY!.flac"],
+		img:["4.jpg"],
+		color:"#43a7f9"
 	}
 ]
 function nav(e){
@@ -328,18 +364,35 @@ function section(a,b){
 		typeof b=='function'&&b();
 	});
 	e=function(i){
-		var a=document.createElement("tr"),b=document.createElement("td");
+		var a=d.createElement("div"),b=a.createElement("span");
+		a.id="track-list-item"
+		libElement(a);
 		b.innerHTML=++h;
-		a.appendChild(b);
-		b=document.createElement("td");
+		b.id="track-list-item-id";
+		a[lib_n].view=b;
+		b=a.createElement("img");
+		b.id="track-list-item-img";
+		b.src="/img/icons/play.svg";
+		a[lib_n].hidden=b;
+		b=a.createElement("span");
 		b.innerHTML=i;
-		a.appendChild(b);
-		d.appendChild(a);
+		return a;
 	};
 	i=function(){d.innerHTML="";};
 	i();
 	for(g in f.list)
-		e.call(this,f.list[g]);
+		e.call(this,f.list[g]).on("mouseover",function(){//마우스 올릴시에 동작
+			//console.log(this[lib_n].hidden);
+			this[lib_n].hidden.style.display="inline-block";
+			this[lib_n].view.style.display="none";
+			this.style.background=data[a].color;
+		}).on("mouseout",function(){
+			this[lib_n].hidden.style.display="none";
+			this[lib_n].view.style.display="inline-block";
+			this.style.background="";
+		}).on("click",function(){
+			
+		});
 	function imgchange(datas,time,url){//element : [img id] | ms | "/img/Album/"
 		var b=0,c,d=this;//
 		function change(){
@@ -354,10 +407,7 @@ function section(a,b){
 		};
 	}
 	k=imgchange.call(id("album"),data[a].img,3000,"/img/Album/");
-	function back(){
-		k();
-	}
-	return {add:e,clear:i,back:back};
+	return {add:e,clear:i,back:k};
 }
 function init(){
 	nav.call(document.querySelector("nav"),function(a){//c==nav b=section
@@ -401,9 +451,6 @@ function changeSize(ops){
 		if(!b||!b.length)return [0,0];
 		return [a[0]!=b[0],a[1]!=b[1]];
 	}
-	function z(){
-	
-	}
 	return rsize;
 }
 		</script>
@@ -437,13 +484,18 @@ function changeSize(ops){
 		섹션 - 데이터
 		===========================================-->
 		<section>
-			<p class=title>undefind</p><img id=back src=/img/back.png>
-			<div id=list>			
-				<img id=album>
-				
-				<div class=scroll-area>
+			<p class=title>undefind</p>
+				<img id=back src=/img/back.png>
+			<div id=list>
+				<div style="width:250px;display:inline-block;">
+					<img id=album>
+					<div class=music_subtitle>
+						가사영역
+					</div>
+				</div>
+				<div class=scroll-area><!-- 655보다 작으면 스크롤바 생성 (세로) -->
 					<ol class=track-list>
-						<li>
+						<!--li>
 							<div class=track-show-actions>
 								<div class=track-index>
 									<div class=track-index-number></div>
@@ -455,8 +507,23 @@ function changeSize(ops){
 								<div class=track-name>트랙이름</div>
 								<div class=track-duration>00:00</div>
 							</div>
-						</li>
+						</li-->
 					</ol>
+				</div>
+				<div class=music>
+					<table>
+						<tr>
+							<td rowspan=3><img src=/img/icons/play_1.jpg style="width:50px;height:50px;" onclick=""></td>
+							<td>00:00</td>
+							<td style="text-align:right;">99:99</td>
+							<td width="32px"><img src=/img/icons/vol_2.png style="width:30px;height:30px;float:right;"></td>
+						</tr>
+						<tr><!--공백--></tr>
+						<tr>
+							<td colspan=3><input id="music_time" type="range" min="0" max="100" step=".001" value=".0" width="150px"></td>
+						</tr>
+					</table>
+					
 				</div>
 			</div>
 			<style>
@@ -478,51 +545,46 @@ function changeSize(ops){
 @media (max-width: 480px) .track-duration{
 	margin-left: 18px;
 }
+
+input[type=range]{
+	-webkit-appearance:none;
+	outline:none;
+	width:160px;
+	height:9px;
+	border-radius:4px;
+	border:1px solid #252525;
+	background-color:#f3f3f3;
+	margin-left:0;
+	margin-top:0
+}
+input[type="range"]::-webkit-slider-thumb{
+	-webkit-appearance:none;
+	background-color:#0ae;
+	width:8px;
+	height:7px
+}
+#music_time[type="range"]::-webkit-slider-thumb{
+	-webkit-appearance:none;
+	border-radius: 10em 10em 10em 10em;
+	width:8px;
+	height:7px
+}
+#music_time[type=range]{
+	width:200px;
+	background-color:#a7e0f7;
+	border:0;
+}
+.music_subtitle{
+	position:absolute;
+	text-align:center;
+    overflow-y: auto;
+    overflow-x: hidden;
+	top: 140px;
+	width:250px;
+	height:250px;
+}
 			</style>
 		</section>
-		
-		
-<script type="text/javascript">
-/****************************************************************************
-//** Software License Agreement (BSD License)
-//** Book Flip slideshow script- Copyright 2011, Will Jones (coastworx.com)
-//** This Script is wholly developed and owned by CoastWorx.com
-//** Copywrite: http://www.coastworx.com/
-//** You are free to use this script so long as this coptwrite notices
-//** and link back to http://www.coastworx.com stays intact in its entirety.
-//** If you want to remove the link back to http://www.coastworx.com then purchase a licence.
-//** You are NOT Permitted to claim this script as your own or
-//** use this script for commercial purposes without the express
-//** permission of CoastWorx Technologies!
-//***************************************************************************/
-
-pWidth=400; //width of each page
-pHeight=482; //height of each page
-
-numPixels=20;  //size of block in pixels to move each pass
-pSpeed=15; //speed of animation, more is slower
-
-startingPage="0";//select page to start from, for last page use "e", eg. startingPage="e"
-allowAutoflipFromUrl = true; //true allows querystring in url eg bookflip.html?autoflip=5
-
-pageBackgroundColor="#CCCCCC";
-pageFontColor="#ffffff";
-
-pageBorderWidth="1";
-pageBorderColor="#3D4D5D";
-pageBorderStyle="solid";  //dotted, dashed, solid, double, groove, ridge, inset, outset, dotted solid double dashed, dotted solid
-
-pageShadowLeftImgUrl ="black_gradient.png";
-pageShadowWidth = 80;
-pageShadowOpacity = 60;
-pageShadow=1 //0=shadow off, 1= shadow on left page
-
-allowPageClick=true; //allow page turn by clicking the page directly
-allowNavigation=true; //this builds a drop down list of pages for auto navigation.
-pageNumberPrefix="page "; //displays in the drop down list of pages if enabled
-
-ini();
-</script>
 	</body>
 </html>
 <!--
