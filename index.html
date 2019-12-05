@@ -20,8 +20,8 @@
 		<meta property="og:type" content="website">
 		<meta property="og:description" content="RΞOL / れをる Album">
 		
-		<meta property="og:url" content="http://www.toysfactory.co.jp/artist/reol/official">
-		<meta property="og:image" content="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/ogp_img.jpg">
+		<meta property="og:url" content="http://www.toysfactory.co.jp/artist/official">
+		<meta property="og:image" content="http://www.reol.jp/wp/wp-content/themes_pc/common/img/ogp_img.jpg">
 		<meta property="fb:app_id" content="">
 		-->
 		
@@ -133,6 +133,7 @@ nav{
 #slider-ctr #select-play{
 	margin-top:50%;
 	transform:translateY(-90%);
+	cursor:pointer;
 }
 
 #slider-ctr button{
@@ -164,9 +165,17 @@ section .title{
 	font-size:100px;
 }
 section img{
+	width:80px;
+	height:80px;
+}
+section #back{
 	float:right;
-	width:100px;
-	height:100px;
+	cursor:pointer;
+}
+section #album{
+	clear:both;
+	width:150px;
+	height:150px;
 }
 
 /* 섹션 */
@@ -202,30 +211,30 @@ Element.prototype.data=function(){
 	return this;
 };
 function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}}}
-/////////////////////////////System func ////////////////////////////////////
+///////////////////////////// System func ////////////////////////////////////
 function id(a){return document.getElementById(a)}
 
-const tag=["no-title","very-colorful","sigma","endless-ep"];
-const name=["No title + / -","極彩色","「Σ」","エンドレスEP"];
 const data=[
 	{name:"No title + / -",tag:"no-title",
 		list:["- Opening -","ヒビカセ","オオエドランヴ","drop pop candy","No title","Echo","- BWW SCREAM -","アシンメトリー","-FINAL SIGMA-","ギガンティックO.T.N - Big Death Edition -","- Ending -"],
+		img:["1-1.jpg","1-2.jpg"]
 	},
 	{name:"極彩色",tag:"very-colorful",
 		list:["-nil-","極彩色","生命線","水底游歩道","ハルシアン","ロジックエージェント","-orderly-","mede:mede","Syrup","ラ·タタン","ミッドナイトストロウラ","Behind The Night","ROXY","約束の蒼","MONSTER","染"],
+		img:["2-1.jpg","2-2.jpg","2-3.jpg","2-4.png","2-5.png","2-6.png"]
 	},
 	{name:"「Σ」",tag:"sigma",
 		list:["VIP KID","ギミアブレスタッナウ","宵々古今","コノヨ Loading...","RE:","Lunatic","神様になった日","ちるちる","-FINAL SIGMA-","DetaramE KiddinG","サマーホラーパーティ","404 Not Found","VIORA"],
+		img:["3-1.jpg","3-2.jpg","3-3.jpg","3-4.png"]
 	},
 	{name:"エンドレスEP",tag:"endless-ep",
 		list:["ニュータイプトーキョー","B12","エンドレスライン","LUVORATORRRRRY!"],
+		img:["4.jpg"]
 	}
 ]
 function nav(e){
 	var a,b=0,c=document.location.href.split("#")[1],c,d=this;
-	console.log(data);
-	console.log(data.length);
-	for(;data[b]&&data[b].tag!==c&&b<data.length;b++)console.log(data[b]);
+	for(;data[b]&&data[b].tag!==c&&b<data.length;b++);
 	if(b>=data.length){b=0;}
 	a=function slide(z,y){
 		var a=this.getElementsByTagName("li"),b=a.length,c=z,d=[0,0],e,f=670,g=0;
@@ -238,7 +247,6 @@ function nav(e){
 			a[e].style="transform: translateX("+(n?f:-f)+"px)";
 			anime({//가려져야 할것,
 				targets:a[c],
-				//easing: 'linear',
 				easing: [.91,-0.54,.29,1.56],
 				translateX:n?-f:f,
 				complete:function(){
@@ -266,7 +274,7 @@ function nav(e){
 	id("select-play").on("click",function(){typeof e=='function'&&e.call(d,b)});
 }
 function section(a,b){
-	var c=this.querySelector(".title"),d=this.querySelector("tbody"),e,f=data[a],g,h=0,i;
+	var c=this.querySelector(".title"),d=this.querySelector("tbody"),e,f=data[a],g,h=0,i,j,k;
 	c.innerHTML=data[a].name;
 	this.querySelector("#back").on("click",function(){
 		typeof b=='function'&&b();
@@ -279,27 +287,40 @@ function section(a,b){
 		b.innerHTML=i;
 		a.appendChild(b);
 		d.appendChild(a);
-		console.log(i);
 	};
-	i=function(){
-		d.innerHTML="";
-	};
+	i=function(){d.innerHTML="";};
 	i();
 	for(g in f.list)
 		e.call(this,f.list[g]);
-	
-	return {add:e,clear:i};
+	function imgchange(datas,time,url){//element : [img id] | ms | "/img/Album/"
+		var b=0,c,d=this;//
+		function change(){
+			if(b>=datas.length)b=0;
+			d.src=url+datas[b++];
+		}
+		change();
+		//d.src=url+datas[0];
+		c=setInterval(change,time);
+		return function(){
+			clearInterval(c);
+		};
+	}
+	k=imgchange.call(id("album"),data[a].img,3000,"/img/Album/");
+	function back(){
+		k();
+	}
+	return {add:e,clear:i,back:back};
 }
 function init(){
 	nav.call(document.querySelector("nav"),function(a){//c==nav b=section
 		var b=document.querySelector("section"),c=this,d,e;
-		d=function(e,o,f){
-			anime({targets:e,top:o,complete:f});
-		}
-		e=section.call(b,a,function(){d(b,1600);d(c,0);});
+		d=function(e,o,f){anime({targets:e,top:o,complete:f})};
+		e=section.call(b,a,function(){
+			d(b,1600);d(c,0);
+			e.back();
+		});
 		d(c,-1600);
 		d(b,0);
-		
 	});
 	console.log("start");
 }
@@ -336,9 +357,10 @@ window.on("load",init);
 		===========================================-->
 		<section>
 			<p class=title>undefind</p><img id=back src=/img/back.png>
+			<img id=album>
 			<table>
 				<colgroup>
-					<col width="10px"><col width="100%"><col width="100px">
+					<col width="30px"><col>
 				</colgroup>
 				<tbody>
 					<!--tr><td class=album-music-id>01.</td><td class=album-music-title >- Opening -</td><td><img class=album-music-youtube-link></td></tr-->
