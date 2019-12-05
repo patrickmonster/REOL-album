@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 <html>
 	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -23,15 +23,7 @@
 		<meta property="og:image" content="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/ogp_img.jpg">
 		<meta property="fb:app_id" content="">
 		
-		<!--[if lt IE 9]>
-		<script src="http://ie9-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
-		<script src="//549.ipdisk.co.kr/js/html5shiv.js"></script>
-		<![endif]-->
-		
-		<!--[if lt IE 7]>
-		<script src="//549.ipdisk.co.kr/js/html5shiv.js"></script>
-		<![endif]-->
-		
+			
 		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" rel="shortcut icon">
 		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/apple-touch-icon-precomposed.png" sizes="152x152" rel="apple-touch-icon">
 		<title>RΞOL / れをる Album</title>
@@ -47,14 +39,13 @@
 		사이트 구동에 필요한 데이터
 		===========================================-->
 		<style media="screen">
-* {
-	margin: 0; padding: 0;
-	font-family: 맑은 고딕;
-	white-space: nowrap;
-	text-decoration: none;
+*{
+	margin:0;padding:0;
+	font-family:맑은 고딕;
+	white-space:nowrap;
+	text-decoration:none;
 	display:auto;
-	cursor: default;
-	
+	cursor:default;
 }
 html,body{
 	position: relative;
@@ -71,762 +62,93 @@ hr {
 	margin-bottom:50px;
 }
 
-block{
-	border:0;
-	margin:50px;
-	
-}
-
-#select{
-	position:relative;
-	overflow:hidden;
-	white-space:nowrap;
-	width:1024px;
-	color:#fff;
-	margin: 0 auto;
-}
-#select-mini{
-	display:none;
-	position:absolute;
-	overflow:hidden;
-	width:1024px;
-	top:0;
-	margin: 0 auto;
-}
-#select ul#slider {
-	list-style:none;
-	margin:0;
-	padding:0;
-}
-#select ul li {
-	position:absolute;
-	width:100%;
-}
-#select ul li img {
-	width:100%;
-	padding:-50%;
-	height:100%;
-}
-#select-screen{
-	position:absolute;
-	width:100%;
-	height:100%;
-	opacity: 0.5;
-}
-
-#select #icon{
-	position:absolute;
-	bottom:0;
-	right:0;
-	height:1em;width:1em;
-	margin:.5em;
-	font-size:2em;
-}
-#select #title{
-	position:absolute;
-	top:0;bottom:0;
-	left:0;right:0;
-	margin:auto;
-	height:100%;
-	width: 2.5em;
-	font-size:2em;
-	text-align:center;
-	overflow:hidden;
-}
-#select #menu{
-	position:absolute;
-	bottom:0;
-	margin:1em;
-	text-align:center;
-	height:1.5em;
-	width: 1em;
-}
-
-#select #menu:hover{
-	transition-duration: .5s;
-	transition-timing-function:ease-in-out;
-	transform:rotate(90deg);
-}
-
-#select-1{margin-top:-50%}
-#select-2{margin-top:-5%}
-#select-3{margin-top:-40%}
-#select-4{margin-top:-20%}
-#select-5{margin-top:-30%}
-
-.select-ctr{
-	position:absolute;
-	display:block;
-	width:100%;
-	height:100%;
-    cursor: pointer;
-    color: transparent;
-    border: none;
-	top:0;
-}
-
-.select-ctr button{
-	position:absolute;
-	width:15%;
-	height:100%;
-	border:0;
-	background-color:rgba(255,255,255,.3);
-    cursor: pointer;
-    color: transparent;
-    border: none;
-    outline: none;
-}
-
-#select-next{
-	left:0;
-}
-#select-begin{
-	right:0;
-}
-#select-mini{
-	position:fixed;
-	top:0;
-	width:100%;
-	height:50px;
-}
-
-#select-mini *{
-	position:absolute;
-}
-#select-min img{
-	width:100%;
-	
-}
-
 #body{
-	position:relative;
-	width:1020px;
-	height:auto;
-	padding-top:15px;
-	margin:0 auto;
-}
-
-.album-music-list span{
-	float: left;
-}
-
-.album-title{
-	font-size:3em;
-	font-weight:bold;
-}
-
-.album-music-list{
-	font-weight:bold;
-}
-.album-music-title{
-	height:1.5rem;
-	cursor:pointer;
-}
-
-.album-music-title:hover{
-	height:1.5rem;
-	background:#284098;
-}	
-.album-music-youtube-link{
-	width: 1rem;
-	height:1rem;
-	float: right;
-}
-.play-control{
-	position:relative;
-	width:500px;
-	height:500px;
-}
-.album-img{
-	width: 500px;
-	height:500px;
-	border-radius:50%;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	background:#284098;
-}
-.play-control div{
 	position:absolute;
-	top:45%;
-	margin:.5em;
-}
-.player-control-next{
-	right:0px;
-}
-.player-control-play{
-	right:40%;
-	top: 40%;
-	font-size:2em;
-}
-
-.content-space{
 	width:100%;
-	clear:both;
+	height:auto;
+	display:inline-block;
 }
-#content-control span{
-	border-style:solid;
-    border-width: 2px 2px 0px 0px;
+
+#content{
 	float:left;
-	border-color:#284098;
-	color:#284098;
+	width:72%;
 }
 
-.content-lyrics{
-	text-align:center;
-}
-.album{
-	display:none;
-}
-#music{
-	position:fixed;
-	bottom:0;
-	width:1024px;
-}
-.content-video{
-	width:1024px;
-}
-.content-video iframe{
+#nav{
 	float:left;
-	margin:5px;
+	background:#35d434;
+	width:250px;
+	height:500px;
 }
 
-
-#foot{
-	position:absolute;
-	text-align:center;
+.layer{
+	width:350px;
+	height:200px;
+	margin:8px;
+	float:left;
+	background:#373f9e;
 }
+
 		</style>
 		<!--===========================================
 		프린트 전용 헤더
 		===========================================-->
-		<style media="print">
-		</style>
-		<!--===========================================
-		상단 셀렉트 바
-		===========================================-->
-		<style>
-
-		</style>
-		<!--script src="ie7.js?var=1"></script-->
+		<script src="../js/soungjin.js?var=1"></script>
 		<script>
-//페이지 구동용 자바스크립트
-/*
-내가 왜 주석을 달고 있는지 모르겠지만...여튼 단다
-*/
-
-if(!window.Element)
-	Element=function(){};
-Element.prototype.removeClass = function(n){var c=this.className,l=c.split(' '),o=_U,i=0;for(;i<l.length;i++)if(l[i]!=n){if(o)o+=' '+l[i];else o=l[i];}this.className=o;return this;};
-Element.prototype.add=function(ele){this.appendChild(ele);return this;};
-Element.prototype.addClass=function(n){var c=this.className;this.className=(c==''?n:c+' '+n);};
-Element.prototype.isClass=function(a){var l=this.className.split(' '),i=0;for(;i<l.length;i++)if(l[i]===a)return 1;return 0;};
-Element.prototype.data=function(){var a=arguments,b=a.length;if(b==1)return this.getAttribute("data-"+a[0]);if(b==2)this.setAttribute("data-"+a[0],a[1]);return this;};
-Element.prototype.getPosition=function(){return this.getBoundingClientRect()};
-
-
-if(!window.Element){
-	var __createElement=document.createElement;
-	document.createElement=function(tagName){
-		var element=__createElement(tagName);
-		for(var key in Element.prototype)element[key]=Element.prototype[key];
-		return element;
-	}
-	var __getElementById=document.getElementById;
-	document.getElementById=function(id){
-		var element=__getElementById(id);
-		for(var key in Element.prototype)element[key]=Element.prototype[key];
-		return element;
-	}
-}
-/*
-IE7 대응 엘리먼트 제작
-*/
-var isIE=0;
-if (navigator.userAgent.toLowerCase().indexOf("msie")!=-1){
-	var ies=document.createElement("style");
-	var txt=".play-control{background:#fff}";//스타일 적용
-	isIE=function(){};
-	isIE.obj=ies;
-	isIE.obj.innerHtml=ies;
-	document.head.appendChild(isIE.obj);
-	console.log("스타일 적용");
-}
-
-
-
-function init(){
-	var open=select();
-	var next=slide(layout());
-	var f=function(){
-		if(!open.isOpen())
-			open.open();
-		else open.reset();
-		next(this.id!=="select-next");
-	};
-	document.getElementById("select-next").addEventListener('click',f,false);
-	document.getElementById("select-begin").addEventListener('click',f,false);
+function loadingView(vele,hele,f){
+	vele.setAttribute("style","display:block;width:100%;height:100%;position:fixed;");
+	hele.setAttribute("style","display:none;width:0;height:0;");
+	setTimeout(function(){
+		vele.setAttribute("style","display:none;width:0;height:0;position:fixed;");
+		hele.setAttribute("style","display:block;width:100%;height:auto;");
+		typeof a=='function'&&f();
+	},/*5*/0*1000);
 	
-	console.log(document.getElementById("body").getPosition());
-	window.onscroll=function(){scroll(open)};
 }
-
-function scroll(open){
-	var body=document.getElementById("body").getPosition(),x=document.body.scrollTop,select=document.getElementById("select"),select_mini=document.getElementById("select-mini");
-	if(x>(open.isOpen()?358:179)){//hidden
-		select_mini.style.display="block";
-	}else{//open
-		select_mini.style.display="none";
-	}
+function load(){
+	loadingView(document.getElementById("loading"),document.getElementById("body"),function(){
+		
+	});
+	console.log("실행");
 }
-
-function slide(f){
-	var x=1024;//window.innerWidth;
-	var l=document.getElementById("slider").getElementsByTagName("li"),b=["reol","no-title","very-colorful","sigma","endless-ep"];
-	var max=l.length-1,now=0;
-	var aniStart=0,next=1,sp=15;
-	function slide_next(n){
-		function sliding(a){
-			var cx=parseInt(l[now].style.right,10)+(a?sp:(-sp)),
-				nx=parseInt(l[next].style.right,10)+(a?sp:(-sp));
-			if(cx>=x||cx<-x){
-				l[now].style.right=-x+"px";//사라지는것
-				l[next].style.right=0;//이동할것
-				a?now++:now--;
-				if(now>max||now<0)now=a?0:max;
-				aniStart=0;
-				document.location.href="#"+b[now];
-				if (typeof f=='function')f(now);
-				return;
-			}
-			l[now].style.right=cx+"px";
-			l[next].style.right=nx+"px";
-			setTimeout(function(){sliding(a)},20);
-		}
-		if (aniStart)return;
-		next=now+(n?1:-1);
-		if(next>max||next<0)next=n?0:max;
-		aniStart=1;
-		l[next].style.right=(n?-x:x)+'px';
-		sliding(n?true:false);
-	}
-	var c=-1,p=document.location.href.split("#")[1];
-	for(var c=0;b[c]!==p&&c<b.length;c++);
-	if(c>=5){c=0;}
-	now=c;
-	for (i=0;i<=max;i++)
-		if (i==now)l[i].style.right=0;
-		else l[i].style.right=-x+"px";
-	if (typeof f=='function')f(now);
-	return slide_next;
-}
-function select(f){
-	var isOpen=1,sp=5,isPlay=0,repeat=0,maxh=40,minh=20;
-	var height=window.innerHeight,target=document.getElementById("select");
-	var y=height/100;//window.innerHeight;//상단길이 미리계산//최대 늘어날 길이
-	target.setAttribute("style","height:"+y*maxh+"px");
-	function tap(f){
-		if(repeat)clearTimeout(repeat),repeat=0;
-		function open(a){
-			var cy=parseInt(target.style.height,10)+(a?sp:(-sp));
-			if(cy>=y*maxh||cy<y*minh){//maxh%일때
-				target.setAttribute("style","height:"+y*(a?maxh:minh)+"px");
-				isPlay=0;isOpen=a;
-				typeof f=='function'&&f();
-				return;
-			}
-			target.setAttribute("style","height:"+cy+"px");
-			setTimeout(function(){open(a)},20);
-		}
-		if (isPlay)return;
-		isPlay=1;
-		target.setAttribute("style","height:"+(isOpen?y*maxh:y*minh)+"px");
-		if(!isOpen)repeat=setTimeout(open,3000);
-		open(isOpen?false:true);//열려있으면 닫아야지.
-	}
-	function op(){
-		return isOpen;
-	}
-	function re(){//타이머 초기화
-		if(isOpen){
-			if(repeat)clearTimeout(repeat),repeat=setTimeout(function(){tap()},3000);;
-		}
-	}
-	/**/
-	document.getElementById("select-screen").onclick=function(){tap()};
-	repeat=setTimeout(function(){tap()},3000);
-	return {open:tap,isOpen:op,reset:re}
-}
-function layout(){//레이아웃 컨트롤
-	var layouts=document.getElementById("body").getElementsByClassName("album"),b=["reol","no-title","very-colorful","sigma","endless-ep"];
-	//IE에서 튕기는데 그냥 냅두자...짜피 이거 없으면 다 표시안되니...
-	function on(a){
-		if(a>=5){on(0);return;}
-		for(var i=0;i<layouts.length;i++)
-			layouts[i].setAttribute("style","display:none");
-		layouts[a].setAttribute("style","display:block");
-	}
-	return on;
-}
-
-window.onload =init;
+/*
+if(!isIE){
+	window.on("onload",load);
+}else{
+	window.onload=load;
+}*/
+window.on("onload",load);
+console.log(window.onload)
 		</script>
 	</head>
 	<body>
 		<!--===========================================
 		타이틀 셀렉터
 		===========================================-->
-		<div id=select>
-			<ul id=slider>
-				<li>
-					<img id=select-1 src="http://549.ipdisk.co.kr/reol/img/Album/0-1.jpg" >
-				</li>
-				<li>
-					<img id=select-2 src="http://549.ipdisk.co.kr/reol/img/Album/1-1.jpg">
-				</li>
-				<li>
-					<img id=select-3 src="http://549.ipdisk.co.kr/reol/img/Album/2-1.jpg">
-				</li>
-				<li>
-					<img id=select-4 src="http://549.ipdisk.co.kr/reol/img/Album/3-1.jpg">
-				</li>
-				<li>
-					<img id=select-5 src="http://549.ipdisk.co.kr/reol/img/Album/4.jpg">
-				</li>
-			</ul>
-			<!-- 여기밑부터 이벤트 엑세스 가능 -->
-			<!--img id=logo src=http://549.ipdisk.co.kr/img/reol/logo.png /-->
-			<div id=title>REOL</div>
-			<div id=menu onclick="side_open()">Σ</div>
-			<img id=icon src="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" style='filter:invert()'>
-			<div class=select-ctr>
-				<div id=select-screen></div>
-				<button id=select-next><img src=http://549.ipdisk.co.kr/reol/img/l.png></button>
-				<button id=select-begin><img src=http://549.ipdisk.co.kr/reol/img/r.png></button>
-			</div>
+		<div id=loading>
+			loading...
 		</div>
-		<!--===========================================
-		헤더 - 타이틀 셀렉터와 병합
-		===========================================-->
-		<!--===========================================
-		실제 데이터가 들어가는 부분.
-			이 부분은 별도 정의?
-			놉 히든을 사용하여 넣기!
-		===========================================-->
 		<div id=body>
-			<!--===========================================
-			사이드바 - 음악 목록(매뉴 확장)
-			===========================================-->
-			<nav class='album-music-list album reol' ><!-- RΞOL -->
-				<p class=album-title>RΞOL</p>
-				<!--  앨범 플레이어 -->
-				<div class="">
-					레오루/ れをる
-				</div>
-				<h4>-곡 목록-</h4>
-				<table style="width:1000px;margin-left:24px;">
-					<colgroup>
-						<col width="10px"><col><col width=100px>
-					</colgroup>
-					<tbody>
-						<tr><td colspan=3 style="text-align:center;background:rgb(200, 180, 216);">ソロ(솔로)</td></tr>
-						<tr><td style="background-color:#916BB2;">Num</td><td colspan=2 style="background-color:#916BB2;"><strong>Title</strong></td></tr>
-						<tr><td>00.</td><td><a title="푹신푹신 수해 소녀">ゆるふわ樹海ガール</a></td></tr>
-						<tr><td>01.</td><td><a title="magician's operation">magician's operation</a></td></tr>
-						<tr><td>02.</td><td><a title="재버워키 재버워카">ジャバヲッキージャバヲッカ</a></td></tr>
-						<tr><td>03.</td><td><a title="온라인 게임 폐인 슈프레히코어">ネトゲ廃人シュプレヒコール</a></td></tr>
-						<tr><td>04.</td><td><a title="이얼 팬클럽">いーあるふぁんくらぶ</a></td></tr>
-						<tr><td>05.</td><td><a title="WAVE">WAVE</a></td></tr>
-						<tr><td>06.</td><td><a title="lll툴틴 안테나lll">lllトゥルティンアンテナlll</a></td></tr>
-						<tr><td>07.</td><td><a title="사요코">小夜子</a></td></tr>
-						<tr><td>08.</td><td><a title="기간틱 O.T.N">ギガンティックO.T.N</a></td></tr>
-						<tr><td>09.</td><td><a title="심해 시티 언더그라운드">深海シティアンダーグラウンド</a></td></tr>
-						<tr><td>10.</td><td><a title="엔비 캣워크">エンヴィキャットウォーク</a></td></tr>
-						<tr><td>11.</td><td><a title="핑코스틱Luv">ぴんこすてぃっくLuv</a></td></tr>
-						<tr><td>12.</td><td><a title="로스트원의 호곡">ロストワンの号哭</a></td></tr>
-						<tr><td>13.</td><td><a title="라즈베리*몬스터">ラズベリー＊モンスター</a></td></tr>
-						<tr><td>14.</td><td><a title="팔레트엔 네가 가득">パレットには君がいっぱい</a></td></tr>
-						<tr><td>15.</td><td><a title="성창폭렬보이">聖槍爆裂ボーイ</a></td></tr>
-						<tr><td>16.</td><td><a title="지터 돌">ジッタードール</a></td></tr>
-						<tr><td>17.</td><td><a title="FACE">FACE</a></td></tr>
-						<tr><td>18.</td><td><a title="사이버 선더 사이다">サイバーサンダーサイダー</a></td></tr>
-						<tr><td>19.</td><td><a title="독점욕">毒占欲</a></td></tr>
-						<tr><td>20.</td><td><a title="">+♂</a></td></tr>
-						<tr><td>21.</td><td><a title="여고생 체인소우 데이즈">女子高生チェーンソウデイズ</a></td></tr>
-						<tr><td>22.</td><td><a title="Abnormalize (Band cover)">Abnormalize (Band cover)</a></td></tr>
-						<tr><td>23.</td><td><a title="울려 퍼져라">ヒビカセ</a></td></tr>
-						<tr><td>24.</td><td><a title="레드 퍼지!!!">レッド・パージ！！！</a></td></tr>
-						<tr><td>25.</td><td><a title="No title">No title</a></td></tr>
-						<tr><td>26.</td><td><a title="스트리밍 하트">ストリーミングハート</a></td></tr>
-						<tr><td>27.</td><td><a title="아스트로넛">アストロノーツ</a></td></tr>
-						<tr><td>28.</td><td><a title="로직 에이전트">ロジックエージェント</a></td></tr>
-						<tr><td>29.</td><td><a title="시스테마틱 러브">システマティック・ラヴ</a></td></tr>
-						<tr><td>30.</td><td><a title="극채색">極彩色</a></td></tr>
-						<tr><td>31.</td><td><a title="메류">メリュー</a></td></tr>
-						<tr><td>32.</td><td><a title="얼뜨기의 연회">頓珍漢の宴</a></td></tr>
-						<tr><td>33.</td><td><a title="WAVE 〔niki × EZFG〕">WAVE 〔niki × EZFG〕</a></td></tr>
-						<tr><td>34.</td><td><a title="클럽=마제스티">クラブ=マジェスティ</a></td></tr>
-						<tr><td>35.</td><td><a title="ECHO">ECHO</a></td></tr>
-						<tr><td>36.</td><td><a title="팔랑팔랑">ちるちる</a></td></tr>
-						<tr><td>37.</td><td><a title="Give me a break Stop now">Give me a break Stop now</a></td></tr>
-						<tr><td>38.</td><td><a title="소소고금">宵々古今</a></td></tr>
-						<!-- 7인 이상 팟 -->
-						<tr><td colspan=3 style="text-align:center;background:rgb(200, 180, 216);">コラボレーション(콜라보레이션)</td></tr>
-						<tr><td style="background-color:#916BB2;"><strong>Num</strong></td><td style="background-color:#916BB2;text-align:center"><strong>Title</strong></td><td style="background-color:#916BB2;"><strong>콜라보레이션</strong></td></tr>
-						<tr><td>01.</td><td><a title="Sweet Devil">Sweet Devil (feat. kradness)</td><td>kradness</td></tr>
-						<tr><td>02.</td><td><a title="죽어버리다니 한심하구나!">しんでしまうとはなさけない！</td><td>kradness</td></tr>
-						<tr><td>03.</td><td><a title="cLick cRack">cLick cRack</a></td><td>	나나히라, kradness, 소라루, 96네코</td></tr>
-						<tr><td>04.</td><td><a title="재교육">再教育</td><td>kradness</td></tr>
-						<tr><td>05.</td><td><a title="「Ib」-forever-">「Ib」-forever-</td><td>마츠시타, 토리코</td></tr>
-						<tr><td>06.</td><td><a title="8HIT">8HIT</td><td>나나히라</td></tr>
-						<tr><td>07.</td><td><a title="어린이 전쟁">おこちゃま戦争</td><td>kradness</td></tr>
-						<tr><td>08.</td><td><a title="Masked bitcH -GIGA Birthday Arrange-">Masked bitcH -GIGA Birthday Arrange-</td><td><a title="nqrse, 칸세루, 96네코, 하니챠무★, EVO+, 슈즈, 오레바나나">nqrse, 칸세루, 96네코, 하니챠무★, ....</a></td></tr>
-						<tr><td>09.</td><td><a title="일심불란">一心不乱 (feat. ill.bell,nqrse)</td><td>ill.bell, nqrse</td></tr>
-						<tr><td>10.</td><td><a title="리모컨">リモコン</td><td>kradness</td></tr>
-						<tr><td>11.</td><td><a title="DOGS">DOGS</td><td>96네코</td></tr>
-						<tr><td>12.</td><td><a title="LUVORATORRRRRY!">LUVORATORRRRRY! (feat.nqrse)</td><td>nqrse</td></tr>
-						<tr><td>13.</td><td><a title="Blessing">Blessing 【SINGERS ver.B】</td><td><a title="아카틴, ＿＿, 이토카시타로, 카케리네, 쿄이치로, Gero, that, 사족, 백화요란, 마후마후, 미우메, 리리리">아카틴, ＿＿,  이토카시타로, 카케리네,....</a></td></tr>
-						<tr><td>14.</td><td><a title="drop pop candy">drop pop candy</td><td>기가P</td></tr>
-						<tr><td>15.</td><td><a title="요괴 체조 제일장">ようかい体操第一</td><td>오키쿠</td></tr>
-						<tr><td>16.</td><td><a title="POPEE the 클라운">POPEE the クラウン</td><td>기가P, 오키쿠</td></tr>
-						<tr><td>17.</td><td><a title="Connecting">Connecting</td><td><a title="halyosy, 리부, 소라루, 론, KK, 샤케미, 남동생의 누나">halyosy, 리부, 소라루, 론, KK, ....</a></td></tr>
-						<tr><td>18.</td><td><a title="귀신KYOKAN">鬼KYOKAN</td><td>kradness</td></tr>
-						<tr><td>19.</td><td><a title="망상세">妄想税</td><td>nqrse</td></tr>
-						<tr><td>20.</td><td><a title="뇌내혁명 걸">脳内革命ガール</td><td>ill.bell</td></tr>
-					</tbody>
-					<tfoot>
-					</tfoot>
-				</table>	
-				<div style="text-align:right;">
-					*&lt;<strong>M</strong>&gt; 一万達成(1만 달성)<br />
-					Mouse:hover to kr
-				</div>
-				<div class="content-space">
-					<hr />
-					<div class="content-live">
-						<table width=100%>
-							<colgroup>
-								<col width=50%><col width=10px><col>
-							</colgroup>
-							<tbody>
-								<tr><td colspan=3 style="text-align:center;background:rgb(200, 180, 216);">ライブ(라이브)</td></tr>
-								<tr><td rowspan=5 style="background-color:#916BB2"><img  id="table-1-0" class=cover width=600px height=727px src="http://549.ipdisk.co.kr/reol/img/Live/1.jpg"></td><td style="background-color:#916BB2;height:50px">Num</td><td style="background-color:#916BB2;height:50px"><strong>Live</strong></td></tr>
-								<tr><td>1.</td><td id="table-1-1" title="High Fidelity" data-img="http://549.ipdisk.co.kr/reol/img/Live/1.jpg" style="background:rgb(200, 180, 216);">High Fidelity</td></tr>
-								<tr><td>2.</td><td id="table-1-2" title="천계의 공식" data-img="http://549.ipdisk.co.kr/reol/img/Live/2.jpg">テンカイ ノ コウシキ</td></tr>
-								<tr><td>3.</td><td id="table-1-3" title="종악장" data-img="http://549.ipdisk.co.kr/reol/img/Live/3.jpg">終楽章</td></tr>
-								<tr><td><span></span></td><td><a title="공백란."></a></td></tr>	
-							</tbody>
-						</table>
-						<script>
-function onDropTable(arr){
-	var target=arr[0],p=0;
-	var f=function(){
-		var data=this.data("img"),c;
-		document.getElementById(target).src=data;
-		this.setAttribute("style","background:rgb(200, 180, 216);cursor:default");//IE7대응
-		for(var c=1;this!=document.getElementById(arr[c])&&c<arr.length;c++);
-		if(c>=arr.length)return;
-		if(p!==c){
-			document.getElementById(arr[p]).setAttribute("style","background:''");
-			p=c;
-		}
-	};
-	for(var i=1;i<arr.length;i++)
-		document.getElementById(arr[i]).onmouseover=f;
-}
-onDropTable(["table-1-0","table-1-1","table-1-2","table-1-3"]);
-						</script>
-					</div>
-					<hr />
-					<div class="content-lyrics"></div>
-					<div class="content-video">
-						<h3>RΞOL - Music Videos</h3>
-						<iframe width="500" height="300" src="https://www.youtube.com/embed/-RGctbcrfk8?showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-						<iframe width="500" height="300" src="https://www.youtube.com/embed/AwfhX1REZ50?showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-						<iframe width="500" height="300" src="https://www.youtube.com/embed/Qmcda2wh-GA?showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-						<iframe width="500" height="300" src="https://www.youtube.com/embed/n5CwXuyNfoc?showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-					</div>
-					<hr />
-				</div>
-			</nav>
-			<nav class='album-music-list album no-title' ><!-- No title -->
-				<p class=album-title>No title</p>
-				<span><!--  앨범 플레이어 -->
-					<div class="play-control" style="background:#5122bf">
-						음악 플레이어
-					</div>
-				</span>
-				<table>
-					<colgroup>
-						<col width="10px"><col width="100%"><col width="100px">
-					</colgroup>
-					<tbody>
-						<tr><td class=album-music-id>01.</td><td class=album-music-title >- Opening -</td><td><img class=album-music-youtube-link></td></tr>
-						<tr><td class=album-music-id>02.</td><td class=album-music-title>ヒビカセ</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>03.</td><td class=album-music-title>オオエドランヴ</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>04.</td><td class=album-music-title>drop pop candy</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>05.</td><td class=album-music-title>No title</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>06.</td><td class=album-music-title>Echo</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>07.</td><td class=album-music-title>- BWW SCREAM -</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>08.</td><td class=album-music-title>アシンメトリー</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>09.</td><td class=album-music-title>-FINAL SIGMA-</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>10.</td><td class=album-music-title>ギガンティックO.T.N - Big Death Edition -</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>11.</td><td class=album-music-title>- Ending -</td><td><img class=album-music-lyrics></td></tr>
-					</tbody>
-				</table>
-				<div class="content-space">
-					<block />
-					<hr />
-					<div class="content-music">
-						음악 소계 영역
-					</div>
-					<div class="content-lyrics">
-						가사 영역
-					</div>
-					<hr />
-					<div class="content-video">
-						유튜브 비디오 링크 영역
-					</div>
-					<hr />
-				</div>
-			</nav>
-			<nav class='album-music-list album very-colorful' ><!-- 極彩色 -->
-				<p class=album-title>極彩色</p>
-				<span><!--  앨범 플레이어 -->
-					<div class="play-control" style="background:#5122bf">
-						음악 플레이어
-					</div>
-				</span>
-				<table>
-					<colgroup>
-						<col width="10px"><col width="100%"><col width="100px">
-					</colgroup>
-					<tbody>
-						<tr><td class=album-music-id>01.</td><td class=album-music-title >-nil-</td><td><img class=album-music-youtube-link></td></tr>
-						<tr><td class=album-music-id>02.</td><td class=album-music-title>極彩色</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>03.</td><td class=album-music-title>生命線</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>04.</td><td class=album-music-title>水底游歩道</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>05.</td><td class=album-music-title>ハルシアン</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>06.</td><td class=album-music-title>ロジックエージェント</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>07.</td><td class=album-music-title>-orderly-</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>08.</td><td class=album-music-title>mede:mede</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>09.</td><td class=album-music-title>Syrup</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>10.</td><td class=album-music-title>ラ·タタン</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>11.</td><td class=album-music-title>ミッドナイトストロウラ</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>12.</td><td class=album-music-title>Behind The Night</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>13.</td><td class=album-music-title>ROXY</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>14.</td><td class=album-music-title>約束の蒼</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>15.</td><td class=album-music-title>MONSTER</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>16.</td><td class=album-music-title>染</td><td><img class=album-music-lyrics></td></tr>
-					</tbody>
-				</table>
-				<div class="content-space">
-					<block />
-					<hr />
-					<div class="content-music">
-						음악 소계 영역
-					</div>
-					<div class="content-lyrics">
-						가사 영역
-					</div>
-					<hr />
-					<div class="content-video">
-						유튜브 비디오 링크 영역
-					</div>
-					<hr />
-				</div>
-			</nav>
-			<nav class='album-music-list album sigma' >
-				<p class=album-title>「Σ」</p>
-				<span><!--  앨범 플레이어 -->
-					<div class="play-control" style="background:#5122bf">
-						음악 플레이어
-					</div>
-				</span>
-				<table>
-					<colgroup>
-						<col width="10px"><col width="100%"><col width="100px">
-					</colgroup>
-					<tbody>
-						<tr><td class=album-music-id>01.</td><td class=album-music-title >VIP KID</td><td><img class=album-music-youtube-link></td></tr>
-						<tr><td class=album-music-id>02.</td><td class=album-music-title>ギミアブレスタッナウ</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>03.</td><td class=album-music-title>宵々古今</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>04.</td><td class=album-music-title>コノヨ Loading...</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>05.</td><td class=album-music-title>RE:</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>06.</td><td class=album-music-title>Lunatic</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>07.</td><td class=album-music-title>神様になった日</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>08.</td><td class=album-music-title>ちるちる</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>09.</td><td class=album-music-title>-FINAL SIGMA-</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>10.</td><td class=album-music-title>DetaramE KiddinG</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>11.</td><td class=album-music-title>サマーホラーパーティ</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>12.</td><td class=album-music-title>404 Not Found</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>13.</td><td class=album-music-title>VIORA</td><td><img class=album-music-lyrics></td></tr>
-					</tbody>
-				</table>
-				<div class="content-space">
-					<block />
-					<hr />
-					<div class="content-music">
-						음악 소계 영역
-					</div>
-					<div class="content-lyrics">
-						가사 영역
-					</div>
-					<hr />
-					<div class="content-video">
-						유튜브 비디오 링크 영역
-					</div>
-					<hr />
-				</div>
-			</nav>
-			<nav class='album-music-list album endless-ep' ><!-- エンドレスEP -->
-				<p class=album-title>エンドレスEP</p>
-				<span><!--  앨범 플레이어 -->
-					<div class="play-control" style="background:#5122bf">
-						음악 플레이어
-					</div>
-				</span>
-				<table>
-					<colgroup>
-						<col width="10px"><col width="100%"><col width="100px">
-					</colgroup>
-					<tbody>
-						<tr><td class=album-music-id>01.</td><td class=album-music-title >ニュータイプトーキョー</td><td><img class=album-music-youtube-link></td></tr>
-						<tr><td class=album-music-id>02.</td><td class=album-music-title>B12</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>03.</td><td class=album-music-title>エンドレスライン</td><td><img class=album-music-lyrics></td></tr>
-						<tr><td class=album-music-id>04.</td><td class=album-music-title>LUVORATORRRRRY!</td><td><img class=album-music-lyrics></td></tr>
-					</tbody>
-				</table>
-				<div class="content-space">
-					<block />
-					<hr />
-					<div class="content-music">
-						음악 소계 영역
-					</div>
-					<div class="content-lyrics">
-						가사 영역
-					</div>
-					<hr />
-					<div class="content-video">
-						유튜브 비디오 링크 영역
-					</div>
-					<hr />
-				</div>
-			</nav>
-			<!--===========================================
-			노설명
-			===========================================-->
-			<div id=foot style="text-align:center">
-				Create By Soungjin....
+			<div id=head>
+				reol
 			</div>
-			
-			
-		</div>
-		<div id=select-mini style="background:#fff">
-			<div id=select-mini-cover>
-				<img id=select-mini-img src="">
+			<div id=content>
+				<!-- 항목들 -->
+				<div class="layer">항목1</div>
+				<div class="layer">항목2</div>
+				<div class="layer">항목3</div>
+				<div class="layer">항목4</div>
+				<div class="layer">항목5</div>
 			</div>
-			<div style="font-size:2em;left:45%">REOL</div>
-				<img id=icon src="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" style='right:0'>
+			<div id=nav>
+				네비게이션
+			</div>
+			<div id=footer>
+				Create BY Soungjin's;
+			</div>
+			<div id=layer>
+				
+			</div>
 		</div>
 	</body>
 </html>
@@ -863,6 +185,15 @@ Re. 존x많다.....헐
 12-31
 언젠가 줄여야 하는 자바스크립트 코드...
 미니 타이틀바 수정하기 = width:100% 에서 1024px으로 수정하기 (이미지나 이런거 넣어야지..)
+
+1-1
+로딩화면 제?
+
+1-5 Re.
+다시만들어 보자!
+
+
+
 
 --->
 <!--
