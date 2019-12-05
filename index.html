@@ -64,8 +64,8 @@ hr {
 	border-top:2px solid #284098;
 	border-bottom:none;
 	clear:both;
-	margin-top:50px;
-	margin-bottom:50px;
+	margin-top:30px;
+	margin-bottom:30px;
 }
 body{
 	-ms-user-select: none;
@@ -73,124 +73,201 @@ body{
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	user-select:none;
-	overflow-y:hidden;
 }
 
 
 /* 기본적인 항목들 */
 
-header, nav, section{
-	position:fixed;
-	width:100%;
-	height:100%;
-	margin:auto;
-}
-nav{
-	max-width:1024px;
-	width:650px;
-	height:650px;
-	position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-
-/* 스라이더 */
-section{
-	position: fixed;
-    max-width: 1024px;
-	min-width:650px;
-	min-height:650px;
-	top:1600px;
-    left: 0;
-    right: 0;
-    margin-top: 50px;
-}
-section .title{
-	font-size:100px;
-}
-section img{
-	width:80px;
-	height:80px;
-}
-section #back{
-	float:right;
-	cursor:pointer;
-}
-section #album{
-	clear:both;
-	width:400px;
-	height:400px;
-}
-section #list{
-	display:right;
-    width: 630px;
-    padding: 0 10px;
-}
-section #list .scroll-area{
-    float: right;
-    min-width: 100px;
-    width: auto;
-}
-section #list .music{
-	width:250px;
-}
-
-
-section #track-list-item-id,section #track-list-item-img{
-	text-align:right;
-	display:inline-block;
-	width:20px;
-	height:20px;
-	margin:5px;
-	padding:0px;
-	cursor:pointer;
-}
-section #track-list-item-img{
-	display:none;
-}
-section #track-list-item{
-	cursor:pointer;
-	
-}
-
 /* ======================================================= */
-/*
-nav{
-	top:-1600px;
-}
-section{
-	top:0px;
-}*/
-
 @media (max-width:656px){
-	#slider, #slider img{
-		width:100%;
-		height:100%;
+	body{overflow-x:hidden;}
+	header, nav, section{
+		display:block;
+		max-width:655px;
 	}
+	nav{
+		width:100%;
+		height:auto;
+		display:block;
+	}
+	section .title{
+		font-size:4em;
+		text-align:center;
+	}
+	section #album{
+		clear:both;
+		margin:10%;
+		width:80vw;
+		height:auto;
+	}
+	
+	section #track-list-item-id,section #track-list-item-img{
+		text-align:right;
+		display:inline-block;
+		width:20px;
+		height:20px;
+		margin:5px;
+		padding:0px;
+		cursor:pointer;
+	}
+	section #track-list-item-img{
+		display:none;
+	}
+	section .music{
+		width:80vw;
+		margin:10%;
+	}
+	section .music table{
+		table-layout:fixed;
+		width:80vw;
+	}
+	#select-next,#select-begin,#select-play,#slider-view,section .music #vol,section #back,.music_subtitle{display:none;}
+	
+	
 	#slider{
 		position:relative;
 		margin:auto 0;
-		width:1px;
-		height:1px;
-		
+		width:100%;
+		height:97vw;
 		list-style:none;
 		margin:0;
 		padding:0;
 	}
-	#slider li{
-		min-height:auto;
-		min-width:100%;
-	}
-	nav,#slider-view{
+	#slider li,#slider img{
+		position:absolute;
 		width:100%;
-		height:100vw;
+	}
+	#slider-ctr{
+		position:absolute;
+		width:100%;
+		height:98vw;
+		top:0;
 	}
 	
+	
+	#slider-ctr #icon{
+		display:block;
+		position:absolute;
+		top:0;bottom:0;
+		left:0;right:0;
+		margin:0 auto;
+		height:auto;
+		width:10%;
+		text-align:center;
+		overflow:hidden;
+	}
+	
+	input[type=range]{
+		-webkit-appearance:none;
+		outline:none;
+		height:20px;
+		border-radius:4px;
+		border:1px solid #252525;
+		background-color:#f3f3f3;
+		margin-left:0;
+		margin-top:0
+		width:200px;
+		background-color:#a7e0f7;
+		border:0;
+	}
+	input[type="range"]::-webkit-slider-thumb{
+		-webkit-appearance:none;
+		background-color:#0ae;
+		width:20px;
+		height:20px;
+		border-radius: 10em 10em 10em 10em;
+	}
+	section #music_time{width:100%;}
+	#subtitle{
+		display:block;
+		text-align: center;
+	}
+	.active{background:#284098;}
 } 
 @media (min-width:656px){
+	body{
+		overflow-y:hidden;
+	}
+	header, nav, section{
+		position:fixed;
+		width:100%;
+		height:100%;
+		margin:auto;
+	}
+	nav{
+		max-width:1024px;
+		width:650px;
+		height:650px;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+	/* 스라이더 */
+	section{
+		position: fixed;
+		max-width: 1024px;
+		min-width:650px;
+		min-height:650px;
+		top:1600px;
+		left: 0;
+		right: 0;
+		margin-top: 50px;
+	}
+	section .title{
+		font-size:100px;
+	}
+	section img{
+		width:80px;
+		height:80px;
+	}
+	section #back{
+		float:right;
+		cursor:pointer;
+	}
+	section #album{
+		clear:both;
+		width:400px;
+		height:400px;
+	}
+	section #list{
+		display:right;
+		width: 630px;
+		padding: 0 10px;
+	}
+	section #list .scroll-area{
+		float: right;
+		min-width: 100px;
+		width: auto;
+	}
+	section #list .music{
+		width:250px;
+	}
+	
+	section .music table{
+		table-layout:fixed;
+		width:400px;
+	}
+	
+	section #track-list-item-id,section #track-list-item-img{
+		text-align:right;
+		display:inline-block;
+		width:20px;
+		height:20px;
+		margin:5px;
+		padding:0px;
+		cursor:pointer;
+	}
+	section #track-list-item-img{
+		display:none;
+	}
+	section #track-list-item{cursor:pointer;}
+	section #list{
+		width:400px;
+		display:inline-block;
+	}
+	section .scroll-area{display:inline-block;}
 	/* nav 테그에 대응하기 위해서 이하는 필터링이 필요함 */
 	#slider{
 		position:relative;
@@ -255,11 +332,49 @@ section{
 	#select-begin{
 		right:0;
 	}
-	
+	.music_subtitle{
+		position:absolute;
+		text-align:center;
+		overflow-y: auto;
+		overflow-x: hidden;
+		top: 300px;
+		width:400px;
+		background: rgba(255,255,255,0.5);
+	}
+	input[type=range]{
+		-webkit-appearance:none;
+		outline:none;
+		height:9px;
+		border-radius:4px;
+		border:1px solid #252525;
+		background-color:#f3f3f3;
+		margin-left:0;
+		margin-top:0
+	}
+	input[type="range"]::-webkit-slider-thumb{
+		-webkit-appearance:none;
+		background-color:#0ae;
+		width:8px;
+		height:7px
+	}
+	#music_time[type="range"]::-webkit-slider-thumb{
+		-webkit-appearance:none;
+		border-radius: 10em 10em 10em 10em;
+		width:8px;
+		height:7px
+	}
+	#music_time[type=range]{
+		background-color:#a7e0f7;
+		border:0;
+	}
+	section #music_time{width:320px;}
+	#subtitle{
+		display:none;
+	}
+	.mb{display:none;}
 }
 
-
-#popup *{
+#popup{
 	position:fixed;
 	left: 50%;
 	bottom: 0%;
@@ -270,11 +385,9 @@ section{
 	-o-transform: translate(-50%,0);
 	transform: translate(-50%,0%);
 }
-
-#popup{
-	position: fixed;
+#popup *{
 	width:100%;
-	height:100%;
+	display: inline-block;
 }
 		</style>
 		<script>
@@ -297,6 +410,7 @@ Element.prototype.on=window.on=function(){//이벤트명/실행함수//이후에
 	d[lib_n].event[a[0]]=c;
 	return d;
 };
+/*
 Element.prototype.remove=function(eve,f){
 	if(!this[lib_n]){
 		if(this["on"+eve])delete this["on"+eve];
@@ -310,7 +424,7 @@ Element.prototype.remove=function(eve,f){
 		}
 	}
 	if(keys.length<=1)delete this["on"+eve];
-};
+};*/
 Element.prototype.data=function(){
 	var a=arguments,b=a.length,c=typeof a[1]!="string";
 	if(b==1)return this.getAttribute("data-"+a[0]);
@@ -320,6 +434,19 @@ Element.prototype.data=function(){
 Element.prototype.createElement=function(ele){var ele=document.createElement(ele);this.appendChild(ele);return ele;};
 Element.prototype.indexOf=function(){var c=this.parentNode.childNodes,i=0;for(;i<c.length;i++)if(c[i]==this)return i;return -1;};
 Element.prototype.getPosition=function(){return this.getBoundingClientRect()};
+Element.prototype.addClass = function(n){var c=this.className;this.className=(c==''?n:c+' '+n);return this;};
+Element.prototype.removeClass = function(n){var c=this.className,l=c.split(' '),o="",i=0;for(;i<l.length;i++)if(l[i]!=n){if(o)o+=' '+l[i];else o=l[i];}this.className=o;return this;};
+
+/*
+Array.prototype.equals = function (array) {
+	if (!array||this.length!=array.length)return false;
+    for (var i=0,l=this.length;i<l;i++) {
+        if (this[i] instanceof Array && array[i] instanceof Array){
+			if (!this[i].equals(array[i]))return false;        
+        }else if (this[i]!=array[i])return false;        
+    }
+    return true;
+}*/
 
 function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}}}//라이브러리 불러오기
 
@@ -346,13 +473,13 @@ const data=[
 		color:"#2b479b"
 	},
 	{name:"極彩色",tag:"very-colorful",
-		list:["-nil-","極彩色","生命線","水底游歩道","ハルシアン","ロジックエージェント","-orderly-","mede:mede","Syrup","ラ·タタン","ミッドナイトストロウラ","Behind The Night","ROXY","約束の蒼","MONSTER","染"],
+		list:["nil","極彩色","生命線","水底游歩道","ハルシアン","ロジックエージェント","-orderly-","mede:mede","Syrup","ラ·タタン","ミッドナイトストロウラ","Behind The Night","ROXY","約束の蒼","MONSTER","染"],
 		type:[".flac"],
 		img:["2-1.jpg","2-2.jpg","2-3.jpg","2-4.png","2-5.png","2-6.png"],
 		color:"#e0c190"
 	},
 	{name:"「Σ」",tag:"sigma",
-		list:["VIP KID","ギミアブレスタッナウ","宵々古今","コノヨ Loading...","RE:","Lunatic","神様になった日","ちるちる","-FINAL SIGMA-","DetaramE KiddinG","サマーホラーパーティ","404 Not Found","VIORA"],
+		list:["VIP KID","ギミアブレスタッナウ","宵々古今","コノヨLoading...","RE:","Lunatic","神様になった日","ちるちる","-FINAL SIGMA-","DetaramE KiddinG","サマーホラーパーティ","404 Not Found","VIORA"],
 		type:[".flac"],
 		img:["3-1.jpg","3-2.jpg","3-3.jpg","3-4.png"],
 		color:"#f8f8f6"
@@ -365,11 +492,13 @@ const data=[
 	}
 ];
 const play=Play(),popup=Popup();
-function nav(e){
-	var a,b=0,c=document.location.href.split("#")[1],c,d=this;
+var scroll;
+function nav(e,i){
+	var a,b=0,c=document.location.href.split("#")[1],c,d=this,h=i.size;
 	for(;data[b]&&data[b].tag!==c&&b<data.length;b++);
 	if(b>=data.length){b=0;}
-	a=function slide(z,y){
+	console.log(b);
+	a=function(z,y){
 		var a=this.getElementsByTagName("li"),b=a.length,c=z,d=[0,0],e,f=670,g=0;
 		if(z>=b||z<0)c=0;
 		for(;g<b;g++)if(c!=g)a[g].style="transform: translateX("+f+"px)";
@@ -400,11 +529,41 @@ function nav(e){
 	}.call(id("slider"),b,function(a){
 		document.location.href="#"+data[a].tag;
 		b=a;
+		typeof h=="function"&&!h()[0]&&e.call(d,a);
+	});
+	typeof h=="function"&&!h()[0]&&e.call(d,b);
+	i.addEvent(function(c){
+		console.log(c);
+		if(!c[0])
+			e.call(d,b);
 	});
 	c=function(){a(this.id!=="select-next")};
 	id("select-next").on("click",c);
 	id("select-begin").on("click",c);
-	id("select-play").on("click",function(){typeof e=='function'&&e.call(d,b)});
+	id("select-play").on("click",function(){if(typeof h!='function'||h()[0])typeof e=='function'&&e.call(d,b)});
+	id("music_time").on("change",function(){play.audio.currentTime=this.value*play.audio.duration/100;});
+	id("play_b").on("click",play.pause);
+	id("volume").on("change",function(){play.audio.volume=this.value});
+	id("vol").on("click",function(){
+		if(this.anime){
+			this.anime.pause();
+			this.anime=null;
+		}
+		var a=this.view;
+		if(a)this.anime=anime({
+			targets:id("volume"),
+			width:0,
+			opacity:0,
+			easing: 'linear',
+			duration:2000
+		});else this.anime=anime({
+			targets:id("volume"),
+			width:180,
+			opacity:1,
+			duration:2000
+		});
+		this.view=!a;
+	});
 }
 function section(a,b){
 	var c=this.querySelector(".title"),d=this.querySelector(".track-list"),e,f=data[a],g,h=0,i,j,k;
@@ -431,7 +590,6 @@ function section(a,b){
 	i();
 	for(g in f.list)
 		e.call(this,f.list[g]).on("mouseover",function(){//마우스 올릴시에 동작
-			//console.log(this[lib_n].hidden);
 			this[lib_n].hidden.style.display="inline-block";
 			this[lib_n].view.style.display="none";
 			this.style.background=data[a].color;
@@ -459,60 +617,78 @@ function section(a,b){
 	return {add:e,clear:i,back:k};
 }
 function Play(){//미디어 관리자
-	var src="",smi="",Sdata,isPlaying=0,ind=[-1,-1],audio=new Audio(),timeU=function(){
+	var src="",smi="",Sdata,isPlaying=0,ind=[-1,-1],audio=new Audio(),last=0,begin_obj,timeU=function(){
 		if(!Sdata||smi!==src)return;
-		var time = Math.floor(this.currentTime*1000),keys=Object.keys(Sdata),last=0,next_time=-1;//현재시간
+		var time = Math.floor(this.currentTime*1000),keys=Object.keys(Sdata),next_time=-1;//현재시간
 		for(var i=1;i<keys.length;i++)
 			if(keys[i-1]<time&&time<=keys[i]){//이전시간
-				document.getElementById("music_subtitle").innerHTML=Sdata[keys[i-1]];
-				last=1;
+				if(i===last)return;
+				id("music_subtitle").innerHTML=Sdata[keys[i-1]];
+				if(begin_obj)begin_obj.removeClass("active");
+				last=i;
 				next_time=keys[i];
+				begin_obj=id("subtitle").childNodes[i-1].addClass("active");
+				if(scroll())window.scrollTo(0,begin_obj.offsetTop);
 				break;
 			}
 		if(keys.length<1||!last)document.getElementById("music_subtitle").innerHTML=Sdata[keys[keys.length-2]];
 		return next_time;
 	};
+	audio.volume=.5;
 	audio.on("canplay",function(){id("e_time").innerHTML=humanReadable(Math.floor(this.duration));});
 	audio.on("change",function(){this.currentTime=this.value*this.duration/100;});
 	audio.on("timeupdate",function(){
+		audio.time=timeU.call(this);
 		id("n_time").innerHTML=humanReadable(Math.floor(this.currentTime));
 		id("music_time").value=this.currentTime*100/this.duration;
 	});
-	audio.on("timeupdate",function(){audio.time=timeU.call(this);});
 	audio.on("ended",function(){
-		if(++b>=data[a].list.length)b=0;
-		play(a,b);
+		if(++ind[1]>=data[ind[0]].list.length)ind[1]=0;
+		play(ind[0],ind[1]);
 	});
-	function init(){
-		id("music_time").on("change",function(){audio.currentTime=this.value*audio.duration/100;});
-		id("play_b").on("click",pause);
-	}
 	function play(a,b){//페이지 / 항목
 		//"/Music/"+data[a].tag+"/"+data[a].list[this.indexOf()].replace(/:/g, "_")+data[a].type;
 		id("play_title").innerHTML=data[a].list[b];
 		ind=[a,b];
-		popup.create(data[a].list[b]+"Playing....");
+		popup.create(data[a].list[b]+" Playing....");
 		src=data[a].tag+"/"+data[a].list[b].replace(/:/g, "_");
 		audio.src="/Music/"+src+data[a].type;
 		audio.play();
+		!isPlaying&&!(id("play_b").src="/img/icons/stop_1.png");
 		isPlaying=1;
 		audio.time=0;
 		document.getElementById("music_subtitle").innerHTML="";
 		get("/Music/"+src+".sti",function(c,d){
 			Sdata=JSON.parse(c);
+			//자막을 html 에 저장
+			var e=Object.keys(Sdata),f=id("subtitle");
+			for(var i=0;i<e.length-1;i++){
+				var g=f.createElement("div");
+				g.innerHTML=Sdata[e[i]];
+				g.onclick=function(){audio.currentTime=e[this.indexOf()]/1000;};
+				if(i==0){g.addClass("active");begin_obj=g;}
+			}
 			smi=d;//자막링크 저장
 		},src);
+		id("subtitle").innerHTML="";
 	}
 	function pause(){
 		if(!audio.src)return;
 		isPlaying?audio.pause():audio.play();
-		isPlaying!=isPlaying;
-		console.log(isPlaying);
+		isPlaying=!isPlaying;
+		id("play_b").src=(isPlaying?"/img/icons/stop_1.png":"/img/icons/play_1.jpg");
 	}
-	function index(){
-		return ind;
+	return {play:play,pause:pause,audio:audio,index:function(){return ind},isPlaying:function(){return isPlaying}};
+}
+function Scroll(){//스크롤 관리자
+	var c=1,d;
+	function b(){//사용자가 스크롤시
+		c=0;//스크롤 따라가는걸 막음
+		if(d){clearTimeout(d);d=0;}
+		d=setTimeout(function(){c=1;},3*1000);
 	}
-	return {init:init,play:play,pause:pause,audio:audio,index:index};
+	document.body.onscroll=b;
+	return function(){return c};
 }
 function Popup(){//팝업 관리자
 	var /*c=new Stack(),*/d=0;
@@ -525,70 +701,69 @@ function Popup(){//팝업 관리자
 		var h=e.childNodes[0];
 		h.style.background="#349ac3";
 		h.style.padding="10px";
-		h.style.bottom=-h.getPosition().height+"px";
+		e.style.bottom=-h.getPosition().height+"px";
 		e.on("click",z);
 		anime({//가려져야 할것,
-			targets:h,
+			targets:e,
 			bottom:0,
-			complete:function(){
-				setTimeout(z,3*1000)
-			}
+			complete:function(){setTimeout(z,3*1000)}
 		});
-		//setTimeout(function(){if(e)z(h)},3*1000);
 	}
 	function z(){//remove
 		var f=id("popup");
-		if(f)
-			anime({//가려져야 할것,
-				targets:f.childNodes[0],
-				bottom:-f.childNodes[0].getPosition().height+"px",
-				complete:function(){
-					f=id("popup");
-					if(f)f.parentNode.removeChild(f);
-				}
-			});
+		if(f)anime({//가려져야 할것,
+			targets:f,
+			bottom:-f.getPosition().height+"px",
+			complete:function(){f=id("popup");if(f)f.parentNode.removeChild(f)}
+		});
 		d=0;
 	}
-	function f(){return d;}
-	return {create:b,remove:z,length:d};
+	return {create:b,remove:z,length:function(){return d}};
 }
 function get(){
 	var xmlhttp = new XMLHttpRequest(),a=arguments,b=a.length;
 	if(b<1)return;
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState==4&&this.status==200)
-				typeof a[1]==="function"&&a[1].call(document,this.responseText,a[2]);
+	xmlhttp.onreadystatechange=function(){
+		if(this.readyState==4&&this.status==200)typeof a[1]==="function"&&a[1].call(document,this.responseText,a[2]);
 	};
 	xmlhttp.open("GET",a[0],true);
 	xmlhttp.send();
 }
-function humanReadable(seconds) {
+function humanReadable(seconds){
   var pad=function(x){return(x<10)?"0"+x:x}
   return pad(parseInt(seconds/60%60))+":"+pad(seconds%60)
 }
 function init(){
-	var a=changeSize([655]);
-	play.init();
-	nav.call(document.querySelector("nav"),function(a){//c==nav b=section
+	var z=changeSize([655]),open=0,navs;
+	scroll=Scroll();
+	navs=nav.call(document.querySelector("nav"),function(a){//c==nav b=section
 		var b=document.querySelector("section"),c=this,d,e;
 		d=function(e,o,f){anime({targets:e,top:o,complete:f})};
 		e=section.call(b,a,function(){
 			d(b,1600);d(c,0);
 			e.back();
 		});
+		z.size[0]&&e.back();
 		d(c,-1600);
-		d(b,0);
-	});
-	console.log("start");
-	window.on("resize",function(){
-		var b=a();
-		if(b[0]||b[1]){
-			console.log("크기변경");
-		}
+		d(b,0,function(){
+			if(!play.isPlaying())
+				play.play(a,0);
+		});
+	},z);
+	z.addEvent(function(a){
+		if(a[0])
+			if(play.isPlaying()){
+				document.querySelector("nav").style.top="-1600px";
+				document.querySelector("section").style.top="0px";
+			}else{
+				document.querySelector("nav").style.top="0px";
+				document.querySelector("section").style.top="1600px";
+			}
 	});
 }
 
 window.on("load",init);
+/*
 function changeSize(ops){
 	var a;//크기 작다|크다
 	if(!ops.length)return function(){};
@@ -610,6 +785,29 @@ function changeSize(ops){
 		return [a[0]!=b[0],a[1]!=b[1]];
 	}
 	return rsize;
+}*/
+function changeSize(ops){//크기비교
+	if(!ops.length)return function(){};
+	if(!ops[1])ops[1]=0;
+	var events=[],b=a();
+	function a(){
+		return[document.body.clientWidth>ops[0],document.body.clientHeight>ops[1]];//크기 [w,h]
+	}
+	window.on("resize",function(){
+		var c=a();//현재상태
+		if(c[0]!=b[0]||c[1]!=b[1]){
+			for(var i=0;i<events.length;i++)
+				events[i].call(this,c);
+			b=c;
+		}
+	});
+	return {size:a,addEvent:function(b){
+		if(typeof b!=="function")return -1;
+		return events.push(b);
+	},removeEvent:function(index){
+		if(index||!b[index])return;
+		b[index]=null;
+	}};
 }
 		</script>
 	</head>
@@ -644,10 +842,23 @@ function changeSize(ops){
 		<section>
 			<p class=title>undefind</p>
 				<img id=back src=/img/back.png>
-			<div id=list>
-				<div style="width:400px;display:inline-block;">
+			<div>
+				<div id=list>
 					<img id=album>
-					<div id=music_subtitle class=music_subtitle style="text-align:center;background:rgba(f,f,f,.3)">
+					<div id=music_subtitle class=music_subtitle style="text-align:center;background:rgba(f,f,f,.3)"></div>
+					<div class=music>
+						<table>
+							<tr>
+								<td rowspan=3 width="71px"><img id=play_b src=/img/icons/play_1.jpg style="width:70px;height:70px;"></td>
+								<td id=n_time width="50px">00:00</td>
+								<td width="100%" style="float:right"><img id=vol src=/img/icons/vol_2.png style="width:30px;height:30px;float:right;"><span id=e_time style="width:50px;float:right">99:99</span><input id=volume type="range" style="width:0px;opacity:0;margin-top:10px" min=0 max=1 step=".001" value=.5></td>
+							</tr>
+							<tr id=play_title><!--공백--></tr>
+							<tr>
+								<td colspan=2><input id="music_time" type="range" min="0" max="100" step=".001" value=".0"></td>
+							</tr>
+						</table>
+						
 					</div>
 				</div>
 				<div class=scroll-area><!-- 655보다 작으면 스크롤바 생성 (세로) -->
@@ -667,21 +878,9 @@ function changeSize(ops){
 						</li-->
 					</ol>
 				</div>
-				<div class=music>
-					<table style="table-layout:fixed;width:400px">
-						<tr>
-							<td rowspan=3 width="71px"><img id=play_b src=/img/icons/play_1.jpg style="width:70px;height:70px;"></td>
-							<td id=n_time>00:00</td>
-							<td id=e_time style="text-align:right;">99:99</td>
-							<td width="32px"><img src=/img/icons/vol_2.png style="width:30px;height:30px;float:right;"></td>
-						</tr>
-						<tr id=play_title><!--공백--></tr>
-						<tr>
-							<td colspan=3><input id="music_time" type="range" min="0" max="100" step=".001" value=".0" style="width:320px"></td>
-						</tr>
-					</table>
-					
-				</div>
+				<hr class=mb />
+				<div id=subtitle class=mb></div>
+				<div id=up class=mb></div>
 			</div>
 			<style>
 .track-show-actions{
@@ -703,34 +902,8 @@ function changeSize(ops){
 	margin-left: 18px;
 }
 
-input[type=range]{
-	-webkit-appearance:none;
-	outline:none;
-	width:160px;
-	height:9px;
-	border-radius:4px;
-	border:1px solid #252525;
-	background-color:#f3f3f3;
-	margin-left:0;
-	margin-top:0
-}
-input[type="range"]::-webkit-slider-thumb{
-	-webkit-appearance:none;
-	background-color:#0ae;
-	width:8px;
-	height:7px
-}
-#music_time[type="range"]::-webkit-slider-thumb{
-	-webkit-appearance:none;
-	border-radius: 10em 10em 10em 10em;
-	width:8px;
-	height:7px
-}
-#music_time[type=range]{
-	width:200px;
-	background-color:#a7e0f7;
-	border:0;
-}
+
+
 .music_subtitle{
 	position:absolute;
 	text-align:center;
