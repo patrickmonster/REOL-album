@@ -42,7 +42,6 @@
 		<!--===========================================
 		사이트 구동에 필요한 데이터
 		===========================================-->
-		<link type="text/css" rel="stylesheet" href="index.css"/>
 		<style media="screen">
 * {
 	margin: 0; padding: 0;
@@ -50,6 +49,8 @@
 	white-space: nowrap;
 	text-decoration: none;
 	display:auto;
+	cursor: default;
+	
 }
 html,body{
 	position: relative;
@@ -66,12 +67,26 @@ hr {
 	margin-bottom:50px;
 }
 
+block{
+	border:0;
+	margin:50px;
+	
+}
+
 #select{
 	position:relative;
 	overflow:hidden;
 	white-space:nowrap;
 	width:1024px;
 	color:#fff;
+	margin: 0 auto;
+}
+#select-mini{
+	display:none;
+	position:absolute;
+	overflow:hidden;
+	width:1024px;
+	top:0;
 	margin: 0 auto;
 }
 #select ul#slider {
@@ -164,6 +179,12 @@ hr {
 #select-begin{
 	right:0;
 }
+
+#select-mini *{
+	position:fixed;
+	z-index:999;
+}
+
 #body{
 	position:relative;
 	width:1020px;
@@ -245,6 +266,23 @@ hr {
 	display:none;
 }
 
+
+
+
+#music{
+	position:fixed;
+	bottom:0;
+	width:1024px;
+}
+.content-video{
+	width:1024px;
+}
+.content-video iframe{
+	float:left;
+	margin:5px;
+}
+
+
 #foot{
 	position:absolute;
 	text-align:center;
@@ -261,22 +299,39 @@ hr {
 		<style>
 
 		</style>
+		<!--script src="ie7.js?var=1"></script-->
 		<script>
 //페이지 구동용 자바스크립트
 /*
 내가 왜 주석을 달고 있는지 모르겠지만...여튼 단다
 */
 
-_U=undefined;
-function _isPO(a){var b,c;return!(!a||"[object Object]"!=={}.toString.call(a))&&(!(b=Object.getPrototypeOf(a))||(c={}.hasOwnProperty.call(b,"constructor")&&b.constructor,"function"==typeof c&&{}.hasOwnProperty.toString.call(c)==={}.hasOwnProperty.toString.call(Object)))}function extend(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||r.isFunction(g)||(g={}),h===i&&(g=this,h--);h<i;h++)if(null!=(a=arguments[h]))for(b in a)c=g[b],d=a[b],g!==d&&(j&&d&&(_isPO(d)||(e=Array.isArray(d)))?(e?(e=!1,f=c&&Array.isArray(c)?c:[]):f=c&&_isPO(c)?c:{},g[b]=r.extend(j,f,d)):void 0!==d&&(g[b]=d));return g}
+if(!window.Element)
+	Element=function(){};
 Element.prototype.removeClass = function(n){var c=this.className,l=c.split(' '),o=_U,i=0;for(;i<l.length;i++)if(l[i]!=n){if(o)o+=' '+l[i];else o=l[i];}this.className=o;return this;};
 Element.prototype.add=function(ele){this.appendChild(ele);return this;};
-Element.prototype.addClass = function(n){var c=this.className;this.className=(c==''?n:c+' '+n);};
-Element.prototype.isClass = function(a){var l=this.className.split(' '),i=0;for(;i<l.length;i++)if(l[i]===a)return 1;return 0;};
-Element.prototype.data = function(){var a=arguments,b=a.length;if(b==0)return;if(b==1)return this.getAttribute("data-"+a[0]);else if(b==2)this.setAttribute("data-"+a[0],a[1]);};
+Element.prototype.addClass=function(n){var c=this.className;this.className=(c==''?n:c+' '+n);};
+Element.prototype.isClass=function(a){var l=this.className.split(' '),i=0;for(;i<l.length;i++)if(l[i]===a)return 1;return 0;};
+Element.prototype.data=function(){var a=arguments,b=a.length;if(b==1)return this.getAttribute("data-"+a[0]);if(b==2)this.setAttribute("data-"+a[0],a[1]);return this;};
+Element.prototype.getPosition=function(){return this.getBoundingClientRect()};
 
+
+if(!window.Element){
+	var __createElement=document.createElement;
+	document.createElement=function(tagName){
+		var element=__createElement(tagName);
+		for(var key in Element.prototype)element[key]=Element.prototype[key];
+		return element;
+	}
+	var __getElementById=document.getElementById;
+	document.getElementById=function(id){
+		var element=__getElementById(id);
+		for(var key in Element.prototype)element[key]=Element.prototype[key];
+		return element;
+	}
+}
 /*
-일단 더럽게 복잡하게 생겼으니, 나중에 공략하자.!
+IE7 대응 엘리먼트 제작
 */
 
 function init(){
@@ -290,7 +345,23 @@ function init(){
 	}
 	document.getElementById("select-next").addEventListener('click',f,false);
 	document.getElementById("select-begin").addEventListener('click',f,false);
+	
+	
 }
+
+function scroll(){
+	var body=document.getElementById("body").getPosition(),x=document.body.scrollTop,select=document.getElementById("select"),select_mini=document.getElementById("select-mini");
+	if(body.top<x){//hidden
+		select.style.display="none";
+		select_mini.style.display="block";
+		document.body.scrollTop=-select_mini.getPosition().top;
+	}else{//open
+		select.style.display="block";
+		select_mini.style.display="none";
+		document.body.scrollTop=-select.getPosition().top;
+	}
+}
+
 function slide(f){
 	var x=1024;//window.innerWidth;
 	var l=document.getElementById("slider").getElementsByTagName("li"),b=["reol","no-title","very-colorful","sigma","endless-ep"];
@@ -323,7 +394,7 @@ function slide(f){
 	}
 	var c=-1,p=document.location.href.split("#")[1];
 	for(var c=0;b[c]!==p&&c<b.length;c++);
-	if(c>=5){document.location.href="#"+b[0];c=0;}
+	if(c>=5){c=0;}
 	now=c;
 	for (i=0;i<=max;i++)
 		if (i==now)l[i].style.right=0;
@@ -381,13 +452,28 @@ function layout(){//레이아웃 컨트롤
 	return on;
 }
 
+function mp3(){//mp3 믹서?
+	
+}
+
 window.onload =init;
+//window.addEventListener("onscroll",scroll);
+window.onscroll=scroll;
 		</script>
 	</head>
 	<body>
 		<!--===========================================
 		타이틀 셀렉터
 		===========================================-->
+		
+		<div id="fullScreen" style="height:100%;width:100%;position:fixed">
+			<div id=select-mini>
+				<img id="select-mini">
+				<div style="left:50%">REOL</div>
+				<img id=icon src="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" style='right:0'>
+				
+			</div>
+		</div>
 		<div id=select>
 			<ul id=slider>
 				<li>
@@ -437,9 +523,9 @@ window.onload =init;
 					</div>
 				</span>
 				<h4>-곡 목록-</h4>
-				<table>
+				<table style="width:1000px;margin-left:24px;">
 					<colgroup>
-						<col width="10px"><col width="50%"><col width=100px>
+						<col width="10px"><col><col width=100px>
 					</colgroup>
 					<tbody>
 						<tr><td colspan=3 style="text-align:center;background:rgba(145, 107, 178, 0.5);">ソロ(솔로)</td></tr>
@@ -493,16 +579,16 @@ window.onload =init;
 						<tr><td>05.</td><td><a title="「Ib」-forever-">「Ib」-forever-</td><td>마츠시타, 토리코</td></tr>
 						<tr><td>06.</td><td><a title="8HIT">8HIT</td><td>나나히라</td></tr>
 						<tr><td>07.</td><td><a title="어린이 전쟁">おこちゃま戦争</td><td>kradness</td></tr>
-						<tr><td>08.</td><td><a title="Masked bitcH -GIGA Birthday Arrange-">Masked bitcH -GIGA Birthday Arrange-</td><td>nqrse, 칸세루, 96네코, 하니챠무★, EVO+, 슈즈, 오레바나나</td></tr>
+						<tr><td>08.</td><td><a title="Masked bitcH -GIGA Birthday Arrange-">Masked bitcH -GIGA Birthday Arrange-</td><td><a title="nqrse, 칸세루, 96네코, 하니챠무★, EVO+, 슈즈, 오레바나나">nqrse, 칸세루, 96네코, 하니챠무★, ....</a></td></tr>
 						<tr><td>09.</td><td><a title="일심불란">一心不乱 (feat. ill.bell,nqrse)</td><td>ill.bell, nqrse</td></tr>
 						<tr><td>10.</td><td><a title="리모컨">リモコン</td><td>kradness</td></tr>
 						<tr><td>11.</td><td><a title="DOGS">DOGS</td><td>96네코</td></tr>
 						<tr><td>12.</td><td><a title="LUVORATORRRRRY!">LUVORATORRRRRY! (feat.nqrse)</td><td>nqrse</td></tr>
-						<tr><td>13.</td><td><a title="Blessing">Blessing 【SINGERS ver.B】</td><td><p style="text-overflow:hidden">아카틴, ＿＿, 이토카시타로, 카케리네, 쿄이치로, Gero, that, 사족, 백화요란, 마후마후, 미우메, 리리리</p></td></tr>
+						<tr><td>13.</td><td><a title="Blessing">Blessing 【SINGERS ver.B】</td><td><a title="아카틴, ＿＿, 이토카시타로, 카케리네, 쿄이치로, Gero, that, 사족, 백화요란, 마후마후, 미우메, 리리리">아카틴, ＿＿,  이토카시타로, 카케리네,....</a></td></tr>
 						<tr><td>14.</td><td><a title="drop pop candy">drop pop candy</td><td>기가P</td></tr>
 						<tr><td>15.</td><td><a title="요괴 체조 제일장">ようかい体操第一</td><td>오키쿠</td></tr>
 						<tr><td>16.</td><td><a title="POPEE the 클라운">POPEE the クラウン</td><td>기가P, 오키쿠</td></tr>
-						<tr><td>17.</td><td><a title="Connecting">Connecting</td><td>halyosy, 리부, 소라루, 론, KK, 샤케미, 남동생의 누나</td></tr>
+						<tr><td>17.</td><td><a title="Connecting">Connecting</td><td><a title="halyosy, 리부, 소라루, 론, KK, 샤케미, 남동생의 누나">halyosy, 리부, 소라루, 론, KK, ....</a></td></tr>
 						<tr><td>18.</td><td><a title="귀신KYOKAN">鬼KYOKAN</td><td>kradness</td></tr>
 						<tr><td>19.</td><td><a title="망상세">妄想税</td><td>nqrse</td></tr>
 						<tr><td>20.</td><td><a title="뇌내혁명 걸">脳内革命ガール</td><td>ill.bell</td></tr>
@@ -523,7 +609,7 @@ window.onload =init;
 							</colgroup>
 							<tbody>
 								<tr><td colspan=3 style="text-align:center;background:rgba(145, 107, 178, 0.5);">ライブ(라이브)</td></tr>
-								<tr><td rowspan=5 style="background-color:#916BB2"><img  id="table-1-0" width=600px height=727px src="http://549.ipdisk.co.kr/reol/img/Live/1.jpg"></td><td style="background-color:#916BB2;height:50px">Num</td><td style="background-color:#916BB2;height:50px"><strong>Live</strong></td></tr>
+								<tr><td rowspan=5 style="background-color:#916BB2"><img  id="table-1-0" class=cover width=600px height=727px src="http://549.ipdisk.co.kr/reol/img/Live/1.jpg"></td><td style="background-color:#916BB2;height:50px">Num</td><td style="background-color:#916BB2;height:50px"><strong>Live</strong></td></tr>
 								<tr><td>1.</td><td id="table-1-1" title="High Fidelity" data-img="http://549.ipdisk.co.kr/reol/img/Live/1.jpg" style="background:rgba(145, 107, 178, 0.5)">High Fidelity</td></tr>
 								<tr><td>2.</td><td id="table-1-2" title="천계의 공식" data-img="http://549.ipdisk.co.kr/reol/img/Live/2.jpg">テンカイ ノ コウシキ</td></tr>
 								<tr><td>3.</td><td id="table-1-3" title="종악장" data-img="http://549.ipdisk.co.kr/reol/img/Live/3.jpg">終楽章</td></tr>
@@ -537,6 +623,7 @@ function onDropTable(arr){
 		var data=this.data("img"),c;
 		target.src=data;
 		this.style.background="rgba(145, 107, 178, 0.5)";
+		this.style.cursor="default";
 		for(var c=1;this!=arr[c]&&c<arr.length;c++);
 		if(c>=arr.length)return;
 		if(p!==c){
@@ -553,7 +640,11 @@ onDropTable([document.getElementById("table-1-0"),document.getElementById("table
 					<hr />
 					<div class="content-lyrics"></div>
 					<div class="content-video">
-						유튜브 비디오 링크 영역
+						<h3>RΞOL - Music Videos</h3>
+						<iframe width="500" height="300" src="https://www.youtube.com/embed/-RGctbcrfk8?showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+						<iframe width="500" height="300" src="https://www.youtube.com/embed/AwfhX1REZ50?showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+						<iframe width="500" height="300" src="https://www.youtube.com/embed/Qmcda2wh-GA?showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+						<iframe width="500" height="300" src="https://www.youtube.com/embed/n5CwXuyNfoc?showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 					</div>
 					<hr />
 				</div>
@@ -597,48 +688,23 @@ onDropTable([document.getElementById("table-1-0"),document.getElementById("table
 						<col width="10px"><col width="100%"><col width="100px">
 					</colgroup>
 					<tbody>
-						<tr>
-							<td class=album-music-id>01.</td><td><p class=album-music-title >VIP KID</p></td><td><img class=album-music-youtube-link></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>02.</td><td class=album-music-title>ギミアブレスタッナウ</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>03.</td><td class=album-music-title>宵々古今</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>04.</td><td class=album-music-title>コノヨ Loading...</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>05.</td><td class=album-music-title>RE:</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>06.</td><td class=album-music-title>Lunatic</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>07.</td><td class=album-music-title>神様になった日</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>08.</td><td class=album-music-title>ちるちる</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>09.</td><td class=album-music-title>-FINAL SIGMA-</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>10.</td><td class=album-music-title>DetaramE KiddinG</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>11.</td><td class=album-music-title>サマーホラーパーティ</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>12.</td><td class=album-music-title>404 Not Found</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
-						<tr>
-							<td class=album-music-id>13.</td><td class=album-music-title>VIORA</td><td class=album-music-title><img class=album-music-lyrics></td>
-						</tr>
+						<tr><td class=album-music-id>01.</td><td><p class=album-music-title >VIP KID</p></td><td><img class=album-music-youtube-link></td></tr>
+						<tr><td class=album-music-id>02.</td><td class=album-music-title>ギミアブレスタッナウ</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>03.</td><td class=album-music-title>宵々古今</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>04.</td><td class=album-music-title>コノヨ Loading...</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>05.</td><td class=album-music-title>RE:</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>06.</td><td class=album-music-title>Lunatic</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>07.</td><td class=album-music-title>神様になった日</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>08.</td><td class=album-music-title>ちるちる</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>09.</td><td class=album-music-title>-FINAL SIGMA-</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>10.</td><td class=album-music-title>DetaramE KiddinG</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>11.</td><td class=album-music-title>サマーホラーパーティ</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>12.</td><td class=album-music-title>404 Not Found</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
+						<tr><td class=album-music-id>13.</td><td class=album-music-title>VIORA</td><td class=album-music-title><img class=album-music-lyrics></td></tr>
 					</tbody>
 				</table>
 				<div class="content-space">
+					<block />
 					<div id="content-control">
 					<span id="content-control-bt-music">Music</span><span id="content-control-bt-lyrics">lyrics</span><span id="content-control-bt-video">Video</span>
 					</div>
@@ -647,37 +713,7 @@ onDropTable([document.getElementById("table-1-0"),document.getElementById("table
 						음악 소계 영역
 					</div>
 					<div class="content-lyrics">
-右手に携帯で左手には愛<br><p style="color:#848484">미기테니 케-타이 히다리테니와 아이</p><br>오른손에는 휴대폰 왼손에는 사랑<br><br>
-受信するメッセージ　当然気付いてるよ<br><p style="color:#848484">쥬신스루 멧세-지　도-젠 키즈이테루요</p><br>수신받은 메세지, 당연히 눈치 채고 있어<br><br>
-でもすぐに返事したりしちゃったら<br><p style="color:#848484">데모 스구니 헨지시타리 시챳타라</p><br>그래도 곧바로 답장 해 버리거나 하면<br><br>
-ひかれちゃうかな　どうかな<br><p style="color:#848484">히카레챠우카나　도-카나</p><br>조금 깬다고 생각하려나, 어떠려나<br><br><br><br>
-そもそもこんなことばっかが巡ってる思考<br><p style="color:#848484">소모소모 콘나 코토 밧카가 메굿테루 시코-</p><br>처음부터 이런 것들만 되풀이되는 사고<br><br>
-ガラにもなくこんなにドキドキしてる心臓<br><p style="color:#848484">가라니모 나쿠 콘나니 도키도키 시테루 신조-</p><br>어울리지 않게 이렇게나 두근두근 거리는 심장<br><br>
-君のこともっと好きになってしまいそう、いいの？<br><p style="color:#848484">키미노 코토 못토 스키니낫테 시마이소-、 이이노?</p><br>너를 더 좋아하게 되어버릴 것 같아, 괜찮은거야?<br><br>
-なんかありきたりなラブソングみたいで笑えるわ<br><p style="color:#848484">난카 아리키타리나 라브송구 미타이데 와라에루와</p><br>어쩐지 널릴대로 널린 러브송 같아서 웃음이 나오네<br><br><br><br>
-頭の中そればっかで　やだなこんなんじゃまるで<br><p style="color:#848484">아타마노 나카 소레밧카데　야다나 콘난쟈마루데</p><br>머릿속은 온통 이런것 뿐이라, 싫어라 이래선 마치<br><br>
-こっちの方が好きみたいじゃん　ねぇ<br><p style="color:#848484">콧치노 호-가 스키미타이쟝　네에</p><br>내쪽이 널 좋아하는 것 같잖아, 저기<br><br>
-勘付かれちゃうのは癪じゃん　自分ですら止められないの<br><p style="color:#848484">칸츠카레챠우노와 샤쿠쟝　지분데스라 토메라레나이노</p><br>눈치 채이는건 싫잖아, 자기 자신이면서 멈출 수 없는거야<br><br>
-本当にどうかしちゃったみたいね<br><p style="color:#848484">혼토-니 도-카 시챳타 미타이네</p><br>정말 어떻게 되어버린 것 같아<br><br><br><br>
-例えばこれが負け戦でも泣きたくないな<br><p style="color:#848484">타토에바 코레가 마케이쿠사데모 나키타쿠나이나</p><br>만약에 이게 다 진 싸움이라고 해도 울고싶지 않은걸<br><br>
-歯止めがきかないのです神様<br><p style="color:#848484">하도메가 키카나이노데스 카미사마</p><br>브레이크가 말을 듣질 않아요 하나님<br><br>
-きっと間違いじゃないから<br><p style="color:#848484">킷토 마치가이쟈나이카라</p><br>분명 착각은 아니니까<br><br><br><br>
-街の屋上　人すれ違い彷徨う<br><p style="color:#848484">마치노 오쿠죠-　히토스레치가이 사마요우</p><br>거리의 옥상에서, 사람들 속에서 엇갈려 헤메어<br><br>
-鳴らないベルが暗示してたの「さよなら」<br><p style="color:#848484">나라나이 베루가 안지시테타노 사요나라</p><br>울리지 않는 벨소리가 「안녕」을 암시했어<br><br><br><br>
-こっちがその気になったって　君のことまだ掴めなくて<br><p style="color:#848484">콧치가 소노키니낫탓테　키미노코토 마다 츠카메나쿠테</p><br>이쪽에서 아무리 좋아해도, 너의 마음을 아직 종잡을 수 없어서<br><br>
-もどかしいよ　好きが相反して<br><p style="color:#848484">모도카시이요　스키가 아이한시테</p><br>답답해 죽겠어, 좋아함이 서로 반대라서<br><br>
-君が思ってるよりたくさん　ほら、また伝えられないの<br><p style="color:#848484">키미가 오못테루요리 타쿠상　호라 마타 츠타에라레나이노</p><br>네가 생각하는 것 보다 훨씬 더, 봐봐, 또 전해지지 않았잖아<br><br>
-君とおんなじ気持ちでいたいの　ねぇ<br><p style="color:#848484">키미토 오나지 키모치데 이타이노　네에</p><br>너와 같은 마음으로 있고싶은데, 저기<br><br><br><br>
-頭の中そればっかで　やだなこんなんじゃまるで<br><p style="color:#848484">아타마노 나카 소레밧카데　야다나 콘난쟈마루데</p><br>머릿속은 온통 이런것 뿐이라, 싫어라 이래선 마치<br><br>
-こっちの方が好きみたいじゃん　ねぇ<br><p style="color:#848484">콧치노 호-가 스키미타이쟝　네에</p><br>내쪽이 널 좋아하는 것 같잖아, 저기<br><br>
-勘付かれちゃうのは癪じゃん　自分ですら止められないの<br><p style="color:#848484">칸츠카레챠우노와 샤쿠쟝　지분데스라 토메라레나이노</p><br>눈치 채이는건 싫잖아, 자기 자신이면서 멈출 수 없는거야<br><br>
-本当にどうかしちゃったみたいね<br><p style="color:#848484">혼토-니 도-카 시챳타 미타이네</p><br>정말 어떻게 되어버린 것 같아<br><br><br><br>
-ここから見える夜空が　僕らを飲み込んで<br><p style="color:#848484">코코카라 미에루 요조라가　보쿠라오 노미콘데</p><br>여기서 보이는 밤하늘이, 우리들을 집어삼켜<br><br>
-もう二度と会えないから　明日もどうだっていいの<br><p style="color:#848484">모- 니도토 아에나이카라　아시타모 도-탓테 이이노</p><br>이제 두번 다시 보지 못할테니, 내일같은건 어찌되든 상관없어<br><br><br><br>
-知らないフリなら簡単で　どっち選んでみてもハズレ<br><p style="color:#848484">시라나이 후리나라 칸탄데　돗치 에란데미테모 하즈레</p><br>모른척 할 뿐이라면 간단해도, 어느쪽을 골라봐도 오답이라<br><br>
-君をすごく遠くに感じて<br><p style="color:#848484">키미오 스고쿠 토오쿠니 칸지테</p><br>네가 너무 멀게만 느껴져<br><br>
-間違いだらけだった足し算　赤点問いかける最後<br><p style="color:#848484">마치가이 다라케닷타 타시잔　아카텐 토이카케루 사이고</p><br>온통 오류 천지였던 덧셈, 낙제점이냐고 마지막으로 물었어<br><br>
-君とおんなじ気持ちが痛いよ　ねぇ<br><p style="color:#848484">키미토 온나지 키모치가 이타이요　네에</p><br>너와 같았던 마음이 아파와, 저기</p>
+						가사 영역
 					</div>
 					<hr />
 					<div class="content-video">
@@ -700,21 +736,10 @@ onDropTable([document.getElementById("table-1-0"),document.getElementById("table
 			</nav>
 			
 			<!--===========================================
-			레이아웃 데이터들
-			===========================================-->
-			<div class="layout">
-				
-			</div>
-			
-			
-			<div id=music><!-- 음악 플레이어 -->
-				
-			</div>
-			<!--===========================================
 			노설명
 			===========================================-->
 			<div id=foot style="text-align:center">
-				@
+				Create By Soungjin....
 			</div>
 		</div>
 		
