@@ -13,6 +13,7 @@
 		<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
 		<meta name="viewport" content="width=1024">
 		
+		<!--
 		<meta property="og:locale" content="ko_KR" />
 		<meta property="og:site_name" content="RΞOL / れをる　Fan Site">
 		<meta property="og:title" content="RΞOL / れをる Album">
@@ -22,6 +23,7 @@
 		<meta property="og:url" content="http://www.toysfactory.co.jp/artist/reol/official">
 		<meta property="og:image" content="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/ogp_img.jpg">
 		<meta property="fb:app_id" content="">
+		-->
 		
 			
 		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" rel="shortcut icon">
@@ -66,7 +68,11 @@ hr {
 	position:absolute;
 	width:100%;
 	height:auto;
-	display:inline-block;
+}
+#head{
+	width:100%;
+	height:30px;
+	background:#293e97;
 }
 
 #content{
@@ -77,24 +83,88 @@ hr {
 #nav{
 	float:left;
 	background:#35d434;
-	width:250px;
+	width:250px;	
 	height:500px;
+}
+#footer{
+	clear: both;
 }
 
 .layer{
-	width:350px;
-	height:200px;
+	width:350px;	
 	margin:8px;
-	float:left;
+	float:right;
 	background:#373f9e;
 }
+#player-img{
+	width:100%;
+	margin-top:20px;
+}
 
+
+button{
+	width:100px;
+	height:50px;
+}
+
+.player{
+	width:100%;
+	height:100%;
+}
+.thumb{
+    background: #fff;
+    border: 1px solid #bebebe;
+    border-color: rgba(0,0,0,.25);
+    border-radius: 1px;
+    position: absolute;
+    left: 0px;
+    top: -2px;
+    width: 22px;
+    height: 10px;
+    margin-left: -1px;
+    overflow: hidden;
+    cursor: pointer;
+}
 		</style>
 		<!--===========================================
 		프린트 전용 헤더
 		===========================================-->
 		<script src="../js/soungjin.js?var=1"></script>
 		<script>
+function progbar(){//프로그래스바 처리
+	var a=document.getElementsByClassName("progbar"),b=0;
+	function _create(ele){
+		var a=document.createElement("div").addClass("progbar-empty")//내부 항목
+			,b=document.createElement("div").addClass("progbar-fill")//게이지바
+			,c=document.createElement("div").addClass("thumb")
+			,d=0,e=0,f=ele.getPosition(),g;//바
+		ele.css({height:"8px",width:"100%",position:"relative"});
+		b.css("width","0px");
+		c.css("left","10px").on("onmousedown",function(){
+			d=window.event.clientX;
+			g=c.css("left");
+			e=1;
+		});
+		window.on("onmousemove",function(){
+			if(!e)return;
+			console.log(c.getPosition().left);
+			console.log(f.width);
+			if(c.getPosition().left-8>f.width)return;
+			var a=window.event.clientX-d;
+			c.css("left",(g+a)+"px");
+		}).on("onmouseup",function(){
+			e=0;
+		});
+		console.log(f.width/100);
+		a.add(b).add(c);
+		ele.add(a);
+		console.log("?");
+	}
+	for(;b<a.length;b++)
+		_create(a[b]);
+	
+}
+
 function loadingView(vele,hele,f){
 	vele.setAttribute("style","display:block;width:100%;height:100%;position:fixed;");
 	hele.setAttribute("style","display:none;width:0;height:0;");
@@ -106,19 +176,17 @@ function loadingView(vele,hele,f){
 	
 }
 function load(){
+	progbar();
 	loadingView(document.getElementById("loading"),document.getElementById("body"),function(){
 		
 	});
-	console.log("실행");
 }
-/*
+
 if(!isIE){
 	window.on("onload",load);
 }else{
 	window.onload=load;
-}*/
-window.on("onload",load);
-console.log(window.onload)
+}
 		</script>
 	</head>
 	<body>
@@ -134,17 +202,33 @@ console.log(window.onload)
 			</div>
 			<div id=content>
 				<!-- 항목들 -->
-				<div class="layer">항목1</div>
-				<div class="layer">항목2</div>
-				<div class="layer">항목3</div>
-				<div class="layer">항목4</div>
-				<div class="layer">항목5</div>
+				<div class="layer">
+					<div id=player-title>타이틀 영역</div>
+					<img id=player-img src="http://549.ipdisk.co.kr/reol/img/Album/1-1.jpg"/>
+				</div>
+				<div class="layer">
+					<table class=player>
+						<colgroup>
+							<col height=8px width=8px /><col />
+						</colgroup>
+						<tr>
+							<td rowspan=2>▶</td>
+							<td>timeline</td>
+						</tr>
+						<tr>
+							<td><div id=player-progbar class="progbar"></div></td>
+						</tr>
+					</table>
+				</div>
+				<div class="layer"></div>
+				<div class="layer"></div>
+				<div class="layer"></div>
 			</div>
 			<div id=nav>
 				네비게이션
 			</div>
 			<div id=footer>
-				Create BY Soungjin's;
+				Create BY Soungjin's
 			</div>
 			<div id=layer>
 				
