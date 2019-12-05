@@ -121,8 +121,8 @@ section #back{
 }
 section #album{
 	clear:both;
-	width:250px;
-	height:250px;
+	width:400px;
+	height:400px;
 }
 section #list{
 	display:right;
@@ -131,8 +131,8 @@ section #list{
 }
 section #list .scroll-area{
     float: right;
-    max-width: 300px;
-    width: 300px;
+    min-width: 100px;
+    width: auto;
 }
 section #list .music{
 	width:250px;
@@ -150,6 +150,10 @@ section #track-list-item-id,section #track-list-item-img{
 }
 section #track-list-item-img{
 	display:none;
+}
+section #track-list-item{
+	cursor:pointer;
+	
 }
 
 /* ======================================================= */
@@ -254,6 +258,24 @@ section{
 	
 }
 
+
+#popup *{
+	position:fixed;
+	left: 50%;
+	bottom: 0%;
+	width:100%;
+	-webkit-transform: translate(-50%,0);
+	-ms-transform: translate(-50%,0);
+	-moz-transform: translate(-50%,0);
+	-o-transform: translate(-50%,0);
+	transform: translate(-50%,0%);
+}
+
+#popup{
+	position: fixed;
+	width:100%;
+	height:100%;
+}
 		</style>
 		<script>
 var lib_n="_Soungjin_s";//라이브러리 네임
@@ -274,7 +296,21 @@ Element.prototype.on=window.on=function(){//이벤트명/실행함수//이후에
 		};
 	d[lib_n].event[a[0]]=c;
 	return d;
-}
+};
+Element.prototype.remove=function(eve,f){
+	if(!this[lib_n]){
+		if(this["on"+eve])delete this["on"+eve];
+		return;
+	}
+	var keys=this[lib_n].event[eve];
+	for(var i in this[lib_n].event[eve]){
+		if(i===f){
+			delete i;
+			break;
+		}
+	}
+	if(keys.length<=1)delete this["on"+eve];
+};
 Element.prototype.data=function(){
 	var a=arguments,b=a.length,c=typeof a[1]!="string";
 	if(b==1)return this.getAttribute("data-"+a[0]);
@@ -286,36 +322,49 @@ Element.prototype.indexOf=function(){var c=this.parentNode.childNodes,i=0;for(;i
 Element.prototype.getPosition=function(){return this.getBoundingClientRect()};
 
 function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}}}//라이브러리 불러오기
+
+function Stack(){
+	this.data = [];
+	this.top = 0;
+	this.push=function(element){this.data[this.top++]=element;}
+	this.pop=function(){if(this.top)return this.data[--this.top];else return 0;}
+	this.shift=function(){this.top--;return this.data.shift();}//요소 앞을 지우고 값을 리턴
+	this.peek=function(){return this.data[this.top-1];}
+	this.length=function(){return this.top;}
+	this.clear=function(){this.top = 0;this.data.length=0;}
+	this.all=function(a,l){l=[];for(a=0;a<this.top;a++)l.push(this.data[a]);return l;}
+}
+
 ///////////////////////////// System func ////////////////////////////////////
 function id(a){return document.getElementById(a)}
 
 const data=[
 	{name:"No title + / -",tag:"no-title",
-		list:["- Opening -","ヒビカセ","オオエドランヴ","drop pop candy","No title","Echo","- BWW SCREAM -","アシンメトリー","-FINAL SIGMA-","ギガンティックO.T.N - Big Death Edition -","- Ending -"],
-		music:["01 - GigaP - Opening.flac","02 - GigaP x Reol - Hibikaze.flac","03 - GigaP feat. Reol, nqrse - Ooedo Ranvu.flac","04 - GigaP x Reol - drop pop candy.flac","05 - GigaP - Interlude.flac",
-				"06 - Reol - No title.flac","07 - GigaP x Reol - Echo.flac","08 - GigaP - BWW SCREAM.flac","09 - GigaP x L.Petty feat. Reol - Asymmetry.flac","10 - GigaP feat. Reol - Gigantic O.T.N -Big Death Edition-.flac","11 - GigaP - Ending.flac"],
+		list:["Opening","ヒビカセ","オオエドランヴ","drop pop candy","Interlude","No title","Echo","BWW SCREAM","アシンメトリ-","-FINAL SIGMA-","ギガンティックO.T.N","Ending"],
+		type:[".flac"],
 		img:["1-1.jpg","1-2.jpg"],
 		color:"#2b479b"
 	},
 	{name:"極彩色",tag:"very-colorful",
 		list:["-nil-","極彩色","生命線","水底游歩道","ハルシアン","ロジックエージェント","-orderly-","mede:mede","Syrup","ラ·タタン","ミッドナイトストロウラ","Behind The Night","ROXY","約束の蒼","MONSTER","染"],
-		music:["(01) [ ギガP] -nil-.flac","(02) [ギガP feat. れをる] 極彩色.flac",".flac",".flac",".flac",".flac",".flac",".flac"],
+		type:[".flac"],
 		img:["2-1.jpg","2-2.jpg","2-3.jpg","2-4.png","2-5.png","2-6.png"],
 		color:"#e0c190"
 	},
 	{name:"「Σ」",tag:"sigma",
 		list:["VIP KID","ギミアブレスタッナウ","宵々古今","コノヨ Loading...","RE:","Lunatic","神様になった日","ちるちる","-FINAL SIGMA-","DetaramE KiddinG","サマーホラーパーティ","404 Not Found","VIORA"],
-		music:["01. VIP KID.flac","02. ギミアブレスタッナウ.flac","03. 宵々古今.flac","04. コノヨLoading....flac","05. RE_.flac","06. Lunatic.flac","07. 神様になった日.flac","08. ちるちる.flac","09. -FINAL SIGMA-.flac",".flac","10. DetaramE KiddinG.flac","11. サマーホラーパーティ.flac","12. 404 not found.flac","13. VIORA.flac"],
+		type:[".flac"],
 		img:["3-1.jpg","3-2.jpg","3-3.jpg","3-4.png"],
 		color:"#f8f8f6"
 	},
 	{name:"エンドレスEP",tag:"endless-ep",
-		list:["ニュータイプトーキョー","B12","エンドレスライン","LUVORATORRRRRY!"],
-		music:["01 ニュータイプトーキョー.flac","02 B12.flac","03 エンドレスライン.flac","04 LUVORATORRRRRY!.flac"],
+		list:["ニュ-タイプト-キョ-","B12","エンドレスライン","LUVORATORRRRRY!"],
+		type:[".flac"],
 		img:["4.jpg"],
-		color:"#43a7f9"
+		color:"#43a7f9",
 	}
-]
+];
+const play=Play(),popup=Popup();
 function nav(e){
 	var a,b=0,c=document.location.href.split("#")[1],c,d=this;
 	for(;data[b]&&data[b].tag!==c&&b<data.length;b++);
@@ -391,7 +440,7 @@ function section(a,b){
 			this[lib_n].view.style.display="inline-block";
 			this.style.background="";
 		}).on("click",function(){
-			
+			play.play(a,this.indexOf());
 		});
 	function imgchange(datas,time,url){//element : [img id] | ms | "/img/Album/"
 		var b=0,c,d=this;//
@@ -409,7 +458,117 @@ function section(a,b){
 	k=imgchange.call(id("album"),data[a].img,3000,"/img/Album/");
 	return {add:e,clear:i,back:k};
 }
+function Play(){//미디어 관리자
+	var src="",smi="",Sdata,isPlaying=0,ind=[-1,-1],audio=new Audio(),timeU=function(){
+		if(!Sdata||smi!==src)return;
+		var time = Math.floor(this.currentTime*1000),keys=Object.keys(Sdata),last=0,next_time=-1;//현재시간
+		for(var i=1;i<keys.length;i++)
+			if(keys[i-1]<time&&time<=keys[i]){//이전시간
+				document.getElementById("music_subtitle").innerHTML=Sdata[keys[i-1]];
+				last=1;
+				next_time=keys[i];
+				break;
+			}
+		if(keys.length<1||!last)document.getElementById("music_subtitle").innerHTML=Sdata[keys[keys.length-2]];
+		return next_time;
+	};
+	audio.on("canplay",function(){id("e_time").innerHTML=humanReadable(Math.floor(this.duration));});
+	audio.on("change",function(){this.currentTime=this.value*this.duration/100;});
+	audio.on("timeupdate",function(){
+		id("n_time").innerHTML=humanReadable(Math.floor(this.currentTime));
+		id("music_time").value=this.currentTime*100/this.duration;
+	});
+	audio.on("timeupdate",function(){audio.time=timeU.call(this);});
+	audio.on("ended",function(){
+		if(++b>=data[a].list.length)b=0;
+		play(a,b);
+	});
+	function init(){
+		id("music_time").on("change",function(){audio.currentTime=this.value*audio.duration/100;});
+		id("play_b").on("click",pause);
+	}
+	function play(a,b){//페이지 / 항목
+		//"/Music/"+data[a].tag+"/"+data[a].list[this.indexOf()].replace(/:/g, "_")+data[a].type;
+		id("play_title").innerHTML=data[a].list[b];
+		ind=[a,b];
+		popup.create(data[a].list[b]+"Playing....");
+		src=data[a].tag+"/"+data[a].list[b].replace(/:/g, "_");
+		audio.src="/Music/"+src+data[a].type;
+		audio.play();
+		isPlaying=1;
+		audio.time=0;
+		document.getElementById("music_subtitle").innerHTML="";
+		get("/Music/"+src+".sti",function(c,d){
+			Sdata=JSON.parse(c);
+			smi=d;//자막링크 저장
+		},src);
+	}
+	function pause(){
+		if(!audio.src)return;
+		isPlaying?audio.pause():audio.play();
+		isPlaying!=isPlaying;
+		console.log(isPlaying);
+	}
+	function index(){
+		return ind;
+	}
+	return {init:init,play:play,pause:pause,audio:audio,index:index};
+}
+function Popup(){//팝업 관리자
+	var /*c=new Stack(),*/d=0;
+	function b(g){//create
+		var e=document.body.createElement("pupup")
+		d++;
+		e.id="popup";
+		if(typeof g==="string")e.createElement("span").innerHTML=g;
+		else e.appendChild(g);
+		var h=e.childNodes[0];
+		h.style.background="#349ac3";
+		h.style.padding="10px";
+		h.style.bottom=-h.getPosition().height+"px";
+		e.on("click",z);
+		anime({//가려져야 할것,
+			targets:h,
+			bottom:0,
+			complete:function(){
+				setTimeout(z,3*1000)
+			}
+		});
+		//setTimeout(function(){if(e)z(h)},3*1000);
+	}
+	function z(){//remove
+		var f=id("popup");
+		if(f)
+			anime({//가려져야 할것,
+				targets:f.childNodes[0],
+				bottom:-f.childNodes[0].getPosition().height+"px",
+				complete:function(){
+					f=id("popup");
+					if(f)f.parentNode.removeChild(f);
+				}
+			});
+		d=0;
+	}
+	function f(){return d;}
+	return {create:b,remove:z,length:d};
+}
+function get(){
+	var xmlhttp = new XMLHttpRequest(),a=arguments,b=a.length;
+	if(b<1)return;
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState==4&&this.status==200)
+				typeof a[1]==="function"&&a[1].call(document,this.responseText,a[2]);
+	};
+	xmlhttp.open("GET",a[0],true);
+	xmlhttp.send();
+}
+function humanReadable(seconds) {
+  var pad=function(x){return(x<10)?"0"+x:x}
+  return pad(parseInt(seconds/60%60))+":"+pad(seconds%60)
+}
 function init(){
+	var a=changeSize([655]);
+	play.init();
 	nav.call(document.querySelector("nav"),function(a){//c==nav b=section
 		var b=document.querySelector("section"),c=this,d,e;
 		d=function(e,o,f){anime({targets:e,top:o,complete:f})};
@@ -421,7 +580,6 @@ function init(){
 		d(b,0);
 	});
 	console.log("start");
-	var a=changeSize([655]);
 	window.on("resize",function(){
 		var b=a();
 		if(b[0]||b[1]){
@@ -487,10 +645,9 @@ function changeSize(ops){
 			<p class=title>undefind</p>
 				<img id=back src=/img/back.png>
 			<div id=list>
-				<div style="width:250px;display:inline-block;">
+				<div style="width:400px;display:inline-block;">
 					<img id=album>
-					<div class=music_subtitle>
-						가사영역
+					<div id=music_subtitle class=music_subtitle style="text-align:center;background:rgba(f,f,f,.3)">
 					</div>
 				</div>
 				<div class=scroll-area><!-- 655보다 작으면 스크롤바 생성 (세로) -->
@@ -511,16 +668,16 @@ function changeSize(ops){
 					</ol>
 				</div>
 				<div class=music>
-					<table>
+					<table style="table-layout:fixed;width:400px">
 						<tr>
-							<td rowspan=3><img src=/img/icons/play_1.jpg style="width:50px;height:50px;" onclick=""></td>
-							<td>00:00</td>
-							<td style="text-align:right;">99:99</td>
+							<td rowspan=3 width="71px"><img id=play_b src=/img/icons/play_1.jpg style="width:70px;height:70px;"></td>
+							<td id=n_time>00:00</td>
+							<td id=e_time style="text-align:right;">99:99</td>
 							<td width="32px"><img src=/img/icons/vol_2.png style="width:30px;height:30px;float:right;"></td>
 						</tr>
-						<tr><!--공백--></tr>
+						<tr id=play_title><!--공백--></tr>
 						<tr>
-							<td colspan=3><input id="music_time" type="range" min="0" max="100" step=".001" value=".0" width="150px"></td>
+							<td colspan=3><input id="music_time" type="range" min="0" max="100" step=".001" value=".0" style="width:320px"></td>
 						</tr>
 					</table>
 					
@@ -579,9 +736,9 @@ input[type="range"]::-webkit-slider-thumb{
 	text-align:center;
     overflow-y: auto;
     overflow-x: hidden;
-	top: 140px;
-	width:250px;
-	height:250px;
+	top: 300px;
+	width:400px;
+	background: rgba(255,255,255,0.5);
 }
 			</style>
 		</section>
