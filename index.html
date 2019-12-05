@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta name="robots" content="noarchive, nofollow, nosnippet" />
+		
+		<!-- 저작권인데 난 저작권이 없기에... 상업적 용도 X -->
+		<!--meta name="copyright" content="&copy;"-->
+		<!-- キャッシュ無 (캐쉬 없음) 	-->
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="expires" content="0">
+		<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
+		<meta name="viewport" content="width=1024">
+		
+		<meta property="og:locale" content="ko_KR" />
+		<meta property="og:site_name" content="Σ / れをる　Fan Site">
+		<meta property="og:title" content="REOL 『Σ』 Fan Site">
+		<meta property="og:type" content="website">
+		<meta property="og:description" content="『Σ』 Album">
+		
+		<meta property="og:url" content="http://www.toysfactory.co.jp/artist/reol/official">
+		<meta property="og:image" content="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/ogp_img.jpg">
+		<meta property="fb:app_id" content="">
+		
+		<!--[if lt IE 9]>
+		<script src="http://ie9-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+		<script src="//549.ipdisk.co.kr/js/html5shiv.js"></script>
+		<![endif]-->
+		
+		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" rel="shortcut icon">
+		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/apple-touch-icon-precomposed.png" sizes="152x152" rel="apple-touch-icon">
+		<title>『Σ』</title>
+		
+		<!--===========================================
+		사이트 공개 테그
+		===========================================-->
+		<meta name="keywords" content="REOL,Giga,Okiku,Σ,레오루,기가,오키쿠,Sigma,びっくり,驚く">
+		<meta name="description" content="『Σ』 Album">
+		
+		
+		<!--===========================================
+		사이트 구동에 필요한 데이터
+		===========================================-->
+		<link type="text/css" rel="stylesheet" href="index.css"/>
+		<style media="screen">
+* {
+	margin: 0; padding: 0;
+	font-family: 맑은 고딕;
+	white-space: nowrap;
+	text-decoration: none;
+	display:auto;
+}
+html,body{
+	position: relative;
+	height:100%;
+	width:100%;
+	margin: 0; padding: 0;
+}
+
+hr {
+	border-top:2px solid #284098;
+	border-bottom:none;
+	clear:both;
+}
+
+#select{
+	position:relative;
+	overflow:hidden;
+	white-space:nowrap;
+	width:1024px;
+	color:#fff;
+	margin: 0 auto;
+}
+#select ul#slider {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+#select ul li {
+	position:absolute;
+	width:100%;
+}
+#select ul li img {
+	width:100%;
+	padding:-50%;
+	height:100%;
+	margin-top:-35%;
+}
+#select-screen{
+	width:100%;
+	height:100%;
+	opacity: 0.5;
+}
+
+#select #icon{
+	position:absolute;
+	bottom:0;
+	right:0;
+	height:1em;width:1em;
+	margin:.5em;
+	font-size:2em;
+}
+#select #title{
+	position:absolute;
+	top:0;bottom:0;
+	left:0;right:0;
+	margin:auto;
+	height:100%;
+	width: 2.5em;
+	font-size:2em;
+	text-align:center;
+	overflow:hidden;
+}
+#select #menu{
+	position:absolute;
+	bottom:0;
+	margin:1em;
+	text-align:center;
+	height:1.5em;
+	width: 1em;
+}
+
+#select #menu:hover{
+	transition-duration: .5s;
+	transition-timing-function:ease-in-out;
+	transform:rotate(90deg);
+}
+
+.select-ctr{
+	position:absolute;
+	width:20px;
+	height:20px;
+	bottom:65%;
+}
+
+#begin{
+	background:url("http://www.reol.jp/wp/wp-content/themes/reol_pc/home/img/arrow_l.png") no-repeat;
+	left:0;
+}
+#next{
+	background:url("http://www.reol.jp/wp/wp-content/themes/reol_pc/home/img/arrow_r.png") no-repeat;
+	right:0;
+}
+#body{
+	position:relative;
+	width:1020px;
+	height:auto;
+	padding-top:15px;
+	margin:0 auto;
+}
+
+#side{
+	position:relative;
+	width:1024px !important;
+}
+
+.album-music-list span{
+	float: left;
+}
+
+.album-title{
+	font-size:3em;
+	font-weight:bold;
+}
+
+.album-music-list{
+	font-size:1.5rem;
+	font-weight:bold;
+}
+.album-music-list ul li{
+	height: 2rem;
+	list-style-type: decimal-leading-zero;
+	margin-bottom:1.5rem;
+}
+.album-music-title{
+	height:1.5rem;
+	cursor:pointer;
+}
+
+.album-music-title:hover{
+	height:1.5rem;
+	background:#284098;
+}	
+.album-music-youtube-link{
+	width: 1rem;
+	height:1rem;
+	float: right;
+}
+.play-control{
+	position:relative;
+	width:500px;
+	height:500px;
+}
+.album-img{
+	width: 500px;
+	height:500px;
+	border-radius:50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	background:#284098;
+}
+.play-control div{
+	position:absolute;
+	top:45%;
+	margin:.5em;
+}
+.player-control-next{
+	right:0px;
+}
+.player-control-play{
+	right:40%;
+	top: 40%;
+	font-size:2em;
+}
+
+.content-space{
+	width:100%;
+	clear:both;
+}
+#content-control span{
+	border-style:solid;
+    border-width: 2px 2px 0px 0px;
+	float:left;
+	border-color:#284098;
+	color:#284098;
+}
+
+.content-lyrics{
+	text-align:center;
+}
+
+#foot{
+	position:absolute;
+	text-align:center;
+}
+		</style>
+		<!--===========================================
+		프린트 전용 헤더
+		===========================================-->
+		<style media="print">
+		</style>
+		<!--===========================================
+		상단 셀렉트 바
+		===========================================-->
+		<style>
+
+		</style>
+		<script>
+//페이지 구동용 자바스크립트
+/*
+내가 왜 주석을 달고 있는지 모르겠지만...여튼 단다
+*/
+var slides;
+function init(){
+	slide();
+	select();
+}
+function slide(){
+	var x=1024;//window.innerWidth;
+	var slider = document.getElementById("slider");
+	var slideArray = slider.getElementsByTagName("li");
+	var slideMax = slideArray.length - 1;
+	var curSlideNo = 0;
+
+	for (i = 0; i <= slideMax; i++) {
+		if (i == curSlideNo) slideArray[i].style.right = 0;
+		else slideArray[i].style.right = -x + "px";
+	}
+	var aniStart = false;
+	var next = 1;
+	var move_speed = 20;
+	/*
+	var changeSlide = function(v){
+		if (aniStart === true) return;
+		next = curSlideNo + 1;
+		if (next > slideMax) next = 0;
+		aniStart = true;
+		sliding();
+	}*/
+	document.getElementById("begin").addEventListener('click', function (){
+		if (aniStart)return;
+		next = curSlideNo-1;
+		if (next<0)next=slideMax;
+		aniStart = true;
+		slideArray[next].style.right=x+'px';
+		console.log(next+'|'+curSlideNo);
+		sliding_r();
+	}, false);
+	document.getElementById("next").addEventListener('click', function (){
+		if (aniStart)return;
+		next=curSlideNo+1;
+		if (next>slideMax)next=0;
+		aniStart = true;
+		slideArray[next].style.right=-x+'px';
+		sliding_l();
+	}, false);
+	
+	function sliding_l(){
+		var curX = parseInt(slideArray[curSlideNo].style.right, 10);
+		var nextX = parseInt(slideArray[next].style.right, 10);
+		var newCurX = curX + move_speed;
+		var newNextX = nextX + move_speed;
+		if (newCurX >= x) {
+			slideArray[curSlideNo].style.right = -x + "px";
+			slideArray[next].style.right = 0;
+			curSlideNo = curSlideNo + 1;
+			if (curSlideNo>slideMax)curSlideNo = 0;
+			aniStart = false;
+			return;
+		}
+		slideArray[curSlideNo].style.right = newCurX + "px";
+		slideArray[next].style.right = newNextX + "px";
+		setTimeout(sliding_l, move_speed );
+	}
+	
+	function sliding_r(){
+		var curX = parseInt(slideArray[curSlideNo].style.right, 10);//현재위치
+		var nextX = parseInt(slideArray[next].style.right, 10);//현재위치
+		var newCurX = curX - move_speed;
+		var newNextX = nextX - move_speed;
+		if (newCurX < -x){//마무리
+			slideArray[curSlideNo].style.right = -x+"px";//사라지는것
+			slideArray[next].style.right = 0;//이동할것
+			curSlideNo = curSlideNo-1;
+			if (curSlideNo<0)curSlideNo = slideMax;
+			aniStart = false;
+			return;
+		}
+		slideArray[curSlideNo].style.right = newCurX + "px";
+		slideArray[next].style.right = newNextX + "px";
+		setTimeout(sliding_r, move_speed );
+	}
+}
+function select(){
+	var isOpen=1,isPlay=0;
+	var height=window.innerHeight,target=document.getElementById("select");
+	var repeat=0;
+	target.style.height=height/100*30+"px";
+	var open=function open(k){
+		if(isPlay)return;
+		if(repeat)clearTimeout(repeat),repeat=0;
+		isPlay=1;
+		if(isOpen){
+			target.animate([
+				{ height: height/100*30+'px' },
+				{ height: height/100*10+'px'} 
+			],{
+				duration: 1500,
+				easing:"ease-in-out",
+				fill:"forwards"
+			});
+		}else{
+			target.animate([
+				{ height: height/100*10+'px' },
+				{ height: height/100*30+'px'} 
+			],{
+				duration: 1500,
+				easing:"ease-in-out",
+				fill:"forwards"
+			});
+			repeat=setTimeout(open,3000);
+		}
+		setTimeout(function(){isPlay=0},1500);
+		isOpen=!isOpen;
+	}
+	document.getElementById("select-screen").onclick=open;
+	setTimeout(open,3000);
+}
+
+window.onload =init;
+		</script>
+	</head>
+	<body>
+		<!--===========================================
+		타이틀 셀렉터
+		===========================================-->
+		<div id=select>
+			<ul id=slider>
+				<li>
+					<img id=select-1 src="http://549.ipdisk.co.kr/reol/img/Album/1-1.jpg" style="margin-top:-5%;">
+				</li>
+				<li>
+					<img id=select-1 src="http://549.ipdisk.co.kr/reol/img/Album/2-1.jpg" style="margin-top:-40%;">
+				</li>
+				<li>
+					<img id=select-1 src="http://549.ipdisk.co.kr/reol/img/Album/3-1.jpg" style="margin-top:-25%;">
+				</li>
+				<li>
+					<img id=select-1 src="http://549.ipdisk.co.kr/reol/img/Album/4.jpg">
+				</li>
+			</ul>
+			<div id=select-screen></div>
+			<!-- 여기밑부터 이벤트 엑세스 가능 -->
+			<!--img id=logo src=http://549.ipdisk.co.kr/img/reol/logo.png /-->
+			<div id=title>REOL</div>
+			<div id=menu onclick="side_open()">Σ</div>
+			<img id=icon src="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" style='filter:invert()'>
+			<img id=next class=select-ctr><img id=begin class=select-ctr>
+		</div>
+		<!--===========================================
+		헤더 - 타이틀 셀렉터와 병합
+		===========================================-->
+		<!--===========================================
+		실제 데이터가 들어가는 부분.
+			이 부분은 별도 정의?
+			놉 히든을 사용하여 넣기!
+		===========================================-->
+		<div id=body>
+			<!--===========================================
+			사이드바 - 음악 목록(매뉴 확장)
+			===========================================-->
+			<nav class='album-music-list album no-title' ><!-- No title -->
+				<p class=album-title>No title</p>
+				<table>
+					<colgroup>
+						<col><col width="100px">
+					</colgroup>
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
+			</nav>
+			<nav class='album-music-list album very-colorful' ><!-- 極彩色 -->
+				<p class=album-title>極彩色</p>
+				<table>
+					<colgroup>
+						<col><col width="100px">
+					</colgroup>
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
+			</nav>
+			<nav class='album-music-list album sigma' ><!-- 「Σ」 -->
+				<p class=album-title>「Σ」</p>
+				<span><!--  앨범 플레이어 -->
+					<div class="play-control">
+						<img id="player-img-main" class="album-img" width="300px" height="300px" >
+						<div class="player-control-begin"><</div>
+						<div class="player-control-next">></div>
+						<div class="player-control-play">▶</div>
+					</div>
+				</span>
+				<table>
+					<colgroup>
+						<col width="10px"><col width="100%"><col width="100px">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td class=album-music-id>01.</td><td><p class=album-music-title >VIP KID</p></td><td><img class=album-music-youtube-link></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>02.</td><td class=album-music-title>ギミアブレスタッナウ</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>03.</td><td class=album-music-title>宵々古今</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>04.</td><td class=album-music-title>コノヨ Loading...</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>05.</td><td class=album-music-title>RE:</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>06.</td><td class=album-music-title>Lunatic</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>07.</td><td class=album-music-title>神様になった日</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>08.</td><td class=album-music-title>ちるちる</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>09.</td><td class=album-music-title>-FINAL SIGMA-</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>10.</td><td class=album-music-title>DetaramE KiddinG</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>11.</td><td class=album-music-title>サマーホラーパーティ</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>12.</td><td class=album-music-title>404 Not Found</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+						<tr>
+							<td class=album-music-id>13.</td><td class=album-music-title>VIORA</td><td class=album-music-title><img class=album-music-lyrics></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="content-space">
+					<div id="content-control">
+					<span id="content-control-bt-music">Music</span><span id="content-control-bt-lyrics">lyrics</span><span id="content-control-bt-video">Video</span>
+					</div>
+					<hr />
+					<div class="content-music">
+						음악 소계 영역
+					</div>
+					<div class="content-lyrics">
+<strong>右手に携帯で左手には愛</strong><br><p style="color:#848484">미기테니 케-타이 히다리테니와 아이</p><br>오른손에는 휴대폰 왼손에는 사랑<br><br>
+<strong>受信するメッセージ　当然気付いてるよ</strong><br><p style="color:#848484">쥬신스루 멧세-지　도-젠 키즈이테루요</p><br>수신받은 메세지, 당연히 눈치 채고 있어<br><br>
+<strong>でもすぐに返事したりしちゃったら</strong><br><p style="color:#848484">데모 스구니 헨지시타리 시챳타라</p><br>그래도 곧바로 답장 해 버리거나 하면<br><br>
+<strong>ひかれちゃうかな　どうかな</strong><br><p style="color:#848484">히카레챠우카나　도-카나</p><br>조금 깬다고 생각하려나, 어떠려나<br><br><br><br>
+<strong>そもそもこんなことばっかが巡ってる思考</strong><br><p style="color:#848484">소모소모 콘나 코토 밧카가 메굿테루 시코-</p><br>처음부터 이런 것들만 되풀이되는 사고<br><br>
+<strong>ガラにもなくこんなにドキドキしてる心臓</strong><br><p style="color:#848484">가라니모 나쿠 콘나니 도키도키 시테루 신조-</p><br>어울리지 않게 이렇게나 두근두근 거리는 심장<br><br>
+<strong>君のこともっと好きになってしまいそう、いいの？</strong><br><p style="color:#848484">키미노 코토 못토 스키니낫테 시마이소-、 이이노?</p><br>너를 더 좋아하게 되어버릴 것 같아, 괜찮은거야?<br><br>
+<strong>なんかありきたりなラブソングみたいで笑えるわ</strong><br><p style="color:#848484">난카 아리키타리나 라브송구 미타이데 와라에루와</p><br>어쩐지 널릴대로 널린 러브송 같아서 웃음이 나오네<br><br><br><br>
+<strong>頭の中そればっかで　やだなこんなんじゃまるで</strong><br><p style="color:#848484">아타마노 나카 소레밧카데　야다나 콘난쟈마루데</p><br>머릿속은 온통 이런것 뿐이라, 싫어라 이래선 마치<br><br>
+<strong>こっちの方が好きみたいじゃん　ねぇ</strong><br><p style="color:#848484">콧치노 호-가 스키미타이쟝　네에</p><br>내쪽이 널 좋아하는 것 같잖아, 저기<br><br>
+<strong>勘付かれちゃうのは癪じゃん　自分ですら止められないの</strong><br><p style="color:#848484">칸츠카레챠우노와 샤쿠쟝　지분데스라 토메라레나이노</p><br>눈치 채이는건 싫잖아, 자기 자신이면서 멈출 수 없는거야<br><br>
+<strong>本当にどうかしちゃったみたいね</strong><br><p style="color:#848484">혼토-니 도-카 시챳타 미타이네</p><br>정말 어떻게 되어버린 것 같아<br><br><br><br>
+<strong>例えばこれが負け戦でも泣きたくないな</strong><br><p style="color:#848484">타토에바 코레가 마케이쿠사데모 나키타쿠나이나</p><br>만약에 이게 다 진 싸움이라고 해도 울고싶지 않은걸<br><br>
+<strong>歯止めがきかないのです神様</strong><br><p style="color:#848484">하도메가 키카나이노데스 카미사마</p><br>브레이크가 말을 듣질 않아요 하나님<br><br>
+<strong>きっと間違いじゃないから</strong><br><p style="color:#848484">킷토 마치가이쟈나이카라</p><br>분명 착각은 아니니까<br><br><br><br>
+<strong>街の屋上　人すれ違い彷徨う</strong><br><p style="color:#848484">마치노 오쿠죠-　히토스레치가이 사마요우</p><br>거리의 옥상에서, 사람들 속에서 엇갈려 헤메어<br><br>
+<strong>鳴らないベルが暗示してたの「さよなら」</strong><br><p style="color:#848484">나라나이 베루가 안지시테타노 사요나라</p><br>울리지 않는 벨소리가 「안녕」을 암시했어<br><br><br><br>
+<strong>こっちがその気になったって　君のことまだ掴めなくて</strong><br><p style="color:#848484">콧치가 소노키니낫탓테　키미노코토 마다 츠카메나쿠테</p><br>이쪽에서 아무리 좋아해도, 너의 마음을 아직 종잡을 수 없어서<br><br>
+<strong>もどかしいよ　好きが相反して</strong><br><p style="color:#848484">모도카시이요　스키가 아이한시테</p><br>답답해 죽겠어, 좋아함이 서로 반대라서<br><br>
+<strong>君が思ってるよりたくさん　ほら、また伝えられないの</strong><br><p style="color:#848484">키미가 오못테루요리 타쿠상　호라 마타 츠타에라레나이노</p><br>네가 생각하는 것 보다 훨씬 더, 봐봐, 또 전해지지 않았잖아<br><br>
+<strong>君とおんなじ気持ちでいたいの　ねぇ</strong><br><p style="color:#848484">키미토 오나지 키모치데 이타이노　네에</p><br>너와 같은 마음으로 있고싶은데, 저기<br><br><br><br>
+<strong>頭の中そればっかで　やだなこんなんじゃまるで</strong><br><p style="color:#848484">아타마노 나카 소레밧카데　야다나 콘난쟈마루데</p><br>머릿속은 온통 이런것 뿐이라, 싫어라 이래선 마치<br><br>
+<strong>こっちの方が好きみたいじゃん　ねぇ</strong><br><p style="color:#848484">콧치노 호-가 스키미타이쟝　네에</p><br>내쪽이 널 좋아하는 것 같잖아, 저기<br><br>
+<strong>勘付かれちゃうのは癪じゃん　自分ですら止められないの</strong><br><p style="color:#848484">칸츠카레챠우노와 샤쿠쟝　지분데스라 토메라레나이노</p><br>눈치 채이는건 싫잖아, 자기 자신이면서 멈출 수 없는거야<br><br>
+<strong>本当にどうかしちゃったみたいね</strong><br><p style="color:#848484">혼토-니 도-카 시챳타 미타이네</p><br>정말 어떻게 되어버린 것 같아<br><br><br><br>
+<strong>ここから見える夜空が　僕らを飲み込んで</strong><br><p style="color:#848484">코코카라 미에루 요조라가　보쿠라오 노미콘데</p><br>여기서 보이는 밤하늘이, 우리들을 집어삼켜<br><br>
+<strong>もう二度と会えないから　明日もどうだっていいの</strong><br><p style="color:#848484">모- 니도토 아에나이카라　아시타모 도-탓테 이이노</p><br>이제 두번 다시 보지 못할테니, 내일같은건 어찌되든 상관없어<br><br><br><br>
+<strong>知らないフリなら簡単で　どっち選んでみてもハズレ</strong><br><p style="color:#848484">시라나이 후리나라 칸탄데　돗치 에란데미테모 하즈레</p><br>모른척 할 뿐이라면 간단해도, 어느쪽을 골라봐도 오답이라<br><br>
+<strong>君をすごく遠くに感じて</strong><br><p style="color:#848484">키미오 스고쿠 토오쿠니 칸지테</p><br>네가 너무 멀게만 느껴져<br><br>
+<strong>間違いだらけだった足し算　赤点問いかける最後</strong><br><p style="color:#848484">마치가이 다라케닷타 타시잔　아카텐 토이카케루 사이고</p><br>온통 오류 천지였던 덧셈, 낙제점이냐고 마지막으로 물었어<br><br>
+<strong>君とおんなじ気持ちが痛いよ　ねぇ</strong><br><p style="color:#848484">키미토 온나지 키모치가 이타이요　네에</p><br>너와 같았던 마음이 아파와, 저기</p>
+					</div>
+					<div class="content-video">
+						유튜브 비디오 링크 영역
+					</div>
+				</div>
+			</nav>
+			<nav class='album-music-list album endless-ep' ><!-- エンドレスEP -->
+				<p class=album-title>エンドレスEP</p>
+				<table>
+					<colgroup>
+						<col><col width="100px">
+					</colgroup>
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
+			</nav>
+			<nav class='album-music-list album reol' ><!-- RΞOL -->
+				<p class=album-title>RΞOL</p>
+				<table>
+					<colgroup>
+						<col><col width="100px">
+					</colgroup>
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
+			</nav>
+			
+			<!--===========================================
+			레이아웃 데이터들
+			===========================================-->
+			<div class="layout">
+				
+			</div>
+			
+			
+			<div id=music><!-- 음악 플레이어 -->
+				
+			</div>
+			<!--===========================================
+			노설명
+			===========================================-->
+			<div id=foot>
+			</div>
+		</div>
+		
+	</body>
+</html>
+<!---
+만들어야 하는것,
+12-10 홈페이지
+사유: 취미로
+내용: .?.
+
+12-20 일자
+음악 플레이어 - 음원을 재생시킬때, (#player-img-main) 가 CD 재생 형식으로 한번 회전하다 중지하고 계속 재생되는 형식,
+가사를 최적화 시킬 방법을 찾아야함, - javascript파일로 만들던가 뭔 짓을 해서 로드되게 만들어야 최소화됨(캐쉬 제거하여 필수로!)
+플로팅 가사 라이브러리 제작 - 뽀대?
+하단부 이미지 뷰어 구조 생각해야함.
+상단 (#select)부와 하단 (.album-music-list .album)부 연동하는 부분 제작.
+(#slider)부에 있는 이미지, 1개가 아닌 여러개기 때문에 그에 따른 이미지 변경 효과도 주면 좋을것 가틈.
+(#slider)스크립트 축소화 프로젝트 (이건 프로젝트로 가야할거 같다.... 너무크다)
+익스플로워용으로 만들어도 괜찮을듯, - 상단 (#slider)부가 생략되는거만 보완하면 익스용으로 완성될거 같다.
+
+Re. 존x많다.....헐
+--->
