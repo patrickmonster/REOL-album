@@ -79,115 +79,118 @@ body{
 
 /* 기본적인 항목들 */
 
+header, nav, section{
+	position:fixed;
+	width:100%;
+	height:100%;
+	margin:auto;
+}
+nav{
+	max-width:1024px;
+	width:650px;
+	height:650px;
+	position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+
+/* 스라이더 */
+section{
+	position: fixed;
+    max-width: 1024px;
+	min-width:650px;
+	min-height:650px;
+	top:1600px;
+    left: 0;
+    right: 0;
+    margin-top: 50px;
+}
+section .title{
+	font-size:100px;
+}
+section img{
+	width:80px;
+	height:80px;
+}
+section #back{
+	float:right;
+	cursor:pointer;
+}
+section #album{
+	clear:both;
+	width:400px;
+	height:400px;
+}
+section #list{
+	display:right;
+    width: 630px;
+    padding: 0 10px;
+}
+section #list .scroll-area{
+    float: right;
+    min-width: 100px;
+    width: auto;
+}
+section #list .music{
+	width:250px;
+}
+
+
+section #track-list-item-id,section #track-list-item-img{
+	text-align:right;
+	display:inline-block;
+	width:20px;
+	height:20px;
+	margin:5px;
+	padding:0px;
+	cursor:pointer;
+}
+section #track-list-item-img{
+	display:none;
+}
+section #track-list-item{
+	cursor:pointer;
+	
+}
+
 /* ======================================================= */
+/*
+nav{
+	top:-1600px;
+}
+section{
+	top:0px;
+}*/
+
 @media (max-width:656px){
-	header, nav, section{
-		display:block;
-		max-width:655px;
-	}
-	nav{
+	#slider, #slider img{
 		width:100%;
-		height:auto;
-		display:block;
+		height:100%;
 	}
 	#slider{
 		position:relative;
 		margin:auto 0;
-		width:100%;
-		height:100%;
+		width:1px;
+		height:1px;
 		
-		overflow:hidden;
-		border-radius: 10%;
-		border-width: 1px;
-		border-color: #7f7f7f;
-		border-style: dashed;
 		list-style:none;
 		margin:0;
 		padding:0;
 	}
-	#slider li,#slider img{
-		position:absolute;
-		width:100vw;
-		height:100vw;
-		min-height:670px;
-		min-width:670px;
+	#slider li{
+		min-height:auto;
+		min-width:100%;
 	}
+	nav,#slider-view{
+		width:100%;
+		height:100vw;
+	}
+	
 } 
 @media (min-width:656px){
-	header, nav, section{
-		position:fixed;
-		width:100%;
-		height:100%;
-		margin:auto;
-	}
-	nav{
-		max-width:1024px;
-		width:650px;
-		height:650px;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-	}
-	/* 스라이더 */
-	section{
-		position: fixed;
-		max-width: 1024px;
-		min-width:650px;
-		min-height:650px;
-		top:1600px;
-		left: 0;
-		right: 0;
-		margin-top: 50px;
-	}
-	section .title{
-		font-size:100px;
-	}
-	section img{
-		width:80px;
-		height:80px;
-	}
-	section #back{
-		float:right;
-		cursor:pointer;
-	}
-	section #album{
-		clear:both;
-		width:400px;
-		height:400px;
-	}
-	section #list{
-		display:right;
-		width: 630px;
-		padding: 0 10px;
-	}
-	section #list .scroll-area{
-		float: right;
-		min-width: 100px;
-		width: auto;
-	}
-	section #list .music{
-		width:250px;
-	}
-
-
-	section #track-list-item-id,section #track-list-item-img{
-		text-align:right;
-		display:inline-block;
-		width:20px;
-		height:20px;
-		margin:5px;
-		padding:0px;
-		cursor:pointer;
-	}
-	section #track-list-item-img{
-		display:none;
-	}
-	section #track-list-item{
-		cursor:pointer;
-		
-	}
 	/* nav 테그에 대응하기 위해서 이하는 필터링이 필요함 */
 	#slider{
 		position:relative;
@@ -252,9 +255,11 @@ body{
 	#select-begin{
 		right:0;
 	}
+	
 }
 
-#popup{
+
+#popup *{
 	position:fixed;
 	left: 50%;
 	bottom: 0%;
@@ -265,9 +270,11 @@ body{
 	-o-transform: translate(-50%,0);
 	transform: translate(-50%,0%);
 }
-#popup *{
+
+#popup{
+	position: fixed;
 	width:100%;
-	display: inline-block;
+	height:100%;
 }
 		</style>
 		<script>
@@ -290,7 +297,6 @@ Element.prototype.on=window.on=function(){//이벤트명/실행함수//이후에
 	d[lib_n].event[a[0]]=c;
 	return d;
 };
-/*
 Element.prototype.remove=function(eve,f){
 	if(!this[lib_n]){
 		if(this["on"+eve])delete this["on"+eve];
@@ -304,7 +310,7 @@ Element.prototype.remove=function(eve,f){
 		}
 	}
 	if(keys.length<=1)delete this["on"+eve];
-};*/
+};
 Element.prototype.data=function(){
 	var a=arguments,b=a.length,c=typeof a[1]!="string";
 	if(b==1)return this.getAttribute("data-"+a[0]);
@@ -340,13 +346,13 @@ const data=[
 		color:"#2b479b"
 	},
 	{name:"極彩色",tag:"very-colorful",
-		list:["nil","極彩色","生命線","水底游歩道","ハルシアン","ロジックエージェント","-orderly-","mede:mede","Syrup","ラ·タタン","ミッドナイトストロウラ","Behind The Night","ROXY","約束の蒼","MONSTER","染"],
+		list:["-nil-","極彩色","生命線","水底游歩道","ハルシアン","ロジックエージェント","-orderly-","mede:mede","Syrup","ラ·タタン","ミッドナイトストロウラ","Behind The Night","ROXY","約束の蒼","MONSTER","染"],
 		type:[".flac"],
 		img:["2-1.jpg","2-2.jpg","2-3.jpg","2-4.png","2-5.png","2-6.png"],
 		color:"#e0c190"
 	},
 	{name:"「Σ」",tag:"sigma",
-		list:["VIP KID","ギミアブレスタッナウ","宵々古今","コノヨLoading...","RE:","Lunatic","神様になった日","ちるちる","-FINAL SIGMA-","DetaramE KiddinG","サマーホラーパーティ","404 Not Found","VIORA"],
+		list:["VIP KID","ギミアブレスタッナウ","宵々古今","コノヨ Loading...","RE:","Lunatic","神様になった日","ちるちる","-FINAL SIGMA-","DetaramE KiddinG","サマーホラーパーティ","404 Not Found","VIORA"],
 		type:[".flac"],
 		img:["3-1.jpg","3-2.jpg","3-3.jpg","3-4.png"],
 		color:"#f8f8f6"
@@ -399,29 +405,6 @@ function nav(e){
 	id("select-next").on("click",c);
 	id("select-begin").on("click",c);
 	id("select-play").on("click",function(){typeof e=='function'&&e.call(d,b)});
-	id("music_time").on("change",function(){play.audio.currentTime=this.value*play.audio.duration/100;});
-	id("play_b").on("click",play.pause);
-	id("volume").on("change",function(){play.audio.volume=this.value});
-	id("vol").on("click",function(){
-		if(this.anime){
-			this.anime.pause();
-			this.anime=null;
-		}
-		var a=this.view;
-		if(a)this.anime=anime({
-			targets:id("volume"),
-			width:0,
-			opacity:0,
-			easing: 'linear',
-			duration:2000
-		});else this.anime=anime({
-			targets:id("volume"),
-			width:180,
-			opacity:1,
-			duration:2000
-		});
-		this.view=!a;
-	});
 }
 function section(a,b){
 	var c=this.querySelector(".title"),d=this.querySelector(".track-list"),e,f=data[a],g,h=0,i,j,k;
@@ -448,6 +431,7 @@ function section(a,b){
 	i();
 	for(g in f.list)
 		e.call(this,f.list[g]).on("mouseover",function(){//마우스 올릴시에 동작
+			//console.log(this[lib_n].hidden);
 			this[lib_n].hidden.style.display="inline-block";
 			this[lib_n].view.style.display="none";
 			this.style.background=data[a].color;
@@ -488,18 +472,21 @@ function Play(){//미디어 관리자
 		if(keys.length<1||!last)document.getElementById("music_subtitle").innerHTML=Sdata[keys[keys.length-2]];
 		return next_time;
 	};
-	audio.volume=.5;
 	audio.on("canplay",function(){id("e_time").innerHTML=humanReadable(Math.floor(this.duration));});
 	audio.on("change",function(){this.currentTime=this.value*this.duration/100;});
 	audio.on("timeupdate",function(){
-		audio.time=timeU.call(this);
 		id("n_time").innerHTML=humanReadable(Math.floor(this.currentTime));
 		id("music_time").value=this.currentTime*100/this.duration;
 	});
+	audio.on("timeupdate",function(){audio.time=timeU.call(this);});
 	audio.on("ended",function(){
-		if(++ind[1]>=data[ind[0]].list.length)ind[1]=0;
-		play(ind[0],ind[1]);
+		if(++b>=data[a].list.length)b=0;
+		play(a,b);
 	});
+	function init(){
+		id("music_time").on("change",function(){audio.currentTime=this.value*audio.duration/100;});
+		id("play_b").on("click",pause);
+	}
 	function play(a,b){//페이지 / 항목
 		//"/Music/"+data[a].tag+"/"+data[a].list[this.indexOf()].replace(/:/g, "_")+data[a].type;
 		id("play_title").innerHTML=data[a].list[b];
@@ -508,7 +495,6 @@ function Play(){//미디어 관리자
 		src=data[a].tag+"/"+data[a].list[b].replace(/:/g, "_");
 		audio.src="/Music/"+src+data[a].type;
 		audio.play();
-		!isPlaying&&!(id("play_b").src="/img/icons/stop_1.png");
 		isPlaying=1;
 		audio.time=0;
 		document.getElementById("music_subtitle").innerHTML="";
@@ -520,10 +506,13 @@ function Play(){//미디어 관리자
 	function pause(){
 		if(!audio.src)return;
 		isPlaying?audio.pause():audio.play();
-		isPlaying=!isPlaying;
-		id("play_b").src=(isPlaying?"/img/icons/stop_1.png":"/img/icons/play_1.jpg");
+		isPlaying!=isPlaying;
+		console.log(isPlaying);
 	}
-	return {play:play,pause:pause,audio:audio,index:function(){return ind},isPlaying:function(){return isPlaying}};
+	function index(){
+		return ind;
+	}
+	return {init:init,play:play,pause:pause,audio:audio,index:index};
 }
 function Popup(){//팝업 관리자
 	var /*c=new Stack(),*/d=0;
@@ -536,40 +525,50 @@ function Popup(){//팝업 관리자
 		var h=e.childNodes[0];
 		h.style.background="#349ac3";
 		h.style.padding="10px";
-		e.style.bottom=-h.getPosition().height+"px";
+		h.style.bottom=-h.getPosition().height+"px";
 		e.on("click",z);
 		anime({//가려져야 할것,
-			targets:e,
+			targets:h,
 			bottom:0,
-			complete:function(){setTimeout(z,3*1000)}
+			complete:function(){
+				setTimeout(z,3*1000)
+			}
 		});
+		//setTimeout(function(){if(e)z(h)},3*1000);
 	}
 	function z(){//remove
 		var f=id("popup");
-		if(f)anime({//가려져야 할것,
-			targets:f,
-			bottom:-f.getPosition().height+"px",
-			complete:function(){f=id("popup");if(f)f.parentNode.removeChild(f)}
-		});
+		if(f)
+			anime({//가려져야 할것,
+				targets:f.childNodes[0],
+				bottom:-f.childNodes[0].getPosition().height+"px",
+				complete:function(){
+					f=id("popup");
+					if(f)f.parentNode.removeChild(f);
+				}
+			});
 		d=0;
 	}
-	return {create:b,remove:z,length:function(){return d}};
+	function f(){return d;}
+	return {create:b,remove:z,length:d};
 }
 function get(){
 	var xmlhttp = new XMLHttpRequest(),a=arguments,b=a.length;
 	if(b<1)return;
-	xmlhttp.onreadystatechange=function(){
-		if(this.readyState==4&&this.status==200)typeof a[1]==="function"&&a[1].call(document,this.responseText,a[2]);
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState==4&&this.status==200)
+				typeof a[1]==="function"&&a[1].call(document,this.responseText,a[2]);
 	};
 	xmlhttp.open("GET",a[0],true);
 	xmlhttp.send();
 }
-function humanReadable(seconds){
+function humanReadable(seconds) {
   var pad=function(x){return(x<10)?"0"+x:x}
   return pad(parseInt(seconds/60%60))+":"+pad(seconds%60)
 }
 function init(){
 	var a=changeSize([655]);
+	play.init();
 	nav.call(document.querySelector("nav"),function(a){//c==nav b=section
 		var b=document.querySelector("section"),c=this,d,e;
 		d=function(e,o,f){anime({targets:e,top:o,complete:f})};
@@ -578,11 +577,7 @@ function init(){
 			e.back();
 		});
 		d(c,-1600);
-		d(b,0,function(){
-			console.log(play.isPlaying());
-			if(!play.isPlaying())
-				play.play(a,0);
-		});
+		d(b,0);
 	});
 	console.log("start");
 	window.on("resize",function(){
@@ -676,12 +671,13 @@ function changeSize(ops){
 					<table style="table-layout:fixed;width:400px">
 						<tr>
 							<td rowspan=3 width="71px"><img id=play_b src=/img/icons/play_1.jpg style="width:70px;height:70px;"></td>
-							<td id=n_time width="50px">00:00</td>
-							<td width="100%" style="float:right"><img id=vol src=/img/icons/vol_2.png style="width:30px;height:30px;float:right;"><span id=e_time style="width:50px;float:right">99:99</span><input id=volume type="range" style="width:0px;opacity:0;margin-top:10px" min=0 max=1 step=".001" value=.5></td>
+							<td id=n_time>00:00</td>
+							<td id=e_time style="text-align:right;">99:99</td>
+							<td width="32px"><img src=/img/icons/vol_2.png style="width:30px;height:30px;float:right;"></td>
 						</tr>
 						<tr id=play_title><!--공백--></tr>
 						<tr>
-							<td colspan=2><input id="music_time" type="range" min="0" max="100" step=".001" value=".0" style="width:320px"></td>
+							<td colspan=3><input id="music_time" type="range" min="0" max="100" step=".001" value=".0" style="width:320px"></td>
 						</tr>
 					</table>
 					
@@ -710,6 +706,7 @@ function changeSize(ops){
 input[type=range]{
 	-webkit-appearance:none;
 	outline:none;
+	width:160px;
 	height:9px;
 	border-radius:4px;
 	border:1px solid #252525;
