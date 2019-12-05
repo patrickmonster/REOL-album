@@ -273,61 +273,40 @@ Element.prototype.removeClass = function(n){var c=this.className,l=c.split(' '),
 Element.prototype.add=function(ele){this.appendChild(ele);return this;};
 Element.prototype.addClass = function(n){var c=this.className;this.className=(c==''?n:c+' '+n);};
 Element.prototype.isClass = function(a){var l=this.className.split(' '),i=0;for(;i<l.length;i++)if(l[i]===a)return 1;return 0;};
+Element.prototype.data = function(){var a=arguments,b=a.length;if(b==0)return;if(b==1)return this.getAttribute("data-"+a[0]);else if(b==2)this.setAttribute("data-"+a[0],a[1]);};
 
 /*
 일단 더럽게 복잡하게 생겼으니, 나중에 공략하자.!
 */
 
 function init(){
-	var layouts=layout();
-	function event_next(index){
-		var classNames=["reol","no-title","very-colorful","sigma","endless-ep"];
-		layouts(classNames[index]);
-	}
 	var open=select();
-	var next=slide(event_next);
-	document.getElementById("select-next").addEventListener('click',function(){
+	var next=slide(layout());
+	var f=function(){
 		if(!open.isOpen())
 			open.open();
 		else open.reset();
-		next(0);
-	},false);
-	document.getElementById("select-begin").addEventListener('click',function(){
-		if(!open.isOpen())
-			open.open();
-		else open.reset();
-		next(1);
-	},false);
-	
-	function loadPage(){
-		var para = document.location.href.split("#")[1];
-		console.log(para);
+		next(this.id!=="select-next");
 	}
-	loadPage();
+	document.getElementById("select-next").addEventListener('click',f,false);
+	document.getElementById("select-begin").addEventListener('click',f,false);
 }
 function slide(f){
 	var x=1024;//window.innerWidth;
-	var l=document.getElementById("slider").getElementsByTagName("li");
-	var max=l.length-1;
-	var now=0;
-
-	for (i = 0; i <= max; i++) {
-		if (i == now) l[i].style.right = 0;
-		else l[i].style.right = -x + "px";
-	}
+	var l=document.getElementById("slider").getElementsByTagName("li"),b=["reol","no-title","very-colorful","sigma","endless-ep"];
+	var max=l.length-1,now=0;
 	var aniStart=0,next=1,sp=15;
 	function slide_next(n){
-		var count=0;
 		function sliding(a){
 			var cx=parseInt(l[now].style.right,10)+(a?sp:(-sp)),
 				nx=parseInt(l[next].style.right,10)+(a?sp:(-sp));
-			count++;
 			if(cx>=x||cx<-x){
 				l[now].style.right=-x+"px";//사라지는것
 				l[next].style.right=0;//이동할것
 				a?now++:now--;
 				if(now>max||now<0)now=a?0:max;
 				aniStart=0;
+				document.location.href="#"+b[now];
 				if (typeof f=='function')f(now);
 				return;
 			}
@@ -342,6 +321,14 @@ function slide(f){
 		l[next].style.right=(n?-x:x)+'px';
 		sliding(n?true:false);
 	}
+	var c=-1,p=document.location.href.split("#")[1];
+	for(var c=0;b[c]!==p&&c<b.length;c++);
+	if(c>=5){document.location.href="#"+b[0];c=0;}
+	now=c;
+	for (i=0;i<=max;i++)
+		if (i==now)l[i].style.right=0;
+		else l[i].style.right=-x+"px";
+	if (typeof f=='function')f(now);
 	return slide_next;
 }
 function select(f){
@@ -382,17 +369,15 @@ function select(f){
 	return {open:tap,isOpen:op,reset:re}
 }
 function layout(){//레이아웃 컨트롤
-	var layouts=document.getElementById("body").getElementsByClassName("album");
-	function on(className){
-		for(var i=0;i<layouts.length;i++){
+	var layouts=document.getElementById("body").getElementsByClassName("album"),b=["reol","no-title","very-colorful","sigma","endless-ep"];
+	for(var i=0;i<layouts.length;i++)
+		layouts[i].data("title",[i]);//데이터 별도 지정
+	function on(a){
+		if(a>=5){on(0);return;}
+		for(var i=0;i<layouts.length;i++)
 			layouts[i].style.display="none";
-			if(layouts[i].isClass(className))
-				layouts[i].style.display="block";
-		}
+		layouts[a].style.display="block";
 	}
-	layouts[0].style.display="block";
-	for(var i=1;i<layouts.length;i++)
-		layouts[i].style.display="none";
 	return on;
 }
 
@@ -454,73 +439,73 @@ window.onload =init;
 				<h4>-곡 목록-</h4>
 				<table>
 					<colgroup>
-						<col width="10px"><col width="100%"><col>
+						<col width="10px"><col width="50%"><col width=100px>
 					</colgroup>
 					<tbody>
 						<tr><td colspan=3 style="text-align:center;background:rgba(145, 107, 178, 0.5);">ソロ(솔로)</td></tr>
 						<tr><td style="background-color:#916BB2;">Num</td><td colspan=2 style="background-color:#916BB2;"><strong>Title</strong></td></tr>
-						<tr><td>00.</td><td><a title="푹신푹신 수해 소녀">ゆるふわ樹海ガール</td></tr>
-						<tr><td>01.</td><td><a title="magician's operation">magician's operation</td></tr>
-						<tr><td>02.</td><td><a title="재버워키 재버워카">ジャバヲッキージャバヲッカ</td></tr>
-						<tr><td>03.</td><td><a title="온라인 게임 폐인 슈프레히코어">ネトゲ廃人シュプレヒコール</td></tr>
-						<tr><td>04.</td><td><a title="이얼 팬클럽">いーあるふぁんくらぶ</td></tr>
-						<tr><td>05.</td><td><a title="WAVE">WAVE</td></tr>
-						<tr><td>06.</td><td><a title="lll툴틴 안테나lll">lllトゥルティンアンテナlll</td></tr>
-						<tr><td>07.</td><td><a title="사요코">小夜子</td></tr>
-						<tr><td>08.</td><td><a title="기간틱 O.T.N">ギガンティックO.T.N</td></tr>
-						<tr><td>09.</td><td><a title="심해 시티 언더그라운드">深海シティアンダーグラウンド</td></tr>
-						<tr><td>10.</td><td><a title="엔비 캣워크">エンヴィキャットウォーク</td></tr>
-						<tr><td>11.</td><td><a title="핑코스틱Luv">ぴんこすてぃっくLuv</td></tr>
-						<tr><td>12.</td><td><a title="로스트원의 호곡">ロストワンの号哭</td></tr>
-						<tr><td>13.</td><td><a title="라즈베리*몬스터">ラズベリー＊モンスター</td></tr>
-						<tr><td>14.</td><td><a title="팔레트엔 네가 가득">パレットには君がいっぱい</td></tr>
-						<tr><td>15.</td><td><a title="성창폭렬보이">聖槍爆裂ボーイ</td></tr>
-						<tr><td>16.</td><td><a title="지터 돌">ジッタードール</td></tr>
-						<tr><td>17.</td><td><a title="FACE">FACE</td></tr>
-						<tr><td>18.</td><td><a title="사이버 선더 사이다">サイバーサンダーサイダー</td></tr>
-						<tr><td>19.</td><td><a title="독점욕">毒占欲</td></tr>
-						<tr><td>20.</td><td><a title="">+♂</td></tr>
-						<tr><td>21.</td><td><a title="여고생 체인소우 데이즈">女子高生チェーンソウデイズ</td></tr>
-						<tr><td>22.</td><td><a title="Abnormalize (Band cover)">Abnormalize (Band cover)</td></tr>
-						<tr><td>23.</td><td><a title="울려 퍼져라">ヒビカセ</td></tr>
-						<tr><td>24.</td><td><a title="레드 퍼지!!!">レッド・パージ！！！</td></tr>
-						<tr><td>25.</td><td><a title="">No title</td></tr>
-						<tr><td>26.</td><td><a title="스트리밍 하트">ストリーミングハート</td></tr>
-						<tr><td>27.</td><td><a title="아스트로넛">アストロノーツ</td></tr>
-						<tr><td>28.</td><td><a title="로직 에이전트">ロジックエージェント</td></tr>
-						<tr><td>29.</td><td><a title="시스테마틱 러브">システマティック・ラヴ</td></tr>
-						<tr><td>30.</td><td><a title="극채색">極彩色</td></tr>
-						<tr><td>31.</td><td><a title="메류">メリュー</td></tr>
-						<tr><td>32.</td><td><a title="얼뜨기의 연회">頓珍漢の宴</td></tr>
-						<tr><td>33.</td><td><a title="WAVE 〔niki × EZFG〕">WAVE 〔niki × EZFG〕</td></tr>
-						<tr><td>34.</td><td><a title="클럽=마제스티">クラブ=マジェスティ</td></tr>
-						<tr><td>35.</td><td><a title="ECHO">ECHO</td></tr>
-						<tr><td>36.</td><td><a title="팔랑팔랑">ちるちる</td></tr>
-						<tr><td>37.</td><td><a title="Give me a break Stop now">Give me a break Stop now</td></tr>
-						<tr><td>38.</td><td><a title="소소고금">宵々古今</td></tr>
+						<tr><td>00.</td><td><a title="푹신푹신 수해 소녀">ゆるふわ樹海ガール</a></td></tr>
+						<tr><td>01.</td><td><a title="magician's operation">magician's operation</a></td></tr>
+						<tr><td>02.</td><td><a title="재버워키 재버워카">ジャバヲッキージャバヲッカ</a></td></tr>
+						<tr><td>03.</td><td><a title="온라인 게임 폐인 슈프레히코어">ネトゲ廃人シュプレヒコール</a></td></tr>
+						<tr><td>04.</td><td><a title="이얼 팬클럽">いーあるふぁんくらぶ</a></td></tr>
+						<tr><td>05.</td><td><a title="WAVE">WAVE</a></td></tr>
+						<tr><td>06.</td><td><a title="lll툴틴 안테나lll">lllトゥルティンアンテナlll</a></td></tr>
+						<tr><td>07.</td><td><a title="사요코">小夜子</a></td></tr>
+						<tr><td>08.</td><td><a title="기간틱 O.T.N">ギガンティックO.T.N</a></td></tr>
+						<tr><td>09.</td><td><a title="심해 시티 언더그라운드">深海シティアンダーグラウンド</a></td></tr>
+						<tr><td>10.</td><td><a title="엔비 캣워크">エンヴィキャットウォーク</a></td></tr>
+						<tr><td>11.</td><td><a title="핑코스틱Luv">ぴんこすてぃっくLuv</a></td></tr>
+						<tr><td>12.</td><td><a title="로스트원의 호곡">ロストワンの号哭</a></td></tr>
+						<tr><td>13.</td><td><a title="라즈베리*몬스터">ラズベリー＊モンスター</a></td></tr>
+						<tr><td>14.</td><td><a title="팔레트엔 네가 가득">パレットには君がいっぱい</a></td></tr>
+						<tr><td>15.</td><td><a title="성창폭렬보이">聖槍爆裂ボーイ</a></td></tr>
+						<tr><td>16.</td><td><a title="지터 돌">ジッタードール</a></td></tr>
+						<tr><td>17.</td><td><a title="FACE">FACE</a></td></tr>
+						<tr><td>18.</td><td><a title="사이버 선더 사이다">サイバーサンダーサイダー</a></td></tr>
+						<tr><td>19.</td><td><a title="독점욕">毒占欲</a></td></tr>
+						<tr><td>20.</td><td><a title="">+♂</a></td></tr>
+						<tr><td>21.</td><td><a title="여고생 체인소우 데이즈">女子高生チェーンソウデイズ</a></td></tr>
+						<tr><td>22.</td><td><a title="Abnormalize (Band cover)">Abnormalize (Band cover)</a></td></tr>
+						<tr><td>23.</td><td><a title="울려 퍼져라">ヒビカセ</a></td></tr>
+						<tr><td>24.</td><td><a title="레드 퍼지!!!">レッド・パージ！！！</a></td></tr>
+						<tr><td>25.</td><td><a title="No title">No title</a></td></tr>
+						<tr><td>26.</td><td><a title="스트리밍 하트">ストリーミングハート</a></td></tr>
+						<tr><td>27.</td><td><a title="아스트로넛">アストロノーツ</a></td></tr>
+						<tr><td>28.</td><td><a title="로직 에이전트">ロジックエージェント</a></td></tr>
+						<tr><td>29.</td><td><a title="시스테마틱 러브">システマティック・ラヴ</a></td></tr>
+						<tr><td>30.</td><td><a title="극채색">極彩色</a></td></tr>
+						<tr><td>31.</td><td><a title="메류">メリュー</a></td></tr>
+						<tr><td>32.</td><td><a title="얼뜨기의 연회">頓珍漢の宴</a></td></tr>
+						<tr><td>33.</td><td><a title="WAVE 〔niki × EZFG〕">WAVE 〔niki × EZFG〕</a></td></tr>
+						<tr><td>34.</td><td><a title="클럽=마제스티">クラブ=マジェスティ</a></td></tr>
+						<tr><td>35.</td><td><a title="ECHO">ECHO</a></td></tr>
+						<tr><td>36.</td><td><a title="팔랑팔랑">ちるちる</a></td></tr>
+						<tr><td>37.</td><td><a title="Give me a break Stop now">Give me a break Stop now</a></td></tr>
+						<tr><td>38.</td><td><a title="소소고금">宵々古今</a></td></tr>
 						<!-- 7인 이상 팟 -->
 						<tr><td colspan=3 style="text-align:center;background:rgba(145, 107, 178, 0.5);">コラボレーション(콜라보레이션)</td></tr>
-						<tr><td style="background-color:#916BB2;"><strong>Title</strong></td><td style="background-color:#916BB2;"><strong>KR</strong></td><td style="background-color:#916BB2;"><strong>콜라보레이션</strong></td></tr>
-						<tr><td>01.</td><td>kradness</td></tr>
-						<tr><td>02.</td><td>しんでしまうとはなさけない！</td><td>죽어버리다니 한심하구나!</td><td>kradness</td></tr>
-						<tr><td>03.</td><td>kradness, 96네코</td></tr>
-						<tr><td>04.</td><td>再教育</td><td>kradness</td></tr>
-						<tr><td>05.</td><td>「Ib」-forever-</td><td></td><td>토리코</td></tr>
-						<tr><td>06.</td><td>8HIT</td><td></td><td>나나히라</td></tr>
-						<tr><td>07.</td><td>おこちゃま戦争</td><td>kradness</td></tr>
-						<tr><td>08.</td><td>Masked bitcH -GIGA Birthday Arrange- </td><td></td><td>nqrse, 칸세루, 96네코, 하니챠무★, EVO+, 슈즈, 오레바나나</td></tr>
-						<tr><td>09.</td><td>一心不乱 (feat. ill.bell,nqrse)</td><td>nqrse</td></tr>
-						<tr><td>10.</td><td>リモコン</td><td>리모컨</td><td>kradness</td></tr>
-						<tr><td>11.</td><td>DOGS</td><td></td><td>96네코</td></tr>
-						<tr><td>12.</td><td>LUVORATORRRRRY! (feat.nqrse)</td><td></td><td>nqrse</td></tr>
-						<tr><td>13.</td><td>Blessing 【SINGERS ver.B】</td><td></td><td>아카틴, ＿＿, 이토카시타로, 카케리네, 쿄이치로, Gero, that, 사족, 백화요란, 마후마후, 미우메, 리리리</td></tr>
-						<tr><td>14.</td><td>drop pop candy</td><td></td><td>기가P</td></tr>
-						<tr><td>15.</td><td>ようかい体操第一</td><td>요괴 체조 제일장</td><td>오키쿠</td></tr>
-						<tr><td>16.</td><td>POPEE the クラウン</td><td>POPEE the 클라운</td><td>오키쿠</td></tr>
-						<tr><td>17.</td><td>Connecting</td><td></td><td>halyosy, 리부, 소라루, 론, KK, 샤케미, 남동생의 누나</td></tr>
-						<tr><td>18.</td><td>kradness</td></tr>
-						<tr><td>19.</td><td>妄想税</td><td>nqrse</td></tr>
-						<tr><td>20.</td><td>脳内革命ガール</td><td>뇌내혁명 걸</td><td>ill.bell</td></tr>
+						<tr><td style="background-color:#916BB2;"><strong>Num</strong></td><td style="background-color:#916BB2;text-align:center"><strong>Title</strong></td><td style="background-color:#916BB2;"><strong>콜라보레이션</strong></td></tr>
+						<tr><td>01.</td><td><a title="Sweet Devil">Sweet Devil (feat. kradness)</td><td>kradness</td></tr>
+						<tr><td>02.</td><td><a title="죽어버리다니 한심하구나!">しんでしまうとはなさけない！</td><td>kradness</td></tr>
+						<tr><td>03.</td><td><a title="cLick cRack">cLick cRack</a></td><td>	나나히라, kradness, 소라루, 96네코</td></tr>
+						<tr><td>04.</td><td><a title="재교육">再教育</td><td>kradness</td></tr>
+						<tr><td>05.</td><td><a title="「Ib」-forever-">「Ib」-forever-</td><td>마츠시타, 토리코</td></tr>
+						<tr><td>06.</td><td><a title="8HIT">8HIT</td><td>나나히라</td></tr>
+						<tr><td>07.</td><td><a title="어린이 전쟁">おこちゃま戦争</td><td>kradness</td></tr>
+						<tr><td>08.</td><td><a title="Masked bitcH -GIGA Birthday Arrange-">Masked bitcH -GIGA Birthday Arrange-</td><td>nqrse, 칸세루, 96네코, 하니챠무★, EVO+, 슈즈, 오레바나나</td></tr>
+						<tr><td>09.</td><td><a title="일심불란">一心不乱 (feat. ill.bell,nqrse)</td><td>ill.bell, nqrse</td></tr>
+						<tr><td>10.</td><td><a title="리모컨">リモコン</td><td>kradness</td></tr>
+						<tr><td>11.</td><td><a title="DOGS">DOGS</td><td>96네코</td></tr>
+						<tr><td>12.</td><td><a title="LUVORATORRRRRY!">LUVORATORRRRRY! (feat.nqrse)</td><td>nqrse</td></tr>
+						<tr><td>13.</td><td><a title="Blessing">Blessing 【SINGERS ver.B】</td><td><p style="text-overflow:hidden">아카틴, ＿＿, 이토카시타로, 카케리네, 쿄이치로, Gero, that, 사족, 백화요란, 마후마후, 미우메, 리리리</p></td></tr>
+						<tr><td>14.</td><td><a title="drop pop candy">drop pop candy</td><td>기가P</td></tr>
+						<tr><td>15.</td><td><a title="요괴 체조 제일장">ようかい体操第一</td><td>오키쿠</td></tr>
+						<tr><td>16.</td><td><a title="POPEE the 클라운">POPEE the クラウン</td><td>기가P, 오키쿠</td></tr>
+						<tr><td>17.</td><td><a title="Connecting">Connecting</td><td>halyosy, 리부, 소라루, 론, KK, 샤케미, 남동생의 누나</td></tr>
+						<tr><td>18.</td><td><a title="귀신KYOKAN">鬼KYOKAN</td><td>kradness</td></tr>
+						<tr><td>19.</td><td><a title="망상세">妄想税</td><td>nqrse</td></tr>
+						<tr><td>20.</td><td><a title="뇌내혁명 걸">脳内革命ガール</td><td>ill.bell</td></tr>
 						
 					</tbody>
 					<tfoot>
@@ -530,11 +515,41 @@ window.onload =init;
 					*&lt;<strong>M</strong>&gt; 一万達成(1만 달성)
 				</div>
 				<div class="content-space">
-					<div id="content-control">
-					</div>
 					<hr />
 					<div class="content-live">
-						라이브 모듈
+						<table width=100%>
+							<colgroup>
+								<col width=50%><col width=10px><col>
+							</colgroup>
+							<tbody>
+								<tr><td colspan=3 style="text-align:center;background:rgba(145, 107, 178, 0.5);">ライブ(라이브)</td></tr>
+								<tr><td rowspan=5 style="background-color:#916BB2"><img  id="table-1-0" width=600px height=727px src="http://549.ipdisk.co.kr/reol/img/Live/1.jpg"></td><td style="background-color:#916BB2;height:50px">Num</td><td style="background-color:#916BB2;height:50px"><strong>Live</strong></td></tr>
+								<tr><td>1.</td><td><a id="table-1-1" title="High Fidelity" data-img="http://549.ipdisk.co.kr/reol/img/Live/1.jpg">High Fidelity</a></td></tr>
+								<tr><td>2.</td><td><a id="table-1-2" title="천계의 공식" data-img="http://549.ipdisk.co.kr/reol/img/Live/2.jpg">テンカイ ノ コウシキ</td></tr>
+								<tr><td>3.</td><td><a id="table-1-3" width="100%" title="종악장" data-img="http://549.ipdisk.co.kr/reol/img/Live/3.jpg">終楽章</td></tr>
+								<tr><td><img></td><td><a title="공백란."></a></td></tr>	
+							</tbody>
+						</table>
+						<script>
+function onDropTable(arr){
+	var target=arr[0],p=0;
+	var f=function(){
+		var data=this.data("img"),c;
+		target.src=data;
+		this.style.background="rgba(145, 107, 178, 0.5)";
+		for(var c=1;this!=arr[c]&&c<arr.length;c++);
+		if(c>=arr.length)return;
+		if(p!==c){
+			arr[p].style.background="";
+			p=c;
+		}
+	};
+	for(var i=1;i<arr.length;i++)
+		arr[i].onmouseover=f;
+	console.log(arr);
+}
+onDropTable([document.getElementById("table-1-0"),document.getElementById("table-1-1"),document.getElementById("table-1-2"),document.getElementById("table-1-3")]);
+						</script>
 					</div>
 					<hr />
 					<div class="content-lyrics"></div>
