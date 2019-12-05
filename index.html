@@ -63,6 +63,13 @@ hr {
 	margin-top:50px;
 	margin-bottom:50px;
 }
+body{
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	user-select:none;
+}
 
 #body{
 	position:absolute;
@@ -129,40 +136,260 @@ button{
 		<!--===========================================
 		프린트 전용 헤더
 		===========================================-->
-		<script src="../js/soungjin.js?var=1"></script>
+		<!--script src="http://549.ipdisk.co.kr/js/soungjin.js?var=1"></script-->
 		<script>
-function progbar(){//프로그래스바 처리
+
+//페이지 구동용 자바스크립트
+
+/*
+IE7 대응 엘리먼트 제작
+*/
+var isIE=navigator.userAgent.toLowerCase().indexOf("msie")!=-1;
+
+var lib_n="_Soungjin_s",_cEle=0;//라이브러리 네임
+if(!window.Element){Element=function(){};_cEle=1;}
+Element.prototype.removeClass = function(n){var c=this.className,l=c.split(' '),o=_U,i=0;for(;i<l.length;i++)if(l[i]!=n){if(o)o+=' '+l[i];else o=l[i];}this.className=o;return this;};
+Element.prototype.add=function(ele){this.appendChild(ele);return this;};
+Element.prototype.addClass=function(n){var c=this.className;this.className=(c==''?n:c+' '+n);return this;};
+Element.prototype.isClass=function(a){var l=this.className.split(' '),i=0;for(;i<l.length;i++)if(l[i]===a)return 1;return 0;};
+Element.prototype.css=function(){
+	var a=arguments,b=a.length,c=this.getAttribute("style"),d,e;
+	if(b==1){
+		if(typeof a[0]!="object"){
+			if(!c)return undefined;
+			if(c.indexOf(";")){//찾기
+				d=c.split(";");
+				if(d[d.length-1]=="")
+					d.length--;
+				for(c=0;c<d.length;c++){
+					e=d[c].split(":");
+					if(e[0]===a[0])
+						return parseInt(e[1].match("px")?e[1].substring(0,e[1].length-2):e[1]);
+				}
+			}else{
+				d=c.split(":");
+				if(d[0]==a[0])
+					return d[1];
+			}
+			return undefined;
+		}else{
+			c="";
+			for(d in a[0])
+				c+=d+":"+a[0][d]+";";
+			this.setAttribute("style",c);
+			return this;
+		}
+	}else if(b==2)
+		this.setAttribute("style",a[0]+":"+a[1]);
+	return this;
+};
+Element.prototype.data=function(){
+	var a=arguments,b=a.length,c=typeof a[1]!="string";
+	if(b==1)return this.getAttribute("data-"+a[0]);
+	if(b==2)this.setAttribute("data-"+a[0],a[1]);
+	return this;
+};
+Element.prototype.getPosition=function(){return this.getBoundingClientRect()};
+Element.prototype.on=function(){//이벤트명/실행함수//이후에는 넘기는 인자
+	var a=arguments,b=a.length,c,d=this,e=[],f=0;
+	if(b<2)return d;//적용x
+	libElement(d);
+	c=d[lib_n].event[a[0]];//이벤트 스텍
+	if(!c)c=[];
+	for(;f<b-2;f++)
+		e.push(a[f+2]);
+	c.push({f:a[1],args:e});
+	if(d["on"+a[0]]==null)
+		d["on"+a[0]]=function(j){
+			e=d[lib_n].event[a[0]];
+			for(f=0;f<e.length;f++)
+				e[f].f.call(d,j,e[f].args);
+		};
+	d[lib_n].event[a[0]]=c;
+	return d;
+}
+if(!isIE)window.on=Element.prototype.on;
+
+function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}};}
+
+if(_cEle){
+	var __createElement=document.createElement;
+	document.createElement=function(tagName){
+		var ele=__createElement(tagName);
+		for(var key in Element.prototype)ele[key]=Element.prototype[key];
+		return ele;
+	}
+	var __getElementById=document.getElementById;
+	document.getElementById=function(id){
+		var ele=__getElementById(id);
+		for(var key in Element.prototype)ele[key]=Element.prototype[key];
+		return ele;
+	}
+}
+
+var __getElementsByClassName=document.getElementsByClassName;
+if(!__getElementsByClassName){
+	document.getElementsByClassName=function(className){
+		var regEx=new RegExp('(^| )'+className+'( |$)');
+		var nodes=[];
+		var elements=document.body.getElementsByTagName("*");
+		var len=elements.length;
+		for(var i=0;i<len;i++)if(regEx.test(elements[i].className))nodes.push(elements[i]);
+		elements=null;
+		return nodes;
+	}
+}
+
+function showAttribute(obj) {
+  try {
+    var data = '';
+    
+    for (var attr in obj) {
+      if (typeof(obj[attr]) == 'string' || typeof(obj[attr]) == 'number') {
+        data = data + 'Attr Name : ' + attr + ', Value : ' + obj[attr] + ', Type : ' + typeof(obj[attr]) + '\t';
+      } else {
+        data = data + 'Attr Name : ' + attr + ', Type : ' + typeof(obj[attr]) + '\t';
+      }
+    }
+    document.getElementById('attr_show').value = data;
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+
+function scroll(open){
+	var body=document.getElementById("body").getPosition(),x=document.body.scrollTop|document.documentElement.scrollTop,select_mini=document.getElementById("select-mini");
+	if(x>(open.isOpen()?358:179)){//hidden
+		select_mini.style.display="block";
+	}else{//open
+		select_mini.style.display="none";
+	}
+}
+
+function slide(f){
+	var x=1024;//window.innerWidth;
+	var l=document.getElementById("slider").getElementsByTagName("li"),b=["reol","no-title","very-colorful","sigma","endless-ep"];
+	var max=l.length-1,now=0;
+	var aniStart=0,next=1,sp=15;
+	function slide_next(n){
+		function sliding(a){
+			var cx=parseInt(l[now].style.right,10)+(a?sp:(-sp)),
+				nx=parseInt(l[next].style.right,10)+(a?sp:(-sp));
+			if(cx>=x||cx<-x){
+				l[now].style.right=-x+"px";//사라지는것
+				l[next].style.right=0;//이동할것
+				a?now++:now--;
+				if(now>max||now<0)now=a?0:max;
+				aniStart=0;
+				document.location.href="#"+b[now];
+				if (typeof f=='function')f(now);
+				return;
+			}
+			l[now].style.right=cx+"px";
+			l[next].style.right=nx+"px";
+			setTimeout(function(){sliding(a)},20);
+		}
+		if (aniStart)return;
+		next=now+(n?1:-1);
+		if(next>max||next<0)next=n?0:max;
+		aniStart=1;
+		l[next].style.right=(n?-x:x)+'px';
+		sliding(n?true:false);
+	}
+	var c=-1,p=document.location.href.split("#")[1];
+	for(var c=0;b[c]!==p&&c<b.length;c++);
+	if(c>=5){c=0;}
+	now=c;
+	for (i=0;i<=max;i++)
+		if (i==now)l[i].style.right=0;
+		else l[i].style.right=-x+"px";
+	if (typeof f=='function')f(now);
+	return slide_next;
+}
+function select(f){
+	var isOpen=1,sp=5,isPlay=0,repeat=0,maxh=40,minh=20;
+	var height=window.innerHeight,target=document.getElementById("select");
+	var y=height/100;//window.innerHeight;//상단길이 미리계산//최대 늘어날 길이
+	target.setAttribute("style","height:"+y*maxh+"px");
+	function tap(f){
+		if(repeat)clearTimeout(repeat),repeat=0;
+		function open(a){
+			var cy=parseInt(target.style.height,10)+(a?sp:(-sp));
+			if(cy>=y*maxh||cy<y*minh){//maxh%일때
+				target.setAttribute("style","height:"+y*(a?maxh:minh)+"px");
+				isPlay=0;isOpen=a;
+				typeof f=='function'&&f();
+				return;
+			}
+			target.setAttribute("style","height:"+cy+"px");
+			setTimeout(function(){open(a)},20);
+		}
+		if (isPlay)return;
+		isPlay=1;
+		target.setAttribute("style","height:"+(isOpen?y*maxh:y*minh)+"px");
+		if(!isOpen)repeat=setTimeout(open,3000);
+		open(isOpen?false:true);//열려있으면 닫아야지.
+	}
+	function op(){
+		return isOpen;
+	}
+	function re(){//타이머 초기화
+		if(isOpen){
+			if(repeat)clearTimeout(repeat),repeat=setTimeout(function(){tap()},3000);;
+		}
+	}
+	/**/
+	document.getElementById("select-screen").onclick=function(){tap()};
+	repeat=setTimeout(function(){tap()},3000);
+	return {open:tap,isOpen:op,reset:re}
+}
+
+		</script>
+		
+		<script>
+function progbar(z){//프로그래스바 처리
 	var a=document.getElementsByClassName("progbar"),b=0;
 	function _create(ele){
 		var a=document.createElement("div").addClass("progbar-empty")//내부 항목
 			,b=document.createElement("div").addClass("progbar-fill")//게이지바
 			,c=document.createElement("div").addClass("thumb")
-			,d=0,e=0,f=ele.getPosition(),g;//바
-		ele.css({height:"8px",width:"100%",position:"relative"});
-		b.css("width","0px");
-		c.css("left","10px").on("onmousedown",function(){
+			,d=0,e=0,f=ele.getPosition(),g
+			,h=document.getElementById("screen"),i,j=f.width;//바
+		ele.css({height:"8px",width:"100%",position:"relative",background:"#fff",cursor:"pointer"});
+		b.css({width:"0px"});
+		c.on("mousedown",function(){
 			d=window.event.clientX;
-			g=c.css("left");
+			g=c.css("left")|0;
 			e=1;
+			h.css({height:"100%",width:"100%",position:"fixed",top:0,left:0,display:"block"});
 		});
-		window.on("onmousemove",function(){
-			if(!e)return;
-			console.log(c.getPosition().left);
-			console.log(f.width);
-			if(c.getPosition().left-8>f.width)return;
-			var a=window.event.clientX-d;
-			c.css("left",(g+a)+"px");
-		}).on("onmouseup",function(){
+		h.on("mousemove",function(){
+			if(!e)return true;
+			var a=window.event.clientX-i;
+			if(a>j){return;}
+			if(a<0){return;}
+			c.css("left",a+"px");
+			typeof z=='function'&&z(Math.floor(a/j*100));
+		}).on("mouseup",function(){
+			this.css("display","none");
 			e=0;
+			//typeof z=='function'&&z(a/j*100);
 		});
-		console.log(f.width/100);
+		ele.on("click",function(){
+			var a=window.event.clientX-i;
+			if(a>j){return;}
+			if(a<=0){return;}
+			c.css("left",a+"px");
+			typeof z=='function'&&z(Math.floor(a/j*100));
+		});
 		a.add(b).add(c);
 		ele.add(a);
-		console.log("?");
+		i=c.getPosition().left;//초기위치
+		j-=c.getPosition().width/2;
 	}
 	for(;b<a.length;b++)
 		_create(a[b]);
-	
 }
 
 function loadingView(vele,hele,f){
@@ -171,22 +398,24 @@ function loadingView(vele,hele,f){
 	setTimeout(function(){
 		vele.setAttribute("style","display:none;width:0;height:0;position:fixed;");
 		hele.setAttribute("style","display:block;width:100%;height:auto;");
-		typeof a=='function'&&f();
+		typeof f=='function'&&f();
 	},/*5*/0*1000);
 	
 }
 function load(){
-	progbar();
+	progbar(function(a){
+		console.log(a);
+	});
 	loadingView(document.getElementById("loading"),document.getElementById("body"),function(){
 		
 	});
 }
 
-if(!isIE){
-	window.on("onload",load);
-}else{
-	window.onload=load;
-}
+
+if(!isIE)window.on("load",load);
+else window.onload=load;
+//window.on("onload",load);
+
 		</script>
 	</head>
 	<body>
@@ -204,7 +433,7 @@ if(!isIE){
 				<!-- 항목들 -->
 				<div class="layer">
 					<div id=player-title>타이틀 영역</div>
-					<img id=player-img src="http://549.ipdisk.co.kr/reol/img/Album/1-1.jpg"/>
+					<img id=player-img src="/img/Album/1-1.jpg"/>
 				</div>
 				<div class="layer">
 					<table class=player>
@@ -213,10 +442,11 @@ if(!isIE){
 						</colgroup>
 						<tr>
 							<td rowspan=2>▶</td>
-							<td>timeline</td>
+							<td>now</td>
+							<td>max</td>
 						</tr>
 						<tr>
-							<td><div id=player-progbar class="progbar"></div></td>
+							<td><div id=player-progbar class="progbar" style="background:#fff"></div></td>
 						</tr>
 					</table>
 				</div>
@@ -231,9 +461,10 @@ if(!isIE){
 				Create BY Soungjin's
 			</div>
 			<div id=layer>
-				
+				<textarea id="attr_show" class="attr_text" rows="30" cols="200"> </textarea>
 			</div>
 		</div>
+		<div id=screen ></div>
 	</body>
 </html>
 <!---
@@ -290,7 +521,7 @@ IE7 처리 주의사항 메모
 그리고 한번에 처리가 안되는 테그가 오질라게 많음.
 IE는 display:none 가 일을 안한다고 함.
 rgba 는 안먹힘
-
+forEach함수가 없다...?
 
 
 걍 느림...두말x 느리다.
