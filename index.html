@@ -39,7 +39,7 @@
 		<!--===========================================
 		라이브러리 모음
 		===========================================-->
-		<script src="../js/anime.min.js"></script>
+		<script src="/js/anime.min.js"></script>
 		<!--===========================================
 		사이트 구동에 필요한 데이터
 		===========================================-->
@@ -223,7 +223,9 @@ const data=[
 ]
 function nav(e){
 	var a,b=0,c=document.location.href.split("#")[1],c,d=this;
-	for(;data[b].tag!==c&&b<data.length;b++);
+	console.log(data);
+	console.log(data.length);
+	for(;data[b]&&data[b].tag!==c&&b<data.length;b++)console.log(data[b]);
 	if(b>=data.length){b=0;}
 	a=function slide(z,y){
 		var a=this.getElementsByTagName("li"),b=a.length,c=z,d=[0,0],e,f=670,g=0;
