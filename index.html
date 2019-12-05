@@ -241,6 +241,53 @@ hr {
 /*
 내가 왜 주석을 달고 있는지 모르겠지만...여튼 단다
 */
+
+function isPlainObject(a) {
+	var b,c;
+	return !(!a||"[object Object]"!=={}.toString.call(a))&&(!(b=Object.getPrototypeOf(a))||(c={}.hasOwnProperty.call(b,"constructor")&&b.constructor,"function"==typeof c&&{}.hasOwnProperty.toString.call(c)==={}.hasOwnProperty.toString.call(Object)))
+}
+function isEmptyObject(a) {
+	var b;
+	for (b in a) return !1;
+	return !0
+}
+function extend() {
+	var a, b, c, d, e, f, g = arguments[0] || {},
+		h = 1,
+		i = arguments.length,
+		j = !1;
+	for ("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||r.isFunction(g)||(g={}),h===i&&(g=this,h--);h<i;h++)
+		if(null!=(a=arguments[h]))
+			for(b in a)c=g[b],d=a[b],g!==d&&(j&&d&&(isPlainObject(d)||(e=Array.isArray(d)))?(e?(e=!1,f=c&&Array.isArray(c)?c:[]):f=c&&isPlainObject(c)?c:{},g[b]=r.extend(j,f,d)):void 0!==d&&(g[b]=d));
+	return g;
+}
+
+function camelCase(a){return a.replace(/^-ms-/,"ms-").replace(/-([a-z])/g,function(a, b) {return b.toUpperCase()})}
+function V() {this.expando = r.expando + V.uid++}
+V.prototype.get=function(a, b) {
+	return void 0 === b ? this.cache(a) : a[this.expando] && a[this.expando][r.camelCase(b)]
+}
+cache: function(a) {
+	var b = a[this.expando];
+	return b || (b = {}, U(a) && (a.nodeType ? a[this.expando] = b : Object.defineProperty(a, this.expando, {
+		value: b,
+		configurable: !0
+	}))), b
+},
+
+Element.prototype.animate=function(a, b, c, d) {
+	var e = isEmptyObject(a),
+		f = r.speed(b, c, d),
+		g = function() {
+			var b = kb(this, extend({}, a), f);
+			(e || W.get(this, "finish")) && b.stop(!0)
+		};
+	return g.finish = g, e || f.queue === !1 ? this.each(g) : this.queue(f.queue, g)
+}
+/*
+일단 더럽게 복잡하게 생겼으니, 나중에 공략하자.!
+*/
+
 var slide_next;
 function init(){
 	slide();
@@ -248,17 +295,15 @@ function init(){
 }
 function slide(){
 	var x=1024;//window.innerWidth;
-	var l = document.getElementById("slider").getElementsByTagName("li");
-	var max = l.length - 1;
-	var now = 0;
+	var l=document.getElementById("slider").getElementsByTagName("li");
+	var max=l.length-1;
+	var now=0;
 
 	for (i = 0; i <= max; i++) {
 		if (i == now) l[i].style.right = 0;
 		else l[i].style.right = -x + "px";
 	}
-	var aniStart=0;
-	var next = 1;
-	var sp = 20;
+	var aniStart=0,next=1,sp=20;
 	/*
 	var changeSlide = function(v){
 		if (aniStart === true) return;
@@ -267,7 +312,6 @@ function slide(){
 		aniStart = true;
 		sliding();
 	}*/
-	console.log(max);
 	slide_next=function(n){
 		function sliding(a){
 			var cx=parseInt(l[now].style.right,10)+(a?sp:(-sp)),
@@ -275,16 +319,13 @@ function slide(){
 			if(nx>=x||cx<-x){
 				l[now].style.right=-x+"px";//사라지는것
 				l[next].style.right=0;//이동할것
-				console.log(a+'|'+now);
 				now=now+(a?1:-1);
-				console.log(a+'|'+now);
 				if(now>max||now<0)now=a?0:max;
 				aniStart=0;
 				return;
 			}
-			l[now].style.right = cx + "px";
-			l[next].style.right = nx + "px";
-			console.log(a);
+			l[now].style.right=cx+"px";
+			l[next].style.right=nx+"px";
 			setTimeout(sliding(a),sp);
 		}
 		if (aniStart)return;
@@ -316,6 +357,7 @@ function select(){
 				fill:"forwards"
 			});
 		}else{
+		/*
 			target.animate([
 				{ height: height/100*10+'px' },
 				{ height: height/100*30+'px'} 
@@ -323,7 +365,9 @@ function select(){
 				duration: 1500,
 				easing:"ease-in-out",
 				fill:"forwards"
-			});
+			});*/
+			console.log(extend({},target.getBoundingClientRect()));
+			target.animations({height:height/100*30},1000);
 			repeat=setTimeout(open,3000);
 		}
 		setTimeout(function(){isPlay=0},1500);
@@ -332,7 +376,7 @@ function select(){
 	document.getElementById("select-screen").onclick=open;
 	setTimeout(open,3000);
 }
-
+console.log(Element.animate);
 window.onload =init;
 		</script>
 	</head>
