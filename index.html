@@ -73,7 +73,7 @@ body{
 #select{
 	position:relative;
 	overflow:hidden;
-	height:auto;
+	height:100%;
 	white-space:nowrap;
 	width:1024px;
 	color:#000;
@@ -108,9 +108,9 @@ body{
 	display:block;
 	width:100%;
 	height:100%;
-    cursor: pointer;
-    color: transparent;
-    border: none;
+		cursor: pointer;
+		color: transparent;
+		border: none;
 	top:0;
 }
 
@@ -131,6 +131,17 @@ body{
 	height:100%;
 	opacity: 0.5;
 }
+#select-screen #player-main{
+	width: 30%;
+	height:30%;
+	margin:auto;
+	background:rgba(255,255,255,.3);
+}
+#select-screen #player-main-play{
+	position:relative;
+	width: 100%;
+	height:100%;
+}
 #select-next{
 	left:0;
 }
@@ -141,7 +152,8 @@ body{
 #body{
 	margin:0 auto;
 	max-width:1024px;
-	height:auto;text-align:center;
+	height:100%;
+	text-align:center;
 }
 
 #footer{
@@ -167,24 +179,24 @@ button{
 	height:100%;
 }
 .thumb{
-    background:#5f65b1;
-    border: 1px solid #bebebe;
-    border-radius: 1px;
-    position: absolute;
-    left: 0px;
-    top: -2px;
-    width: 22px;
-    height: 10px;
-    margin-left: -1px;
-    overflow: hidden;
-    cursor: pointer;
+		background:#5f65b1;
+		border: 1px solid #bebebe;
+		border-radius: 1px;
+		position: absolute;
+		left: 0px;
+		top: -2px;
+		width: 22px;
+		height: 10px;
+		margin-left: -1px;
+		overflow: hidden;
+		cursor: pointer;
 }
 		</style>
 		<!--===========================================
 		프린트 전용 헤더
 		===========================================-->
-		<!--script src="http://549.ipdisk.co.kr/js/soungjin.js?var=1"></script-->
-		<script src="http://549.ipdisk.co.kr/js/anime.min.js"></script>
+		<!--script src="../js/soungjin.js?var=1"></script-->
+		<script src="../js/anime.min.js"></script>
 		<script>
 
 //페이지 구동용 자바스크립트
@@ -313,7 +325,7 @@ function scroll(open){
 		select_mini.style.display="none";
 	}
 }
-
+/*
 function slide(ele,b,f){
 	var l=ele.getElementsByTagName("li"),x=ele.getPosition().width,max=l.length-1,now=0,aniStart=0,next=1,sp=15;
 	function slide_next(n){
@@ -354,6 +366,35 @@ function slide(ele,b,f){
 			l[i].style.right=-x+"px";
 		}
 	if (typeof f=='function')f(now);
+	return slide_next;
+}*/
+function slide(ele){
+	var a=ele.getElementsByTagName("li"),b=a.length,c=0,d=[0,0],e,f=1024,g=1;
+	for(;g<b;g++)a[g].style="transform: translateX("+f+"px)";
+	function slide_next(n){
+		if(d[0]&&d[1])return;
+		d=[1,1];e=n?c+1:c-1;
+		if(e>=b)e=0;if(e<0)e=b-1;
+		a[e].style="transform: translateX("+(n?f:-f)+"px)";
+		anime({//가려져야 할것,
+			targets:a[c],
+			//easing: 'linear',
+			translateX:n?-f:f,
+			complete:function(){
+				d[0]=0;
+				c=e;
+				anime({
+					
+				});
+			}
+		});
+		anime({//나와야 할것
+			targets:a[e],
+			//easing: 'linear',
+			translateX:0,
+			complete:function(){d[1]=0}
+		});
+	}
 	return slide_next;
 }
 function changeimg(tar,datas,time,url){//element | [data-'',data-''] | ms | "/img/Album/"
@@ -435,20 +476,59 @@ function loadingView(vele,hele,time,f){
 		typeof f=='function'&&f();
 	},time);
 }
-var next;
+function player(ele){
+	var a=ele.querySelector(".stroke"),b=a.getTotalLength(),d,z;
+	a.style.strokeDasharray=b;
+	a.style.strokeDashoffset=b;
+	d=function(e){
+		switch(e.type){
+			case "animationstart":
+				z=ele.onStart;
+				typeof z=='function'&&z();
+				break;
+			case "animationiteration":
+				z=ele.onEnded;
+				typeof z=='function'&&z();
+				break;
+		}
+	}
+	a.addEventListener("animationstart",d);
+	a.addEventListener("animationiteration",d);
+	ele.on("click",function(){
+		var c=a.style.webkitAnimationPlayState;
+		if(c=="running"){
+			ele.querySelector(".play").css("opacity",1);
+			ele.querySelector(".pause").css("opacity",0);
+			typeof ele.onPlay=='function'&&ele.onPlay();
+		}else{
+			ele.querySelector(".play").css("opacity",0);
+			ele.querySelector(".pause").css("opacity",1);
+			typeof ele.onPause=='function'&&ele.onPause();
+		}
+		a.style.webkitAnimationPlayState=(c=="running"?"paused":"running");
+	});
+	function re(){
+		var b=a.style.webkitAnimationPlayState=="running";
+		if(b)a.style.webkitAnimationPlayState=="paused";
+		a.classList.remove("stroke");
+		setTimeout(function(){
+			a.classList.add("stroke");
+			if(b)a.style.webkitAnimationPlayState=="running";
+		},10);
+	}
+	function seek(c){
+		var d=b*c/100;
+		//a.style.strokeDasharray=d;
+		a.style.strokeDashoffset=d;
+		console.log(a.style);
+		return d;
+	}
+	return {seek:seek,replay:re};
+}
+var _A;
 function init(){
 	progbar();
-	var cssProperties = anime({
-		targets: '',
-		opacity: .5,
-		left: '240px',
-		backgroundColor: '#FFF',
-		borderRadius: ['0em', '2em'],
-		easing: 'easeInOutQuad'
-	});
-	
-	
-	
+	_A=player(document.getElementById("player-main-play"));
 	next=slide(id("slider"),["no-title","very-colorful","sigma","endless-ep"],function(a){
 		console.log("이벤트?"+a);
 	});
@@ -476,6 +556,33 @@ function load(){
 if(!isIE)window.on("load",load);
 else window.onload=load;
 		</script>
+		<style>
+.player-hidden {
+	opacity: 0;
+}
+.stroke{
+	stroke-dasharray: 145;
+	stroke-dashoffset: 145;
+	-webkit-animation: dash 60s linear infinite paused;
+	animation: dash 60s linear infinite paused;
+}
+@-webkit-keyframes dash {
+	from {
+		stroke-dashoffset: 0;
+	}
+	to {
+		stroke-dashoffset: 145;
+	}
+}
+@keyframes dash {
+	from {
+		stroke-dashoffset: 0;
+	}
+	to {
+		stroke-dashoffset: 145;
+	}
+}
+		</style>
 	</head>
 	<body>
 		<div id=loading style="width:500px;height:500px;">
@@ -493,15 +600,24 @@ else window.onload=load;
 					<li><img id=select-5 src="/img/Album/4.jpg" alt="Endless-ep"></li>
 				</ul>
 				<!-- 여기밑부터 이벤트 엑세스 가능 -->
-				<!--img id=logo src=http://549.ipdisk.co.kr/img/reol/logo.png /-->
 				<div id=title>REOL</div>
 				<div id=menu onclick="side_open()">Σ</div>
 				<!--img id=icon src="/img/logo.png" style='filter:invert()'-->
 				<img id=icon src="https://www.reol.jp/images/common/logo.png" style='filter:invert()'>
 				<div class=select-ctr>
 					<div id=select-screen>
-						<div>
-							
+						<div id=player-main>
+							<div id=player-main-play>
+								<svg viewBox="0 0 60 60">
+									<g>
+										<path class="play" fill="#f1f1f1" d="M24.89,40.84c-0.37,0.22-0.83,0.23-1.2,0.02s-0.6-0.61-0.6-1.04V20.2c0-0.43,0.23-0.83,0.6-1.04 c0.37-0.21,0.83-0.21,1.2,0.02l16.35,9.81c0.36,0.21,0.58,0.6,0.58,1.02s-0.22,0.81-0.58,1.02L24.89,40.84z"></path>
+										<path class="pause" fill="#f1f1f1" d="M28.03,19.06v21.88c0,0.86-0.7,1.56-1.56,1.56h-3.12c-0.86,0-1.56-0.7-1.56-1.56V19.06 c0-0.86,0.7-1.56,1.56-1.56h3.12C27.33,17.5,28.03,18.2,28.03,19.06z M38.46,19.06v21.88c0,0.86-0.7,1.56-1.56,1.56h-3.12 c-0.86,0-1.56-0.7-1.56-1.56V19.06c0-0.86,0.7-1.56,1.56-1.56h3.12C37.76,17.5,38.46,18.2,38.46,19.06z"></path>
+										<path class="stroke-bg" fill="none" stroke="#4c4c4c" stroke-width="4" d="M30,7C17.32,7,7,17.32,7,30 c0,12.68,10.32,23,23,23c12.68,0,23-10.32,23-23C53,17.32,42.68,7,30,7z"></path>
+										
+										<path class="stroke" fill="none" stroke="#f1f1f1" stroke-width="4" d="M30,7C17.32,7,7,17.32,7,30 c0,12.68,10.32,23,23,23c12.68,0,23-10.32,23-23C53,17.32,42.68,7,30,7z" style="stroke-dasharray: 144.494; stroke-dashoffset: 144.494; animation-play-state: running;"></path>
+									</g>
+								</svg>
+							</div>
 						</div>
 					</div>
 					<button id=select-next><img src=/img/l.png></button>
