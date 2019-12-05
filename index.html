@@ -14,10 +14,10 @@
 		<meta name="viewport" content="width=1024">
 		
 		<meta property="og:locale" content="ko_KR" />
-		<meta property="og:site_name" content="Σ / れをる　Fan Site">
-		<meta property="og:title" content="REOL 『Σ』 Fan Site">
+		<meta property="og:site_name" content="RΞOL / れをる　Fan Site">
+		<meta property="og:title" content="RΞOL / れをる Album">
 		<meta property="og:type" content="website">
-		<meta property="og:description" content="『Σ』 Album">
+		<meta property="og:description" content="RΞOL / れをる Album">
 		
 		<meta property="og:url" content="http://www.toysfactory.co.jp/artist/reol/official">
 		<meta property="og:image" content="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/ogp_img.jpg">
@@ -30,13 +30,13 @@
 		
 		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" rel="shortcut icon">
 		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/apple-touch-icon-precomposed.png" sizes="152x152" rel="apple-touch-icon">
-		<title>『Σ』</title>
+		<title>RΞOL / れをる Album</title>
 		
 		<!--===========================================
 		사이트 공개 테그
 		===========================================-->
-		<meta name="keywords" content="REOL,Giga,Okiku,Σ,레오루,기가,오키쿠,Sigma,びっくり,驚く">
-		<meta name="description" content="『Σ』 Album">
+		<meta name="keywords" content="REOL,Giga,Okiku,Σ,레오루,기가,오키쿠,Sigma,びっくり,驚く,れをる,Album">
+		<meta name="description" content="RΞOL / れをる Album">
 		
 		
 		<!--===========================================
@@ -135,11 +135,11 @@ hr {
 }
 
 #begin{
-	background:url("http://www.reol.jp/wp/wp-content/themes/reol_pc/home/img/arrow_l.png") no-repeat;
+	background:url("http://549.ipdisk.co.kr/reol/img/l.png") no-repeat;
 	left:0;
 }
 #next{
-	background:url("http://www.reol.jp/wp/wp-content/themes/reol_pc/home/img/arrow_r.png") no-repeat;
+	background:url("http://549.ipdisk.co.kr/reol/img/r.png") no-repeat;
 	right:0;
 }
 #body{
@@ -148,11 +148,6 @@ hr {
 	height:auto;
 	padding-top:15px;
 	margin:0 auto;
-}
-
-#side{
-	position:relative;
-	width:1024px !important;
 }
 
 .album-music-list span{
@@ -167,11 +162,6 @@ hr {
 .album-music-list{
 	font-size:1.5rem;
 	font-weight:bold;
-}
-.album-music-list ul li{
-	height: 2rem;
-	list-style-type: decimal-leading-zero;
-	margin-bottom:1.5rem;
 }
 .album-music-title{
 	height:1.5rem;
@@ -251,86 +241,61 @@ hr {
 /*
 내가 왜 주석을 달고 있는지 모르겠지만...여튼 단다
 */
-var slides;
+var slide_next;
 function init(){
 	slide();
 	select();
 }
 function slide(){
 	var x=1024;//window.innerWidth;
-	var slider = document.getElementById("slider");
-	var slideArray = slider.getElementsByTagName("li");
-	var slideMax = slideArray.length - 1;
-	var curSlideNo = 0;
+	var l = document.getElementById("slider").getElementsByTagName("li");
+	var max = l.length - 1;
+	var now = 0;
 
-	for (i = 0; i <= slideMax; i++) {
-		if (i == curSlideNo) slideArray[i].style.right = 0;
-		else slideArray[i].style.right = -x + "px";
+	for (i = 0; i <= max; i++) {
+		if (i == now) l[i].style.right = 0;
+		else l[i].style.right = -x + "px";
 	}
-	var aniStart = false;
+	var aniStart=0;
 	var next = 1;
-	var move_speed = 20;
+	var sp = 20;
 	/*
 	var changeSlide = function(v){
 		if (aniStart === true) return;
-		next = curSlideNo + 1;
-		if (next > slideMax) next = 0;
+		next = now + 1;
+		if (next > max) next = 0;
 		aniStart = true;
 		sliding();
 	}*/
-	document.getElementById("begin").addEventListener('click', function (){
-		if (aniStart)return;
-		next = curSlideNo-1;
-		if (next<0)next=slideMax;
-		aniStart = true;
-		slideArray[next].style.right=x+'px';
-		console.log(next+'|'+curSlideNo);
-		sliding_r();
-	}, false);
-	document.getElementById("next").addEventListener('click', function (){
-		if (aniStart)return;
-		next=curSlideNo+1;
-		if (next>slideMax)next=0;
-		aniStart = true;
-		slideArray[next].style.right=-x+'px';
-		sliding_l();
-	}, false);
-	
-	function sliding_l(){
-		var curX = parseInt(slideArray[curSlideNo].style.right, 10);
-		var nextX = parseInt(slideArray[next].style.right, 10);
-		var newCurX = curX + move_speed;
-		var newNextX = nextX + move_speed;
-		if (newCurX >= x) {
-			slideArray[curSlideNo].style.right = -x + "px";
-			slideArray[next].style.right = 0;
-			curSlideNo = curSlideNo + 1;
-			if (curSlideNo>slideMax)curSlideNo = 0;
-			aniStart = false;
-			return;
+	console.log(max);
+	slide_next=function(n){
+		function sliding(a){
+			var cx=parseInt(l[now].style.right,10)+(a?sp:(-sp)),
+				nx=parseInt(l[next].style.right,10)+(a?sp:(-sp));
+			if(nx>=x||cx<-x){
+				l[now].style.right=-x+"px";//사라지는것
+				l[next].style.right=0;//이동할것
+				console.log(a+'|'+now);
+				now=now+(a?1:-1);
+				console.log(a+'|'+now);
+				if(now>max||now<0)now=a?0:max;
+				aniStart=0;
+				return;
+			}
+			l[now].style.right = cx + "px";
+			l[next].style.right = nx + "px";
+			console.log(a);
+			setTimeout(sliding(a),sp);
 		}
-		slideArray[curSlideNo].style.right = newCurX + "px";
-		slideArray[next].style.right = newNextX + "px";
-		setTimeout(sliding_l, move_speed );
+		if (aniStart)return;
+		next=now+(n?1:-1);
+		if(next>max||next<0)next=n?0:max;
+		aniStart=1;
+		l[next].style.right=(n?-x:x)+'px';
+		sliding(n?true:false);
 	}
-	
-	function sliding_r(){
-		var curX = parseInt(slideArray[curSlideNo].style.right, 10);//현재위치
-		var nextX = parseInt(slideArray[next].style.right, 10);//현재위치
-		var newCurX = curX - move_speed;
-		var newNextX = nextX - move_speed;
-		if (newCurX < -x){//마무리
-			slideArray[curSlideNo].style.right = -x+"px";//사라지는것
-			slideArray[next].style.right = 0;//이동할것
-			curSlideNo = curSlideNo-1;
-			if (curSlideNo<0)curSlideNo = slideMax;
-			aniStart = false;
-			return;
-		}
-		slideArray[curSlideNo].style.right = newCurX + "px";
-		slideArray[next].style.right = newNextX + "px";
-		setTimeout(sliding_r, move_speed );
-	}
+	document.getElementById("next").addEventListener('click',new Function("slide_next(1)"),false);
+	document.getElementById("begin").addEventListener('click',new Function("slide_next(0)"),false);
 }
 function select(){
 	var isOpen=1,isPlay=0;
@@ -377,6 +342,9 @@ window.onload =init;
 		===========================================-->
 		<div id=select>
 			<ul id=slider>
+				<li>
+					<img id=select-1 src="http://549.ipdisk.co.kr/reol/img/Album/0-1.jpg" style="margin-top:-50%;">
+				</li>
 				<li>
 					<img id=select-1 src="http://549.ipdisk.co.kr/reol/img/Album/1-1.jpg" style="margin-top:-5%;">
 				</li>
@@ -594,8 +562,13 @@ window.onload =init;
 하단부 이미지 뷰어 구조 생각해야함.
 상단 (#select)부와 하단 (.album-music-list .album)부 연동하는 부분 제작.
 (#slider)부에 있는 이미지, 1개가 아닌 여러개기 때문에 그에 따른 이미지 변경 효과도 주면 좋을것 가틈.
-(#slider)스크립트 축소화 프로젝트 (이건 프로젝트로 가야할거 같다.... 너무크다)
+(#slider)스크립트 축소화 프로젝트 (이건 프로젝트로 가야할거 같다.... 너무크다) ok
 익스플로워용으로 만들어도 괜찮을듯, - 상단 (#slider)부가 생략되는거만 보완하면 익스용으로 완성될거 같다.
 
 Re. 존x많다.....헐
+
+12-21일자
+(#slider)스크립트 축소화 프로젝트 (이건 프로젝트로 가야할거 같다.... 너무크다) ok
+
+
 --->
