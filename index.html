@@ -253,7 +253,7 @@ function showAttribute(obj) {
         data = data + 'Attr Name : ' + attr + ', Type : ' + typeof(obj[attr]) + '\t';
       }
     }
-    document.getElementById('attr_show').value = data;
+    //document.getElementById('attr_show').value = data;
   } catch (e) {
     alert(e.message);
   }
@@ -359,7 +359,7 @@ function progbar(){//프로그래스바 처리
 			,d=0,e=0,f=ele.getPosition(),g
 			,h=document.createElement("screen").css({height:"100%",width:"100%",position:"fixed",top:0,left:0,display:"block"}),i,j=f.width,k;//바
 		ele.css({height:"8px",width:"100%",position:"relative",background:"#fff",cursor:"pointer"});
-		b.css({width:"0px"});
+		b.css({background:"rgba(0,0,0,.30)",width:"100px",height:"8px"});
 		c.on("mousedown",function(){
 			document.body.add(h);e=1;
 		});
@@ -406,8 +406,6 @@ function load(){
 
 if(!isIE)window.on("load",load);
 else window.onload=load;
-//window.on("onload",load);
-
 		</script>
 	</head>
 	<body>
@@ -425,7 +423,7 @@ else window.onload=load;
 				<!-- 항목들 -->
 				<div class="layer">
 					<div id=player-title>타이틀 영역</div>
-					<img id=player-img src="/img/Album/1-1.jpg"/>
+					<img id=player-img src="http://549.ipdisk.co.kr/reol/img/Album/1-1.jpg"/>
 				</div>
 				<div class="layer">
 					<table class=player>
@@ -438,11 +436,27 @@ else window.onload=load;
 							<td>max</td>
 						</tr>
 						<tr>
-							<td><div id=player-progbar class="progbar" style="background:#fff"></div></td>
+							<td colspan=2><div id=player-progbar class="progbar" style="width:100%"></div></td>
 						</tr>
 					</table>
 				</div>
-				<div class="layer"></div>
+				<div class="layer">
+					<table style="width:100%;">
+					<tbody><tr><td style="background-color:#916BB2;">발매일</td><td>2014년 8월 17일</td><td><a class="wiki-link-external" href="https://www.youtube.com/watch?v=-RGctbcrfk8" target="_blank" rel="noopener" title="https://www.youtube.com/watch?v=-RGctbcrfk8">크로스페이드</a></td></tr>
+<tr><td style="background-color:#916BB2;">트랙</td><td style="background-color:#916BB2;">곡명</td><td style="background-color:#916BB2;">번역</td></tr>
+<tr><td>01</td><td>- Opening -</td><td>-</td></tr>
+<tr><td>02</td><td><a href="/w/%E3%83%92%E3%83%93%E3%82%AB%E3%82%BB" title="ヒビカセ">ヒビカセ</a><sup><a class="wiki-link-external" href="https://www.youtube.com/watch?v=UC_qla6FQwM" target="_blank" rel="noopener" title="https://www.youtube.com/watch?v=UC_qla6FQwM">M</a></sup></td><td><a href="/w/%EC%9A%B8%EB%A0%A4%ED%8D%BC%EC%A0%B8%EB%9D%BC" title="울려퍼져라">울려퍼져라</a></td></tr>
+<tr><td>03</td><td><a href="/w/%E3%82%AA%E3%82%AA%E3%82%A8%E3%83%89%E3%83%A9%E3%83%B3%E3%83%B4" title="オオエドランヴ">オオエドランヴ</a></td><td>오오에도 난무</td></tr>
+<tr><td>04</td><td><a href="/w/drop%20pop%20candy" title="drop pop candy">drop pop candy</a><sup><a class="wiki-link-external" href="https://www.youtube.com/watch?v=9eyyhtOrKPI" target="_blank" rel="noopener" title="https://www.youtube.com/watch?v=9eyyhtOrKPI">M</a></sup></td><td>-</td></tr>
+<tr><td>05</td><td>- Interlude -</td><td>-</td></tr>
+<tr><td>06</td><td><a href="/w/No%20title" title="No title">No title</a><sup><a class="wiki-link-external" href="https://www.youtube.com/watch?v=LfephiFN76E" target="_blank" rel="noopener" title="https://www.youtube.com/watch?v=LfephiFN76E">M</a></sup></td><td>-</td></tr>
+<tr><td>07</td><td>Echo<a class="wiki-fn-content" title="Crusher-P의 ECHO와는 다른 곡이다. 애초에 이 곡은 가사가 이 세상에 현존하는 언어가 아니다. 전후사정을 설명하자면, 이 곡의 작사는 기가P가 담당했고 생방송 중 레오루가 보여준 가사와 나눈 이야기를 통한 바로는 그저 듣기 좋은 발음들을 쑤셔 넣은 것 뿐이라 가사 자체에 뜻은 하나도 없다고 한다. 굳이 말하자면 echo라는 곡의 제목과 맞게 그저 메아리라고 생각해 달라고. 정작 가사라고 띄운 텍스트 파일도 가타카나, 즉 발음의 향연이었기 때문에 그냥 들리는 대로 이해하면 될 듯 하다. 다만 검색해보면 몇 개의 결과물이 나오기는 한다. 물론 레오루 본인이 그리 말했으니 아마 몬데그린일 가능성이 높겠지만, 구글에 reol echo lyrics라고 치면 겉보기엔 그럴싸한 영어 가사가 나온다. 다만 현재는 2016년에 투고된 ECHO와 제목이 중복되기 때문에 찾기가 조금 힘든 편이다." href="#fn-1"><span class="target" id="rfn-1"></span>[1]</a></td><td>-</td></tr>
+<tr><td>08</td><td>- BWW SCREAM -</td><td>-</td></tr>
+<tr><td>09</td><td><a href="/w/%E3%82%A2%E3%82%B7%E3%83%B3%E3%83%A1%E3%83%88%E3%83%AA%E3%83%BC" title="アシンメトリー">アシンメトリー</a></td><td>애시메트리</td></tr>
+<tr><td>10</td><td>ギガンティックO.T.N - Big Death Edition -</td><td><a href="/w/%EA%B8%B0%EA%B0%84%ED%8B%B1%20O.T.N" title="기간틱 O.T.N">기간틱 O.T.N</a> - Big Death Edition -</td></tr>
+<tr><td>11</td><td>- Ending -</td><td>-</td></tr></tbody>
+					</table>
+				</div>
 				<div class="layer"></div>
 				<div class="layer"></div>
 			</div>
@@ -453,7 +467,6 @@ else window.onload=load;
 				Create BY Soungjin's
 			</div>
 			<div id=layer>
-				<textarea id="attr_show" class="attr_text" rows="30" cols="200"> </textarea>
 			</div>
 		</div>
 	</body>
