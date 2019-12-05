@@ -195,6 +195,12 @@ Element.prototype.on=window.on=function(){//이벤트명/실행함수//이후에
 	d[lib_n].event[a[0]]=c;
 	return d;
 }
+Element.prototype.data=function(){
+	var a=arguments,b=a.length,c=typeof a[1]!="string";
+	if(b==1)return this.getAttribute("data-"+a[0]);
+	if(b==2)this.setAttribute("data-"+a[0],a[1]);
+	return this;
+};
 function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}}}
 /////////////////////////////System func ////////////////////////////////////
 function id(a){return document.getElementById(a)}
@@ -204,24 +210,23 @@ const name=["No title + / -","極彩色","「Σ」","エンドレスEP"];
 const data=[
 	{name:"No title + / -",tag:"no-title",
 		list:["- Opening -","ヒビカセ","オオエドランヴ","drop pop candy","No title","Echo","- BWW SCREAM -","アシンメトリー","-FINAL SIGMA-","ギガンティックO.T.N - Big Death Edition -","- Ending -"],
-		
 	},
 	{name:"極彩色",tag:"very-colorful",
-		list:[],
+		list:["-nil-","極彩色","生命線","水底游歩道","ハルシアン","ロジックエージェント","-orderly-","mede:mede","Syrup","ラ·タタン","ミッドナイトストロウラ","Behind The Night","ROXY","約束の蒼","MONSTER","染"],
 	},
 	{name:"「Σ」",tag:"sigma",
-		list:[],
+		list:["VIP KID","ギミアブレスタッナウ","宵々古今","コノヨ Loading...","RE:","Lunatic","神様になった日","ちるちる","-FINAL SIGMA-","DetaramE KiddinG","サマーホラーパーティ","404 Not Found","VIORA"],
 	},
 	{name:"エンドレスEP",tag:"endless-ep",
-		list:[],
+		list:["ニュータイプトーキョー","B12","エンドレスライン","LUVORATORRRRRY!"],
 	}
 ]
 function nav(e){
 	var a,b=0,c=document.location.href.split("#")[1],c,d=this;
-	for(;tag[b]!==c&&b<tag.length;b++);
-	if(b>=tag.length){b=0;}
+	for(;data[b].tag!==c&&b<data.length;b++);
+	if(b>=data.length){b=0;}
 	a=function slide(z,y){
-		var a=this.getElementsByTagName("li"),b=a.length,c=z,d=[0,0],e,f=1024,g=0;
+		var a=this.getElementsByTagName("li"),b=a.length,c=z,d=[0,0],e,f=670,g=0;
 		if(z>=b||z<0)c=0;
 		for(;g<b;g++)if(c!=g)a[g].style="transform: translateX("+f+"px)";
 		function slide_next(n){
@@ -243,14 +248,14 @@ function nav(e){
 			anime({//나와야 할것
 				targets:a[e],
 				//easing: 'linear',
-				translateX:0,
 				easing: [.91,-0.54,.29,1.56],
+				translateX:0,
 				complete:function(){d[1]=0}
 			});
 		}
 		return slide_next;
 	}.call(id("slider"),b,function(a){
-		document.location.href="#"+tag[a];
+		document.location.href="#"+data[a].tag;
 		b=a;
 	});
 	c=function(){a(this.id!=="select-next")};
@@ -259,30 +264,39 @@ function nav(e){
 	id("select-play").on("click",function(){typeof e=='function'&&e.call(d,b)});
 }
 function section(a,b){
-	var c=this.querySelector(".title");
-	c.innerHTML=name[a];
-	
+	var c=this.querySelector(".title"),d=this.querySelector("tbody"),e,f=data[a],g,h=0,i;
+	c.innerHTML=data[a].name;
 	this.querySelector("#back").on("click",function(){
-		console.log(b);
 		typeof b=='function'&&b();
 	});
+	e=function(i){
+		var a=document.createElement("tr"),b=document.createElement("td");
+		b.innerHTML=++h;
+		a.appendChild(b);
+		b=document.createElement("td");
+		b.innerHTML=i;
+		a.appendChild(b);
+		d.appendChild(a);
+		console.log(i);
+	};
+	i=function(){
+		d.innerHTML="";
+	};
+	i();
+	for(g in f.list)
+		e.call(this,f.list[g]);
+	
+	return {add:e,clear:i};
 }
 function init(){
-	nav.call(document.querySelector("nav"),function(a){
-		var b=document.querySelector("section"),c=this,d;
+	nav.call(document.querySelector("nav"),function(a){//c==nav b=section
+		var b=document.querySelector("section"),c=this,d,e;
 		d=function(e,o,f){
-			anime({
-				targets:e,
-				top:o,
-				complete:f
-			});
+			anime({targets:e,top:o,complete:f});
 		}
-		section.call(b,a,function(){d(b,1600);d(c,0);});
+		e=section.call(b,a,function(){d(b,1600);d(c,0);});
 		d(c,-1600);
-		d(b,0,function(){
-			var c=b.querySelector("tbody");
-			
-		});
+		d(b,0);
 		
 	});
 	console.log("start");
