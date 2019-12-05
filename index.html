@@ -26,8 +26,8 @@
 		-->
 		
 			
-		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/favicon.ico" rel="shortcut icon">
-		<link href="http://www.reol.jp/wp/wp-content/themes/reol_pc/common/img/apple-touch-icon-precomposed.png" sizes="152x152" rel="apple-touch-icon">
+		<link href="/favicon.ico" rel="shortcut icon">
+		<link href="/apple-touch-icon.png" sizes="152x152" rel="apple-touch-icon">
 		<title>RΞOL / れをる Album</title>
 		
 		<!--===========================================
@@ -70,28 +70,80 @@ body{
 	-khtml-user-select: none;
 	user-select:none;
 }
+#select{
+	position:relative;
+	overflow:hidden;
+	height:auto;
+	white-space:nowrap;
+	width:1024px;
+	color:#000;
+	margin: 0 auto;
+}
+#select ul#slider {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+#select ul li {
+	position:absolute;
+	width:100%;
+}
+#select ul li img {
+	width:100%;
+	height:100%;
+}
+#select #icon{
+	position:absolute;
+	top:0;bottom:0;
+	left:0;right:0;
+	margin:0 auto;
+	height:auto;
+	width: 2.5em;
+	font-size:2em;
+	text-align:center;
+	overflow:hidden;
+}
+.select-ctr{
+	position:absolute;
+	display:block;
+	width:100%;
+	height:100%;
+    cursor: pointer;
+    color: transparent;
+    border: none;
+	top:0;
+}
+
+.select-ctr button{
+	position:absolute;
+	width:15%;
+	height:100%;
+	border:0;
+	background-color:rgba(255,255,255,.3);
+	cursor: pointer;
+	color: transparent;
+	border: none;
+	outline: none;
+}
+#select-screen{
+	position:absolute;
+	width:100%;
+	height:100%;
+	opacity: 0.5;
+}
+#select-next{
+	left:0;
+}
+#select-begin{
+	right:0;
+}
 
 #body{
 	margin:0 auto;
-	width:1024px;
-	height:auto;
-}
-#head{
-	width:100%;
-	height:30px;
-	background:#293e97;
+	max-width:1024px;
+	height:auto;text-align:center;
 }
 
-#content{
-	float:left;
-	color:#fff;
-}
-
-#nav{
-	background:#35d434;
-	width:250px;	
-	height:500px;
-}
 #footer{
 	clear: both;
 	width:100%;
@@ -99,21 +151,6 @@ body{
 	background:#293e97;
 }
 
-.layer{
-	width:500px;
-	margin:6px;
-	float:right;
-	background:#373f9e;
-}
-.layer *{
-	max-width:500px;
-}
-.layer table tr td{
-	text-overflow: ellipsis;
-	overflow: hidden;
-	max-width:270px;
-    cursor: pointer;
-}
 #player-img{
 	width:100%;
 	margin-top:20px;
@@ -146,6 +183,8 @@ button{
 		<!--===========================================
 		프린트 전용 헤더
 		===========================================-->
+		<!--script src="http://549.ipdisk.co.kr/js/soungjin.js?var=1"></script-->
+		<script src="http://549.ipdisk.co.kr/js/anime.min.js"></script>
 		<script>
 
 //페이지 구동용 자바스크립트
@@ -183,8 +222,10 @@ Element.prototype.css=function(){
 			return undefined;
 		}else{
 			c="";
-			for(d in a[0])
+			for(d in a[0]){
+				console.log(a[0][d]);
 				this.style[d]=a[0][d];
+			}
 				//c+=d+":"+a[0][d]+";";
 			//this.setAttribute("style",c);
 			return this;
@@ -264,24 +305,6 @@ if(!__getElementsByClassName){
 	}
 }
 
-function showAttribute(obj) {
-  try {
-    var data = '';
-    
-    for (var attr in obj) {
-      if (typeof(obj[attr]) == 'string' || typeof(obj[attr]) == 'number') {
-        data = data + 'Attr Name : ' + attr + ', Value : ' + obj[attr] + ', Type : ' + typeof(obj[attr]) + '\t';
-      } else {
-        data = data + 'Attr Name : ' + attr + ', Type : ' + typeof(obj[attr]) + '\t';
-      }
-    }
-    //document.getElementById('attr_show').value = data;
-  } catch (e) {
-    alert(e.message);
-  }
-}
-
-
 function scroll(open){
 	var body=document.getElementById("body").getPosition(),x=document.body.scrollTop|document.documentElement.scrollTop,select_mini=document.getElementById("select-mini");
 	if(x>(open.isOpen()?358:179)){//hidden
@@ -291,11 +314,8 @@ function scroll(open){
 	}
 }
 
-function slide(f){
-	var x=1024;//window.innerWidth;
-	var l=document.getElementById("slider").getElementsByTagName("li"),b=["reol","no-title","very-colorful","sigma","endless-ep"];
-	var max=l.length-1,now=0;
-	var aniStart=0,next=1,sp=15;
+function slide(ele,b,f){
+	var l=ele.getElementsByTagName("li"),x=ele.getPosition().width,max=l.length-1,now=0,aniStart=0,next=1,sp=15;
 	function slide_next(n){
 		function sliding(a){
 			var cx=parseInt(l[now].style.right,10)+(a?sp:(-sp)),
@@ -323,50 +343,45 @@ function slide(f){
 	}
 	var c=-1,p=document.location.href.split("#")[1];
 	for(var c=0;b[c]!==p&&c<b.length;c++);
-	if(c>=5){c=0;}
+	if(c>=b.length){c=0;}
 	now=c;
 	for (i=0;i<=max;i++)
 		if (i==now)l[i].style.right=0;
-		else l[i].style.right=-x+"px";
+		else {
+			var z=ele.getPosition();
+			for(var y in z)
+				console.log(y+"\t"+z[y]);
+			l[i].style.right=-x+"px";
+		}
 	if (typeof f=='function')f(now);
 	return slide_next;
 }
-function select(f){
-	var isOpen=1,sp=5,isPlay=0,repeat=0,maxh=40,minh=20;
-	var height=window.innerHeight,target=document.getElementById("select");
-	var y=height/100;//window.innerHeight;//상단길이 미리계산//최대 늘어날 길이
-	target.setAttribute("style","height:"+y*maxh+"px");
-	function tap(f){
-		if(repeat)clearTimeout(repeat),repeat=0;
-		function open(a){
-			var cy=parseInt(target.style.height,10)+(a?sp:(-sp));
-			if(cy>=y*maxh||cy<y*minh){//maxh%일때
-				target.setAttribute("style","height:"+y*(a?maxh:minh)+"px");
-				isPlay=0;isOpen=a;
-				typeof f=='function'&&f();
-				return;
-			}
-			target.setAttribute("style","height:"+cy+"px");
-			setTimeout(function(){open(a)},20);
+function changeimg(tar,datas,time,url){//element | [data-'',data-''] | ms | "/img/Album/"
+	var a=0,b=datas.length,c,d=0,e=0;
+	//tar.src=url+tar.data(datas[d]).split('|')[0];
+	change();
+	function change(){//index/point
+		if(d<0||d>=b){
+			clearInterval(c);
+			return;
 		}
-		if (isPlay)return;
-		isPlay=1;
-		target.setAttribute("style","height:"+(isOpen?y*maxh:y*minh)+"px");
-		if(!isOpen)repeat=setTimeout(open,3000);
-		open(isOpen?false:true);//열려있으면 닫아야지.
+		var f=tar.data(datas[d]).split('|');
+		if(e>=f.length)e=0;
+		tar.src=url+tar.data(datas[d]).split('|')[e];
+		e++;
 	}
-	function op(){
-		return isOpen;
-	}
-	function re(){//타이머 초기화
-		if(isOpen){
-			if(repeat)clearTimeout(repeat),repeat=setTimeout(function(){tap()},3000);;
+	function index(index){
+		if(index<0||index>=b){
+			return undefined;
 		}
+		clearInterval(c);
+		c=setInterval(change,time);
+		d=index;e=0;
+		change();
+		return d;
 	}
-	/**/
-	document.getElementById("select-screen").onclick=function(){tap()};
-	repeat=setTimeout(function(){tap()},3000);
-	return {open:tap,isOpen:op,reset:re}
+	c=setInterval(change,time);
+	return index;
 }
 
 		</script>
@@ -380,8 +395,8 @@ function progbar(){//프로그래스바 처리
 			,c=document.createElement("div").addClass("thumb")
 			,d=0,e=0,f=ele.getPosition(),g
 			,h=document.createElement("screen").css({height:"100%",width:"100%",position:"fixed",top:0,left:0,display:"block",cursor:"pointer"}),i,j=f.width,k;//바
-		ele.css({height:"8px",width:"100%",position:"relative",background:"#fff",cursor:"pointer"});
-		b.css({background:"rgba(0,0,0,.30)",width:"100px",height:"8px"});
+		ele.css({height:"8px",width:"100%",position:"relative",background:"#fff",cursor:"pointer",border:"1px solid #293e97"});
+		b.css({background:"#b2b2b2",width:"100px",height:"8px"});
 		c.on("mousedown",function(){
 			if(e){document.body.removeChild(this);e=0;return;}
 			document.body.add(h);e=1;
@@ -410,51 +425,51 @@ function progbar(){//프로그래스바 처리
 		_create(a[b]);
 }
 
-function loadingView(vele,hele,f){
+function loadingView(vele,hele,time,f){
 	vele.css({display:"block",height:"100%",position:"fixed"});
 	hele.css({display:"none",height:0});
+	if(time<0)return;
 	setTimeout(function(){
 		vele.css({display:"none",height:0,position:"fixed"});
 		hele.css({display:"block",height:"auto"});
 		typeof f=='function'&&f();
-	},1*1000);
-	
+	},time);
 }
-function changeimg(tar,datas,time,url){//element | [data-'',data-''] | ms | "http://549.ipdisk.co.kr/reol/img/Album/"
-	var a=0,b=datas.length,c,d=0,e=0;
-	//tar.src=url+tar.data(datas[d]).split('|')[0];
-	change();
-	function change(){//index/point
-		if(d<0||d>=b){
-			clearInterval(c);
-			return;
-		}
-		var f=tar.data(datas[d]).split('|');
-		if(e>=f.length)e=0;
-		tar.src=url+tar.data(datas[d]).split('|')[e];
-		e++;
-	}
-	function index(index){
-		if(index<0||index>=b){
-			return undefined;
-		}
-		clearInterval(c);
-		c=setInterval(change,time);
-		d=index;e=0;
-		change();
-		return d;
-	}
-	c=setInterval(change,time);
-	return index;
-}
-function load(){
+var next;
+function init(){
 	progbar();
-	change=changeimg(document.getElementById("player-img"),["no-title","very-colorful","sigma","endless-ep"],3000,"/img/Album/");
-	loadingView(document.getElementById("loading"),document.getElementById("body"),function(){
+	var cssProperties = anime({
+		targets: '',
+		opacity: .5,
+		left: '240px',
+		backgroundColor: '#FFF',
+		borderRadius: ['0em', '2em'],
+		easing: 'easeInOutQuad'
+	});
+	
+	
+	
+	next=slide(id("slider"),["no-title","very-colorful","sigma","endless-ep"],function(a){
+		console.log("이벤트?"+a);
+	});
+	var f=function(){
+		next(this.id!=="select-next");
+	};
+	document.getElementById("select-next").addEventListener('click',f,false);
+	document.getElementById("select-begin").addEventListener('click',f,false);
+}
+function id(a){return document.getElementById(a)}
+
+function load(){
+	init();
+	/*
+	change=changeimg(id("player-img"),["no-title","very-colorful","sigma","endless-ep"],3000,"/img/Album/");
+	loadingView(id("select"),id("content"),-1);
+	loadingView(id("loading"),id("body"),3*1000,function(){
 		document.getElementsByClassName("progbar")[0].on("change",function(){
 			
 		});
-	});
+	});*/
 }
 
 
@@ -463,67 +478,38 @@ else window.onload=load;
 		</script>
 	</head>
 	<body>
-		<!--===========================================
-		타이틀 셀렉터
-		===========================================-->
-		<div id=loading>
+		<div id=loading style="width:500px;height:500px;">
 			loading...
 		</div>
 		<div id=body>
-			<div id=head>
-				reol
-			</div>
+			<!--===========================================
+			타이틀 셀렉터
+			===========================================-->
+			<div id=select>
+				<ul id=slider>
+					<li><img id=select-2 src="/img/Album/1-1.jpg" alt="No title +/-"></li>
+					<li><img id=select-3 src="/img/Album/2-1.jpg" alt="very-colorful"></li>
+					<li><img id=select-4 src="/img/Album/3-1.jpg" alt="Sigma"></li>
+					<li><img id=select-5 src="/img/Album/4.jpg" alt="Endless-ep"></li>
+				</ul>
+				<!-- 여기밑부터 이벤트 엑세스 가능 -->
+				<!--img id=logo src=http://549.ipdisk.co.kr/img/reol/logo.png /-->
+				<div id=title>REOL</div>
+				<div id=menu onclick="side_open()">Σ</div>
+				<!--img id=icon src="/img/logo.png" style='filter:invert()'-->
+				<img id=icon src="https://www.reol.jp/images/common/logo.png" style='filter:invert()'>
+				<div class=select-ctr>
+					<div id=select-screen>
+						<div>
+							
+						</div>
+					</div>
+					<button id=select-next><img src=/img/l.png></button>
+					<button id=select-begin><img src=/img/r.png></button>
+				</div>
+				</div>
 			<div id=content>
-				<!-- 항목들 -->
-				<div class="layer">
-					<div id=player-title>No title +/-</div>
-					<img id=player-img data-no-title="1-1.jpg|1-2.jpg" data-very-colorful="2-1.jpg|2-2.jpg|2-3.jpg|2-4.png|2-5.png|2-6.png" data-sigma="3-1.jpg|3-2.jpg|3-3.jpg|3-4.png" data-endless-ep="4.jpg"/>
-				</div>
-				<div class=layer>
-					<table>
-						<tr><td>01</td><td onclick="change(0);document.getElementById('player-title').innerHTML=this.innerHTML;">No title +/-</td></tr>
-						<tr><td>02</td><td onclick="change(1);document.getElementById('player-title').innerHTML=this.innerHTML;">極彩色</td></tr>
-						<tr><td>03</td><td onclick="change(2);document.getElementById('player-title').innerHTML=this.innerHTML;">「Σ」</td></tr>
-						<tr><td>04</td><td onclick="change(3);document.getElementById('player-title').innerHTML=this.innerHTML;">エンドレスEP</td></tr>
-					</table>
-				</div>
-				<div class="layer">
-					나중에 음악 타이틀 이미지가 나올 레이어
-				</div>
-				<div class="layer">
-					<table class=player>
-						<colgroup>
-							<col height=8px width=8px /><col />
-						</colgroup>
-						<tr>
-							<td rowspan=2>▶</td>
-							<td>now</td>
-							<td style="float:right">max</td>
-						</tr>
-						<tr>
-							<td colspan=2><div id=player-progbar class="progbar" style="width:100%"></div></td>
-						</tr>
-					</table>
-				</div>
-				<div class="layer">
-					<table>
-						<tbody><tr><td>발매일</td><td><a href="https://www.youtube.com/watch?v=-RGctbcrfk8" target="_blank" rel="noopener" title="크로스페이드">2014년 8월 17일</a></td></tr>
-							<tr><td>트랙</td><td>곡명</td></tr>
-							<tr><td>01</td><td>- Opening -</td></tr>
-							<tr><td>02</td><td><a title="울려퍼져라">ヒビカセ</a><sup><a href="https://www.youtube.com/watch?v=UC_qla6FQwM" target="_blank" rel="noopener" title="https://www.youtube.com/watch?v=UC_qla6FQwM">M</a></sup></td></tr>
-							<tr><td>03</td><td><a title="오오에도 난무">オオエドランヴ</a></td></tr>
-							<tr><td>04</td><td><a title="drop pop candy">drop pop candy</a><sup><a href="https://www.youtube.com/watch?v=9eyyhtOrKPI" target="_blank" rel="noopener" title="https://www.youtube.com/watch?v=9eyyhtOrKPI">M</a></sup></td></tr>
-							<tr><td>05</td><td>- Interlude -</td></tr>
-							<tr><td>06</td><td><a title="No title">No title</a><sup><a href="https://www.youtube.com/watch?v=LfephiFN76E" target="_blank" rel="noopener" title="https://www.youtube.com/watch?v=LfephiFN76E">M</a></sup></td></tr>
-							<tr><td>07</td><td>Echo</td></tr>
-							<tr><td>08</td><td>- BWW SCREAM -</td></tr>
-							<tr><td>09</td><td><a title="애시메트리">アシンメトリー</a></td></tr>
-							<tr><td>10</td><td><a title="기간틱 O.T.N - Big Death Edition -">ギガンティックO.T.N - Big Death Edition -</td></tr>
-							<tr><td>11</td><td>- Ending -</td></tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="layer"></div>
+				
 			</div>
 			<div id=footer>
 				Create BY Soungjin's
