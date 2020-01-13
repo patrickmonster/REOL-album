@@ -437,17 +437,6 @@ Element.prototype.getPosition=function(){return this.getBoundingClientRect()};
 Element.prototype.addClass = function(n){var c=this.className;this.className=(c==''?n:c+' '+n);return this;};
 Element.prototype.removeClass = function(n){var c=this.className,l=c.split(' '),o="",i=0;for(;i<l.length;i++)if(l[i]!=n){if(o)o+=' '+l[i];else o=l[i];}this.className=o;return this;};
 
-/*
-Array.prototype.equals = function (array) {
-	if (!array||this.length!=array.length)return false;
-    for (var i=0,l=this.length;i<l;i++) {
-        if (this[i] instanceof Array && array[i] instanceof Array){
-			if (!this[i].equals(array[i]))return false;        
-        }else if (this[i]!=array[i])return false;        
-    }
-    return true;
-}*/
-
 function libElement(ele){if(ele[lib_n])return;ele[lib_n]={event:{}}}//라이브러리 불러오기
 
 function Stack(){
@@ -578,7 +567,7 @@ function section(a,b){
 		a[lib_n].view=b;
 		b=a.createElement("img");
 		b.id="track-list-item-img";
-		b.src="http://549.ipdisk.co.kr/img/icons/play.svg";
+		b.src="img/icons/play.svg";
 		a[lib_n].hidden=b;
 		b=a.createElement("span");
 		b.innerHTML=i;
@@ -598,7 +587,7 @@ function section(a,b){
 		}).on("click",function(){
 			play.play(a,this.indexOf());
 		});
-	function imgchange(datas,time,url){//element : [img id] | ms | "http://549.ipdisk.co.kr/reol/img/Album/"
+	function imgchange(datas,time,url){
 		var b=0,d=this;//
 		function change(){
 			if(b>=datas.length)b=0;
@@ -613,7 +602,7 @@ function section(a,b){
 			img=0;
 		};
 	}
-	k=imgchange.call(id("album"),data[a].img,3000,"http://549.ipdisk.co.kr/reol/img/Album/");
+	k=imgchange.call(id("album"),data[a].img,3000,"img/Album/");
 	return {add:e,clear:i,back:k};
 }
 function Play(){//미디어 관리자
@@ -647,18 +636,17 @@ function Play(){//미디어 관리자
 		play(ind[0],ind[1]);
 	});
 	function play(a,b){//페이지 / 항목
-		//"http://549.ipdisk.co.kr/reol/Music/"+data[a].tag+"/"+data[a].list[this.indexOf()].replace(/:/g, "_")+data[a].type;
 		id("play_title").innerHTML=data[a].list[b];
 		ind=[a,b];
 		popup.create(data[a].list[b]+" Playing....");
 		src=data[a].tag+"/"+data[a].list[b].replace(/:/g, "_");
-		audio.src="http://549.ipdisk.co.kr/reol/Music/"+src+data[a].type;
+		audio.src="Music/"+src+data[a].type;
 		audio.play();
-		!isPlaying&&!(id("play_b").src="http://549.ipdisk.co.kr/img/icons/stop_1.png");
+		!isPlaying&&!(id("play_b").src="img/icons/stop_1.png");
 		isPlaying=1;
 		audio.time=0;
 		document.getElementById("music_subtitle").innerHTML="";
-		get("http://549.ipdisk.co.kr/reol/Music/"+src+".sti",function(c,d){
+		get("Music/"+src+".sti",function(c,d){
 			Sdata=JSON.parse(c);
 			//자막을 html 에 저장
 			var e=Object.keys(Sdata),f=id("subtitle");
@@ -676,7 +664,7 @@ function Play(){//미디어 관리자
 		if(!audio.src)return;
 		isPlaying?audio.pause():audio.play();
 		isPlaying=!isPlaying;
-		id("play_b").src=(isPlaying?"http://549.ipdisk.co.kr/img/icons/stop_1.png":"http://549.ipdisk.co.kr/img/icons/play_1.jpg");
+		id("play_b").src=(isPlaying?"img/icons/stop_1.png":"img/icons/play_1.jpg");
 	}
 	return {play:play,pause:pause,audio:audio,index:function(){return ind},isPlaying:function(){return isPlaying}};
 }
@@ -763,29 +751,6 @@ function init(){
 }
 
 window.on("load",init);
-/*
-function changeSize(ops){
-	var a;//크기 작다|크다
-	if(!ops.length)return function(){};
-	if(!ops[1])ops[1]=0;
-	function rsize(){
-		var b=document.body.clientWidth,c=document.body.clientHeight,d=[b>ops[0],c>ops[1]];//크기 [w,h]
-		if(!a){
-			a=d;
-			return a;
-		}
-		return (function(){
-			var r=isChange(d);
-			a=d;
-			return r;
-		})();
-	}
-	function isChange(b){
-		if(!b||!b.length)return [0,0];
-		return [a[0]!=b[0],a[1]!=b[1]];
-	}
-	return rsize;
-}*/
 function changeSize(ops){//크기비교
 	if(!ops.length)return function(){};
 	if(!ops[1])ops[1]=0;
@@ -860,16 +825,16 @@ function Swipe(){
 		<nav>
 			<div id=slider-view></div>
 			<ul id=slider>
-				<li><img id=select-2 src="http://549.ipdisk.co.kr/reol/img/Album/1-1.jpg" alt="No title +/-"></li>
-				<li><img id=select-3 src="http://549.ipdisk.co.kr/reol/img/Album/2-1.jpg" alt="very-colorful"></li>
-				<li><img id=select-4 src="http://549.ipdisk.co.kr/reol/img/Album/3-1.jpg" alt="Sigma"></li>
-				<li><img id=select-5 src="http://549.ipdisk.co.kr/reol/img/Album/4.jpg" alt="Endless-ep"></li>
+				<li><img id=select-2 src="img/Album/1-1.jpg" alt="No title +/-"></li>
+				<li><img id=select-3 src="img/Album/2-1.jpg" alt="very-colorful"></li>
+				<li><img id=select-4 src="img/Album/3-1.jpg" alt="Sigma"></li>
+				<li><img id=select-5 src="img/Album/4.jpg" alt="Endless-ep"></li>
 			</ul>
 			<div id=slider-ctr>
 				<img id=icon src="https://www.reol.jp/images/common/logo.png" style='filter:invert()'>
-				<img id=select-play src="http://549.ipdisk.co.kr/reol/img/play.png">
-				<button id=select-next><img src=http://549.ipdisk.co.kr/reol/img/l.png></button>
-				<button id=select-begin><img src=http://549.ipdisk.co.kr/reol/img/r.png></button>
+				<img id=select-play src="img/play.png">
+				<button id=select-next><img src=img/l.png></button>
+				<button id=select-begin><img src=img/r.png></button>
 			</div>
 		</nav>
 		<!--===========================================
@@ -877,7 +842,7 @@ function Swipe(){
 		===========================================-->
 		<section>
 			<p class=title>undefind</p>
-				<img id=back src=http://549.ipdisk.co.kr/reol/img/back.png>
+				<img id=back src=img/back.png>
 			<div>
 				<div id=list>
 					<img id=album>
@@ -885,9 +850,9 @@ function Swipe(){
 					<div class=music>
 						<table>
 							<tr>
-								<td rowspan=3 width="71px"><img id=play_b src=http://549.ipdisk.co.kr/img/icons/play_1.jpg style="width:70px;height:70px;"></td>
+								<td rowspan=3 width="71px"><img id=play_b src=img/icons/play_1.jpg style="width:70px;height:70px;"></td>
 								<td id=n_time width="50px">00:00</td>
-								<td width="100%" style="float:right"><img id=vol src=http://549.ipdisk.co.kr/img/icons/vol_2.png style="width:30px;height:30px;float:right;"><span id=e_time style="width:50px;float:right">99:99</span><input id=volume type="range" style="width:0px;opacity:0;margin-top:10px" min=0 max=1 step=".001" value=.5></td>
+								<td width="100%" style="float:right"><img id=vol src=img/icons/vol_2.png style="width:30px;height:30px;float:right;"><span id=e_time style="width:50px;float:right">99:99</span><input id=volume type="range" style="width:0px;opacity:0;margin-top:10px" min=0 max=1 step=".001" value=.5></td>
 							</tr>
 							<tr id=play_title><!--공백--></tr>
 							<tr>
@@ -953,11 +918,3 @@ function Swipe(){
 		</section>
 	</body>
 </html>
-<!--
-MEMO
-1-14 개조
-음악은 최대30초만,(저작권자의 권리는 보장해줘야지![그래도 문제긴하지만,,,,쩝...])
-
-
-
--->
